@@ -29,6 +29,7 @@ $factory->define(App\Article::class, function (Faker\Generator $faker) {
         'title' => $faker->sentence(3),
         'slug' => $faker->slug,
         'description' => $faker->sentence(10, true),
+        'keywords' => $faker->word(5),
         'body' => $faker->text
     ];
 });

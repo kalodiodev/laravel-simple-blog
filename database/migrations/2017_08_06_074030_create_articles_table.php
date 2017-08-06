@@ -18,6 +18,7 @@ class CreateArticlesTable extends Migration
             $table->string('title');
             $table->string('slug');
             $table->string('description');
+            $table->string('keywords');
             $table->text('body');
             $table->boolean('enabled')->default(true);
             $table->timestamps();

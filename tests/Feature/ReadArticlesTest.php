@@ -27,4 +27,12 @@ class ExampleTest extends TestCase
 
         $response->assertSee($this->article->title);
     }
+
+    /** @test */
+    public function a_user_can_view_an_article()
+    {
+        $response = $this->get('/articles/' . $this->article->slug);
+
+        $response->assertSee($this->article->title);
+    }
 }
