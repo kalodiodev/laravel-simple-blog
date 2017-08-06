@@ -7,7 +7,7 @@ use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class ExampleTest extends TestCase
+class ReadArticlesTest extends TestCase
 {
 
     use DatabaseMigrations;
@@ -31,7 +31,7 @@ class ExampleTest extends TestCase
     /** @test */
     public function a_user_can_view_an_article()
     {
-        $response = $this->get('/articles/' . $this->article->slug);
+        $response = $this->get('/article/' . $this->article->slug);
 
         $response->assertSee($this->article->title);
     }
