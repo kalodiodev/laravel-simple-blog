@@ -16,4 +16,5 @@ Route::get('/', 'HomeController@index');
 Route::get('/articles/create', 'ArticlesController@create');
 Route::post('/articles', 'ArticlesController@store');
 Route::get('/article/{slug}', 'ArticlesController@show');
-
+Route::get('/article/{slug}/edit', 'ArticlesController@edit');
+Route::patch('/article/{slug}', 'ArticlesController@update');
