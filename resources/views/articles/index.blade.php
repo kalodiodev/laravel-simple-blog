@@ -4,6 +4,6 @@
     <hr>
     <p>{{ $article->description }}</p>
 
-    <a href="/articles/{{ $article->slug }}">Read more...</a>
+    <a href="/article/{{ $article->slug }}">Read more...</a>
 
 </div>
