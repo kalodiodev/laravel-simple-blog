@@ -9,15 +9,22 @@ use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ExampleTest extends TestCase
 {
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function testBasicTest()
+
+    use DatabaseMigrations;
+
+    protected $article;
+
+    public function setUp() {
+        parent::setUp();
+
+        $this->article = factory('App\Article')->create();
+    }
+
+    /** @test */
+    public function a_user_can_view_all_articles()
     {
         $response = $this->get('/');
 
-        $response->assertStatus(200);
+        $response->assertSee($this->article->title);
     }
 }
