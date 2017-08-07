@@ -11,6 +11,9 @@
 |
 */
 
+
+Auth::routes();
+
 Route::get('/', 'HomeController@index');
 
 Route::get('/articles/create', 'ArticlesController@create');
