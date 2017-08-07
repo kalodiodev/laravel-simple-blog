@@ -6,9 +6,17 @@ use App\Article;
 use App\Http\Requests\ArticleRequest;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\PaginationServiceProvider;
+use Illuminate\Support\Facades\Auth;
 
 class ArticlesController extends Controller
 {
+    /**
+     * ArticlesController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth')->except(['show']);
+    }
 
     /**
      * Create article
@@ -32,7 +40,8 @@ class ArticlesController extends Controller
             'title' => $request->get('title'),
             'description' => $request->get('description'),
             'keywords' => $request->get('keywords'),
-            'body' => $request->get('body')
+            'body' => $request->get('body'),
+            'user_id' => auth()->id()
         ]);
 
         return redirect("/article/" . $article->slug);
@@ -46,8 +55,10 @@ class ArticlesController extends Controller
      */
     public function edit($slug)
     {
-
-        $article = Article::whereSlug($slug)->firstOrFail();
+        $auth = auth()->user();
+        $article = $auth->articles()
+            ->whereSlug($slug)
+            ->firstOrFail();
 
         return view('articles.edit', compact('article'));
     }
@@ -61,7 +72,9 @@ class ArticlesController extends Controller
      */
     public function update($slug, ArticleRequest $request)
     {
-        $article = Article::whereSlug($slug)->firstOrFail();
+        $article = auth()->user()->articles()
+            ->whereSlug($slug)
+            ->firstOrFail();
 
         $data = [
             'title' => $request->get('title'),

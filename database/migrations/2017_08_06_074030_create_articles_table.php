@@ -21,7 +21,13 @@ class CreateArticlesTable extends Migration
             $table->string('keywords')->nullable();
             $table->text('body');
             $table->boolean('enabled')->default(true);
+            $table->integer('user_id')->unsigned()->index();
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
         });
     }
 

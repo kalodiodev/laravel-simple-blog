@@ -20,7 +20,7 @@ class EditArticlesTest extends TestCase
     /** @test */
     public function an_authenticated_user_can_edit_article()
     {
-        // TODO: Authenticate user
+        $this->signIn($this->article->user);
 
         $response = $this->get('/article/' . $this->article->slug . '/edit');
 
@@ -30,7 +30,7 @@ class EditArticlesTest extends TestCase
     /** @test */
     public function an_authenticated_user_can_update_article()
     {
-        // TODO: Authenticate user
+        $this->signIn($this->article->user);
 
         $data = [
             'title' => 'New Title',
@@ -48,6 +48,42 @@ class EditArticlesTest extends TestCase
             'description' => $data['description'],
             'keywords' => $data['keywords'],
             'body' => $data['body']
+        ]);
+    }
+
+    /** @test */
+    public function a_guest_may_not_edit_articles()
+    {
+        $this->get('/article/' . $this->article->slug . '/edit')
+            ->assertRedirect('/login');
+
+        $this->patch('/article/' . $this->article->slug)
+            ->assertRedirect('/login');
+    }
+
+    /** @test */
+    public function an_authenticated_user_cannot_edit_other_users_article()
+    {
+        $this->signIn();
+
+        $this->get('/article/' . $this->article->slug . '/edit')
+            ->assertStatus(404);
+    }
+
+    /** @test */
+    public function an_authenticated_user_cannot_update_other_users_article()
+    {
+        $this->signIn();
+
+        $data = [
+            'title' => 'New Title'
+        ];
+
+        $this->patch('/article/' . $this->article->slug, $data);
+
+        $this->assertDatabaseMissing('articles', [
+            'id' => $this->article->id,
+            'title' => $data['title'],
         ]);
     }
 }

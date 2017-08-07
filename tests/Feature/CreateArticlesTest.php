@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Article;
+use App\User;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -16,12 +17,13 @@ class CreateArticlesTest extends TestCase
     protected $article;
 
     /** @test */
-    function an_authenticated_user_can_create_an_article() {
+    function an_authenticated_user_can_create_an_article()
+    {
+        $user = factory(User::class)->create();
+        $article = factory(Article::class)->make(['user_id' => $user->id]);
 
-        // TODO: Authenticate user
-        
-        $article = factory(Article::class)->make();
-        
+        $this->signIn($user);
+                
         $response = $this->post('/articles', $article->toArray());
         
         $this->get($response->headers->get('Location'))
@@ -30,15 +32,26 @@ class CreateArticlesTest extends TestCase
     }
 
     /** @test */
-    function an_article_requires_a_title() {
+    function an_guest_user_cannot_create_an_article()
+    {
+        $this->get('/articles/create')
+            ->assertRedirect('/login');
 
+        $this->post('/articles')
+            ->assertRedirect('/login');
+    }
+
+    /** @test */
+    function an_article_requires_a_title()
+    {
         $response = $this->publish_article([ 'title' => null ]);
 
         $response->assertSessionHasErrors('title');
     }
 
     /** @test */
-    function an_article_requires_a_description() {
+    function an_article_requires_a_description()
+    {
 
         $response = $this->publish_article([ 'description' => null ]);
 
@@ -46,7 +59,8 @@ class CreateArticlesTest extends TestCase
     }
 
     /** @test */
-    function an_article_requires_a_body() {
+    function an_article_requires_a_body()
+    {
 
         $response = $this->publish_article([ 'body' => null ]);
 
@@ -54,7 +68,8 @@ class CreateArticlesTest extends TestCase
     }
 
     /** @test */
-    function an_article_has_a_title_of_limited_length() {
+    function an_article_has_a_title_of_limited_length()
+    {
 
         $response = $this->publish_article([ 'title' => str_random(101) ]);
 
@@ -62,7 +77,8 @@ class CreateArticlesTest extends TestCase
     }
 
     /** @test */
-    function an_article_has_a_description_of_limited_length() {
+    function an_article_has_a_description_of_limited_length()
+    {
 
         $response = $this->publish_article([ 'description' => str_random(151) ]);
 
@@ -70,7 +86,8 @@ class CreateArticlesTest extends TestCase
     }
 
     /** @test */
-    function an_article_can_have_keywords_of_limited_length() {
+    function an_article_can_have_keywords_of_limited_length()
+    {
 
         $response = $this->publish_article([ 'keywords' => str_random(61) ]);
 
@@ -79,7 +96,7 @@ class CreateArticlesTest extends TestCase
 
     private function publish_article($overrides = [])
     {
-        // TODO: Authenticate user
+        $this->signIn();
 
         $article = factory(Article::class)->make($overrides);
 
