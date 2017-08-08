@@ -28,6 +28,20 @@
               name="body">@if(isset($article)){{ old('body',$article->body) }}@else{{ old('body') }}@endif</textarea>
 </div>
 
+{{-- Tags --}}
+<div class="form-group">
+    <label for="tags" class="label">Tags</label>
+    <select multiple class="form-control" id="tags" name="tags[]">
+        @foreach($tags as $tag)
+            <option value="{{ $tag->id }}"
+                    @if(isset($article) && in_array($tag->id, $article->tags()->pluck('id')->toArray()))
+                    selected
+                    @endif
+            >{{ $tag->name }}</option>
+        @endforeach
+    </select>
+</div>
+
 {{-- Submit Button --}}
 <div class="form-group">
     <button class="btn btn-primary" type="submit">Post article</button>

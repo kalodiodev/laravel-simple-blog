@@ -30,4 +30,14 @@ class Article extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Article belongs to many tags
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 }

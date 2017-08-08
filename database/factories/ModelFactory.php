@@ -12,7 +12,8 @@
 */
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(App\User::class, function (Faker\Generator $faker)
+{
     static $password;
 
     return [
@@ -23,7 +24,8 @@ $factory->define(App\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\Article::class, function (Faker\Generator $faker) {
+$factory->define(App\Article::class, function (Faker\Generator $faker)
+{
 
     return [
         'title' => $faker->sentence(3),
@@ -32,5 +34,12 @@ $factory->define(App\Article::class, function (Faker\Generator $faker) {
         'keywords' => $faker->word(5),
         'body' => $faker->text,
         'user_id' => factory(App\User::class)->create()->id
+    ];
+});
+
+$factory->define(App\Tag::class, function (Faker\Generator $faker)
+{
+    return [
+        'name' => $faker->word
     ];
 });

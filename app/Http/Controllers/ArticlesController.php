@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Http\Requests\ArticleRequest;
+use App\Tag;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\PaginationServiceProvider;
 use Illuminate\Support\Facades\Auth;
@@ -25,7 +26,9 @@ class ArticlesController extends Controller
      */
     public function create()
     {
-        return view('articles.create');
+        $tags = Tag::all();
+
+        return view('articles.create', compact('tags'));
     }
 
     /**
@@ -36,6 +39,7 @@ class ArticlesController extends Controller
      */
     public function store(ArticleRequest $request)
     {
+        // Create article
         $article = Article::create([
             'title' => $request->get('title'),
             'description' => $request->get('description'),
@@ -43,6 +47,9 @@ class ArticlesController extends Controller
             'body' => $request->get('body'),
             'user_id' => auth()->id()
         ]);
+
+        // Attach tags to article
+        $article->tags()->attach($request->get('tags'));
 
         return redirect("/article/" . $article->slug);
     }
@@ -55,12 +62,14 @@ class ArticlesController extends Controller
      */
     public function edit($slug)
     {
+        $tags = Tag::all();
+
         $auth = auth()->user();
         $article = $auth->articles()
             ->whereSlug($slug)
             ->firstOrFail();
 
-        return view('articles.edit', compact('article'));
+        return view('articles.edit', compact('article', 'tags'));
     }
 
     /**
@@ -83,7 +92,11 @@ class ArticlesController extends Controller
             'body' => $request->get('body')
         ];
 
+        // Update article
         $article->update($data);
+
+        // Sync article tags
+        $article->tags()->sync($request->get('tags'));
 
         return redirect('/article/' . $article->slug);
     }
