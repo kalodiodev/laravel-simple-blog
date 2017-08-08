@@ -11,3 +11,21 @@
 body {
   padding-top: $body-padding-top;
 }
+
+.blog-post {
+  margin-bottom: $post-padding-bottom;
+}
+
+.blog-post-title {
+  margin-bottom: $post-title-margin-bottom;
+  font-size: $post-title-font-size;
+
+  a {
+    color: $post-title-link-color;
+  }
+}
+
+.blog-post-meta {
+  margin-bottom: $post-meta-margin-bottom;
+  color: $post-meta-color;
+}

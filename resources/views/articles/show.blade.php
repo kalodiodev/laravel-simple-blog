@@ -10,13 +10,12 @@
 
     <div class="row">
         <div class="col-md-8">
-            <div class="panel">
-                <h2>{{ $article->title }}</h2>
-                <p>Created by <a href="#">User</a> on {{ $article->created_at }}</p>
-                <hr>
+            <h1>{{ $article->title }}</h1>
+            <p class="blog-post-meta">Created by <a href="#">{{ $article->user->name }}</a> on
+                {{ $article->created_at->toFormattedDateString() }}</p>
+            <hr>
 
-                <p>{{ $article->body }}</p>
-            </div>
+            <p>{{ $article->body }}</p>
         </div>
     </div>
 
