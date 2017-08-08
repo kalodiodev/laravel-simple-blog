@@ -1,6 +1,6 @@
 # Simple Laravel Blog
 
-A simple blog built in Laravel Framework
+A simple blog built on Laravel Framework
 
 ## Frameworks/Libraries
 
