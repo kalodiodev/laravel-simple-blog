@@ -31,8 +31,15 @@
 
     <div class="container">
 
-        @yield('content')
+        @yield('intro')
 
+        <div class="row">
+
+            @yield('content')
+
+            @yield('sidebar')
+
+        </div>
     </div>
 
     <!-- Scripts -->

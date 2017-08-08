@@ -5,29 +5,31 @@
     <meta name="keywords" content="laravel, blog, framework, php">
 @endsection
 
-
-@section('content')
-
+@section('intro')
     <div class="row">
         <div class="col-md-12 jumbotron">
             <h1>This is Simple Blog homepage</h1>
             <p>Welcome to simple blog</p>
         </div>
     </div>
+@endsection
 
-    <div class="row">
-        <div class="col-md-8">
+@section('content')
 
-            {{-- Articles --}}
-            @foreach($articles as $article)
+    <div class="col-md-8">
+        {{-- Articles --}}
+        @foreach($articles as $article)
 
-                @include('articles.index')
+            @include('articles.index')
 
-            @endforeach
-
-        </div>
+        @endforeach
     </div>
 
+@endsection
 
+
+@section('sidebar')
+
+    @include('layouts.sidebar')
 
 @endsection

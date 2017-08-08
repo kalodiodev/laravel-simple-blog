@@ -2,7 +2,6 @@
 
 @section('content')
 
-<div class="row">
     <div class="col-8 col-md-6 offset-md-2">
         <div class="card">
 
@@ -74,6 +73,5 @@
             </div>
         </div>
     </div>
-</div>
 
 @endsection

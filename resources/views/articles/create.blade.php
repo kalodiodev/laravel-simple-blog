@@ -2,16 +2,14 @@
 
 @section('content')
 
-    <div class="row">
-        <div class="col-md-8">
+    <div class="col-md-8">
 
-            <h1>Create article</h1>
-            <hr>
+        <h1>Create article</h1>
+        <hr>
 
-            <form method="POST" action="/articles">
-                @include('articles.form')
-            </form>
-        </div>
+        <form method="POST" action="/articles">
+            @include('articles.form')
+        </form>
     </div>
 
 @endsection

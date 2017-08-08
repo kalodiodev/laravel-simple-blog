@@ -2,17 +2,15 @@
 
 @section('content')
 
-    <div class="row">
-        <div class="col-md-8">
+    <div class="col-md-8">
 
-            <h1>Edit article</h1>
-            <hr>
+        <h1>Edit article</h1>
+        <hr>
 
-            <form method="POST" action="/article/{{ $article->slug }}">
-                {{ method_field('PATCH') }}
-                @include('articles.form')
-            </form>
-        </div>
+        <form method="POST" action="/article/{{ $article->slug }}">
+            {{ method_field('PATCH') }}
+            @include('articles.form')
+        </form>
     </div>
 
 @endsection
