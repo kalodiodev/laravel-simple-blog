@@ -18,7 +18,7 @@ class AppServiceProvider extends ServiceProvider
         Schema::defaultStringLength(191);
 
         view()->composer('layouts.sidebar', function($view) {
-            $view->with('tags', Tag::all());
+            $view->with('tags', Tag::has('articles')->get());
         });
     }
 
