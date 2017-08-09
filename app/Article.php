@@ -40,4 +40,18 @@ class Article extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
+
+    /**
+     * Archives dates
+     *
+     * @return array
+     */
+    public static function archives()
+    {
+        return static::selectRaw('year(created_at) year, monthname(created_at) month, count(*) enabled')
+            ->groupBy('year', 'month')
+            ->orderByRaw('min(created_at) desc')
+            ->get()
+            ->toArray();
+    }
 }

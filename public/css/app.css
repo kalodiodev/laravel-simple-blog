@@ -48,3 +48,12 @@
   line-height: 16px;
 }
 
+.sidebar-module {
+  padding: 1rem;
+}
+
+.list-unstyled {
+  padding-left: 0;
+  list-style: none;
+}
+
