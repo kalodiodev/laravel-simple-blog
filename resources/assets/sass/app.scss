@@ -29,3 +29,31 @@ body {
   margin-bottom: $post-meta-margin-bottom;
   color: $post-meta-color;
 }
+
+.tags {
+  padding: 0;
+  list-style: none;
+}
+
+.is-primary {
+  background: $primary-color;
+
+  &:hover {
+    background: $primary-hover-color;
+  }
+}
+
+.tag {
+  display: inline-block;
+  border-radius: $tag-radius;
+  padding-left: $tag-padding;
+  padding-right: $tag-padding;
+  margin: $tag-margin;
+
+  a {
+    color: white;
+    font-size: 1rem;
+    text-decoration: none;
+    line-height: 16px;
+  }
+}

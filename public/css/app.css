@@ -20,3 +20,31 @@
   color: #999;
 }
 
+.tags {
+  padding: 0;
+  list-style: none;
+}
+
+.is-primary {
+  background: #8eb4cb;
+}
+
+.is-primary:hover {
+  background: #1b6d85;
+}
+
+.tag {
+  display: inline-block;
+  border-radius: 0.25rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  margin: 0.2rem;
+}
+
+.tag a {
+  color: white;
+  font-size: 1rem;
+  text-decoration: none;
+  line-height: 16px;
+}
+

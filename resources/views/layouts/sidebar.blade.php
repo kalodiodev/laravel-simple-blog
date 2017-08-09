@@ -2,10 +2,12 @@
     {{-- Tags --}}
     <div>
         <h3>Tags</h3>
-        @foreach($tags as $tag)
-            <a href="/?tag={{ $tag->name }}" style="font-size: 1.25rem">
-                <span class="badge badge-primary">{{ $tag->name }}</span>
-            </a>
-        @endforeach
+        <ul class="tags">
+            @foreach($tags as $tag)
+                <li class="tag is-primary">
+                    <a href="/tags/{{ $tag }}">{{ $tag }}</a>
+                </li>
+            @endforeach
+        </ul>
     </div>
 </div>
