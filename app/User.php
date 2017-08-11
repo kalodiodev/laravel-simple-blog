@@ -36,4 +36,27 @@ class User extends Authenticatable
     {
         return $this->hasMany(Article::class);
     }
+
+    /**
+     * A user belongs to single role
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
+    /**
+     * Assign a role to user
+     * 
+     * @param $role
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public function giveRole($role)
+    {
+        return Role::whereName($role)
+            ->firstOrFail()
+            ->assignRoleTo($this);
+    }
 }
