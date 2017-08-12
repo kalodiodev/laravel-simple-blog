@@ -1,9 +1,10 @@
 <?php
 
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\IntegrationTestCase;
 use Tests\TestCase;
 
-class EditArticlesTest extends TestCase
+class EditArticlesTest extends IntegrationTestCase
 {
 
     use DatabaseMigrations;

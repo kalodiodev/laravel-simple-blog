@@ -4,22 +4,23 @@ namespace Tests\Feature;
 
 use App\Article;
 use App\User;
+use Tests\IntegrationTestCase;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class CreateArticlesTest extends TestCase
+class CreateArticlesTest extends IntegrationTestCase
 {
 
     use DatabaseMigrations;
 
     protected $article;
-
+    
     /** @test */
     function an_authenticated_user_can_create_an_article()
     {
-        $user = factory(User::class)->create();
+        $user = factory(User::class)->create(['role_id' => 1]);
         $article = factory(Article::class)->make(['user_id' => $user->id]);
 
         $this->signIn($user);

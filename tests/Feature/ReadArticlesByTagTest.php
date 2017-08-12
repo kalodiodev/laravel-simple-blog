@@ -2,12 +2,13 @@
 
 namespace Tests\Feature;
 
+use Tests\IntegrationTestCase;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
 
-class ReadArticlesByTagTest extends TestCase
+class ReadArticlesByTagTest extends IntegrationTestCase
 {
 
     use DatabaseMigrations;
