@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'role_id'
     ];
 
     /**
@@ -58,5 +58,32 @@ class User extends Authenticatable
         return Role::whereName($role)
             ->firstOrFail()
             ->assignRoleTo($this);
+    }
+
+    /**
+     * Determine if user has the given role
+     *
+     * @param $role
+     * @return bool
+     */
+    public function hasRole($role)
+    {
+        if(is_string($role))
+        {
+            return $this->role->name == $role;
+        }
+
+        return $role->contains('name', $this->role->name);
+    }
+
+    /**
+     * Determine if user has the given permission
+     *
+     * @param Permission $permission
+     * @return bool
+     */
+    public function hasPermission(Permission $permission)
+    {
+        return $this->hasRole($permission->roles);
     }
 }
