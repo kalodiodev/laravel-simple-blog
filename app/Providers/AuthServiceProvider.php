@@ -2,10 +2,9 @@
 
 namespace App\Providers;
 
-use App\Permission;
-use Illuminate\Contracts\Auth\Access\Gate as GateContract;
+use App\Article;
+use App\Policies\ArticlePolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Schema;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -15,29 +14,30 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        'App\Model' => 'App\Policies\ModelPolicy',
+        //'App\Model' => 'App\Policies\ModelPolicy',
+        Article::class => ArticlePolicy::class,
     ];
 
     /**
      * Register any authentication / authorization services.
-     *
-     * @param GateContract $gate
      */
-    public function boot(GateContract $gate)
+    public function boot()
     {
         $this->registerPolicies();
 
-        if (Schema::hasTable('permissions')) {
-            foreach ($this->getPermissions() as $permission) {
-                $gate->define($permission->name, function ($user) use ($permission) {
-                    return $user->hasPermission($permission);
-                });
-            }
-        }
+        // Gate::define('create', 'App\Policies\ArticlePolicy@create');
+
+//        if (Schema::hasTable('permissions')) {
+//            foreach ($this->getPermissions() as $permission) {
+//                $gate->define($permission->name, function ($user) use ($permission) {
+//                    return $user->hasPermission($permission);
+//                });
+//            }
+//        }
     }
 
     protected function getPermissions()
     {
-        return Permission::with('roles')->get();
+//        return Permission::with('roles')->get();
     }
 }

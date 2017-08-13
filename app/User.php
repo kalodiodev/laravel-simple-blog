@@ -79,11 +79,28 @@ class User extends Authenticatable
     /**
      * Determine if user has the given permission
      *
-     * @param Permission $permission
+     * @param $permission
      * @return bool
      */
-    public function hasPermission(Permission $permission)
+    public function hasPermission($permission)
     {
+        if(is_string($permission)) {
+            return $this->hasRole(
+                Permission::whereName($permission)->firstOrFail()->roles
+            );
+        }
+
         return $this->hasRole($permission->roles);
+    }
+
+    /**
+     * Determine if user owns the given article
+     * 
+     * @param Article $article
+     * @return bool
+     */
+    public function ownsArticle(Article $article)
+    {
+        return $this->id === $article->user_id;
     }
 }

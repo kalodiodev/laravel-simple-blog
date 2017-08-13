@@ -12,7 +12,7 @@ class PermissionsTableSeeder extends Seeder
 
     private $author_actions = [
         ['name' => 'article-create', 'label' => 'Create article'],
-        ['name' => 'article-edit', 'label' => 'Edit article'],
+        ['name' => 'article-update', 'label' => 'Edit article'],
         ['name' => 'article-delete', 'label' => 'Delete article']
     ];
     

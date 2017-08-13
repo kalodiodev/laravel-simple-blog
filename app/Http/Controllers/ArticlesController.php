@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Article;
-use App\Http\Requests\ArticleRequest;
 use App\Tag;
-use Illuminate\Http\Request;
-use Illuminate\Pagination\PaginationServiceProvider;
-use Illuminate\Support\Facades\Auth;
+use App\Article;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Support\Facades\Gate;
+use App\Http\Requests\ArticleRequest;
+
 
 class ArticlesController extends Controller
 {
@@ -22,10 +22,15 @@ class ArticlesController extends Controller
     /**
      * Create article
      *
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws AuthorizationException
      */
     public function create()
     {
+        if(Gate::denies('create', Article::class))
+        {
+            throw new AuthorizationException('You are not authorized for this action');
+        }
+
         $tags = Tag::all();
 
         return view('articles.create', compact('tags'));
@@ -36,9 +41,15 @@ class ArticlesController extends Controller
      *
      * @param ArticleRequest $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws AuthorizationException
      */
     public function store(ArticleRequest $request)
     {
+        if(Gate::denies('create', Article::class))
+        {
+            throw new AuthorizationException('You are not authorized for this action');
+        }
+        
         // Create article
         $article = Article::create([
             'title' => $request->get('title'),
@@ -57,17 +68,17 @@ class ArticlesController extends Controller
     /**
      * Edit article
      *
-     * @param $slug
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws AuthorizationException
      */
     public function edit($slug)
     {
         $tags = Tag::all();
+        $article = $this->retrieveArticle($slug);
 
-        $auth = auth()->user();
-        $article = $auth->articles()
-            ->whereSlug($slug)
-            ->firstOrFail();
+        if(Gate::denies('update', $article))
+        {
+            throw new AuthorizationException('You are not authorized for this action');
+        }
 
         return view('articles.edit', compact('article', 'tags'));
     }
@@ -78,12 +89,16 @@ class ArticlesController extends Controller
      * @param $slug
      * @param ArticleRequest $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws AuthorizationException
      */
     public function update($slug, ArticleRequest $request)
     {
-        $article = auth()->user()->articles()
-            ->whereSlug($slug)
-            ->firstOrFail();
+        $article = $this->retrieveArticle($slug);
+
+        if(Gate::denies('update', $article))
+        {
+            throw new AuthorizationException('You are not authorized for this action');
+        }
 
         $data = [
             'title' => $request->get('title'),
@@ -109,8 +124,19 @@ class ArticlesController extends Controller
      */
     public function show($slug)
     {
-        $article = Article::whereSlug($slug)->firstOrFail();
+        $article = $this->retrieveArticle($slug);
 
         return view('articles.show', compact('article'));
+    }
+    
+    /**
+     * Retrieve article by slug
+     * 
+     * @param $slug
+     * @return mixed
+     */
+    private function retrieveArticle($slug)
+    {
+        return Article::whereSlug($slug)->firstOrFail();
     }
 }
