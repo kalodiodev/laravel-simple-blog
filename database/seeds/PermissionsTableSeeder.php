@@ -7,13 +7,15 @@ use Illuminate\Support\Facades\DB;
 class PermissionsTableSeeder extends Seeder
 {
     private $admin_actions = [
-        ['name' => 'user-manage', 'label' => 'Manage users']
+        ['name' => 'user-manage', 'label' => 'Manage users'],
+        ['name' => 'article-update-any', 'label' => 'Edit others article'],
+        ['name' => 'article-delete-any', 'label' => 'Delete others article']
     ];
 
     private $author_actions = [
         ['name' => 'article-create', 'label' => 'Create article'],
-        ['name' => 'article-update', 'label' => 'Edit article'],
-        ['name' => 'article-delete', 'label' => 'Delete article']
+        ['name' => 'article-update', 'label' => 'Edit own article'],
+        ['name' => 'article-delete', 'label' => 'Delete own article']
     ];
     
     /**

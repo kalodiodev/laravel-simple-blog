@@ -19,4 +19,9 @@ abstract class IntegrationTestCase extends TestCase
         $this->actingAs($user);
         return $this;
     }
+    
+    protected function giveUserRole($user, $role)
+    {
+        return $user->giveRole($role);
+    }
 }

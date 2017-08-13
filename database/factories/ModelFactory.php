@@ -33,7 +33,7 @@ $factory->define(App\Article::class, function (Faker\Generator $faker)
         'slug' => $faker->slug,
         'description' => $faker->sentence(10, true),
         'keywords' => $faker->word(5),
-        'body' => $faker->text,
+        'body' => $faker->paragraphs(4, true),
         'user_id' => factory(App\User::class)->create()->id
     ];
 });
