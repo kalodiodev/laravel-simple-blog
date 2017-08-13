@@ -14,7 +14,6 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        //'App\Model' => 'App\Policies\ModelPolicy',
         Article::class => ArticlePolicy::class,
     ];
 
@@ -24,20 +23,5 @@ class AuthServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->registerPolicies();
-
-        // Gate::define('create', 'App\Policies\ArticlePolicy@create');
-
-//        if (Schema::hasTable('permissions')) {
-//            foreach ($this->getPermissions() as $permission) {
-//                $gate->define($permission->name, function ($user) use ($permission) {
-//                    return $user->hasPermission($permission);
-//                });
-//            }
-//        }
-    }
-
-    protected function getPermissions()
-    {
-//        return Permission::with('roles')->get();
     }
 }
