@@ -19,6 +19,19 @@
         <hr>
 
         <p>{{ $article->body }}</p>
+
+        @if(Gate::check('update', $article) || Gate::check('delete', $article))
+            <div class="row justify-content-end">
+                <div class="btn-group">
+                    @can('update', $article)
+                        <a href="{{ route('article.edit', ['slug' => $article->slug]) }}" class="btn btn-primary">Edit</a>
+                    @endcan
+                    @can('delete', $article)
+                        <a href="" class="btn btn-danger">Delete</a>
+                    @endcan
+                </div>
+            </div>
+       @endif
     </div>
 
 @endsection

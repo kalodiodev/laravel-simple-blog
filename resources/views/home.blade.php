@@ -17,6 +17,13 @@
 @section('content')
 
     <div class="col-md-8">
+
+        @can('create', \App\Article::class)
+            <div class="row justify-content-end" style="margin-bottom: 30px;">
+                <a href="{{ route('article.create') }}" class="btn btn-primary">Create article</a>
+            </div>
+        @endcan
+
         {{-- Articles --}}
         @foreach($articles as $article)
 
