@@ -28,7 +28,7 @@ class HomeController extends Controller
             $articles->whereMonth('created_at', Carbon::parse($month)->month);
         }
 
-        $articles = $articles->get();
+        $articles = $articles->simplePaginate(10);
 
         return view('home', compact('articles'));
     }

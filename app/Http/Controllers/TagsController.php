@@ -16,7 +16,7 @@ class TagsController extends Controller
     {
         $articles = $tag->articles()
             ->latest()
-            ->get();
+            ->simplePaginate(10);
 
         return view('home', compact('articles'));
     }
