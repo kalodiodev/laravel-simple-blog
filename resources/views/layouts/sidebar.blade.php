@@ -5,7 +5,7 @@
         <ol class="list-unstyled">
             @foreach($archives as $archive)
                 <li>
-                    <a href="/?year={{ $archive['year'] }}&month={{ $archive['month'] }}">
+                    <a href="{{ route('archives', ['year' => $archive['year'], 'month' => $archive['month_index']]) }}">
                         {{ $archive['year'] . ' ' . $archive['month'] }}
                     </a>
                 </li>

@@ -14,7 +14,7 @@
 
 Auth::routes();
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/articles/create', 'ArticlesController@create')->name('article.create');
 Route::post('/articles', 'ArticlesController@store');
@@ -23,3 +23,5 @@ Route::get('/article/{slug}/edit', 'ArticlesController@edit')->name('article.edi
 Route::patch('/article/{slug}', 'ArticlesController@update');
 
 Route::get('/tags/{tag}', 'TagsController@index');
+
+Route::get('/archives/{year?}/{month?}', 'ArchivesController@index')->name('archives');

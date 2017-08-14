@@ -16,19 +16,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $articles = Article::latest();
-
-        if($year = request('year'))
-        {
-            $articles->whereYear('created_at', $year);
-        }
-
-        if($month = request('month'))
-        {
-            $articles->whereMonth('created_at', Carbon::parse($month)->month);
-        }
-
-        $articles = $articles->simplePaginate(10);
+        $articles = Article::latest()->simplePaginate(10);
 
         return view('home', compact('articles'));
     }

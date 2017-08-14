@@ -48,10 +48,30 @@ class Article extends Model
      */
     public static function archives()
     {
-        return static::selectRaw('year(created_at) year, monthname(created_at) month, count(*) enabled')
-            ->groupBy('year', 'month')
+        return static::selectRaw('year(created_at) year, monthname(created_at) month, month(created_at) month_index, count(*) enabled')
+            ->groupBy('year', 'month', 'month_index')
             ->orderByRaw('min(created_at) desc')
             ->get()
             ->toArray();
+    }
+
+    /**
+     * Scope query to only include articles of year, month
+     *
+     * @param $query
+     * @param $year
+     * @param $month
+     * @return mixed
+     */
+    public function scopeOfDate($query, $year, $month)
+    {
+        $query->latest()->whereYear('created_at', $year);
+
+        if(isset($month))
+        {
+            $query->whereMonth('created_at', $month);
+        }
+        
+        return $query;
     }
 }
