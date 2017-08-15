@@ -8,18 +8,18 @@
                 <h4 class="card-title">Login</h4>
                 <h6 class="card-subtitle mb-2 text-muted">Welcome to login,</h6>
             </div>
-            <div class="card-block">
+            <div class="card-body">
                 <form method="POST" action="{{ route('login') }}">
                     {{ csrf_field() }}
 
                     {{-- Email --}}
-                    <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
+                    <div class="form-group">
                         <label for="email" class="form-control-label">E-Mail Address</label>
                         <input id="email" type="email" name="email"
-                               class="form-control{{ $errors->has('email') ? ' form-control-danger' : '' }}" required autofocus>
+                               class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" required autofocus>
 
                         @if ($errors->has('email'))
-                            <div class="form-control-feedback">
+                            <div class="invalid-feedback">
                                 {{ $errors->first('email') }}
                             </div>
                             <small class="form-text text-muted">Please check your email.</small>
@@ -27,13 +27,13 @@
                     </div>
 
                     {{-- Password --}}
-                    <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
+                    <div class="form-group">
                         <label for="password" class="form-control-label">Password</label>
                         <input id="password" type="password" name="password"
-                               class="form-control{{ $errors->has('email') ? ' form-control-danger' : '' }}" required>
+                               class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" required>
 
                         @if ($errors->has('password'))
-                            <div class="form-control-feedback">
+                            <div class="invalid-feedback">
                                 {{ $errors->first('password') }}
                             </div>
                             <small class="form-text text-muted">Please check your password.</small>

@@ -10,20 +10,20 @@
                 <h6 class="card-subtitle mb-2 text-muted">Welcome to registration,</h6>
             </div>
 
-            <div class="card-block">
+            <div class="card-body">
                 <form method="POST" action="{{ route('register') }}">
 
                     {{ csrf_field() }}
 
                     {{-- Name --}}
-                    <div class="form-group{{ $errors->has('name') ? ' has-danger' : '' }}">
+                    <div class="form-group">
                         <label for="name" class="form-control-label">Name</label>
                         <input id="name" type="text" name="name"
-                               class="form-control{{ $errors->has('name') ? ' form-control-danger' : '' }}"
-                               value="{{ old('name') }}" required autofocus>
+                               class="form-control{{ $errors->has('name') ? ' is-invalid' : '' }}"
+                               value="{{ old('name') }}"  autofocus required>
 
                         @if ($errors->has('name'))
-                            <div class="form-control-feedback">
+                            <div class="invalid-feedback">
                                 {{ $errors->first('name') }}
                             </div>
                             <small class="form-text text-muted">Please check your name.</small>
@@ -31,14 +31,14 @@
                     </div>
 
                     {{-- Email --}}
-                    <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
+                    <div class="form-group">
                         <label for="email" class="form-control-label">E-Mail Address</label>
-                        <input id="email" type="email" class="form-control" name="email"
-                               class="form-control{{ $errors->has('email') ? ' form-control-danger' : '' }}"
+                        <input id="email" type="email" name="email"
+                               class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
                                value="{{ old('email') }}" required>
 
                         @if ($errors->has('email'))
-                            <div class="form-control-feedback">
+                            <div class="invalid-feedback">
                                 {{ $errors->first('email') }}
                             </div>
                             <small class="form-text text-muted">Please check your e-mail.</small>
@@ -46,13 +46,13 @@
                     </div>
 
                     {{-- Password --}}
-                    <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
+                    <div class="form-group">
                         <label for="password" class="form-control-label">Password</label>
                         <input id="password" type="password" name="password"
-                               class="form-control{{ $errors->has('password') ? ' form-control-danger' : '' }}" required>
+                               class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" required>
 
                         @if ($errors->has('password'))
-                            <div class="form-control-feedback">
+                            <div class="invalid-feedback">
                                 {{ $errors->first('password') }}
                             </div>
                             <small class="form-text text-muted">Please check your password.</small>
@@ -61,7 +61,7 @@
 
 
                     {{-- Password Confirmation --}}
-                    <div class="form-group{{ $errors->has('password') ? ' has-danger' : '' }}">
+                    <div class="form-group">
                         <label for="password-confirm" class="form-control-label">Confirm Password</label>
                         <input id="password-confirm" type="password"
                                name="password_confirmation" class="form-control" required>
