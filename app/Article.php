@@ -74,4 +74,14 @@ class Article extends Model
         
         return $query;
     }
+
+    /**
+     * Article has many comments
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

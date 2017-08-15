@@ -44,3 +44,15 @@ $factory->define(App\Tag::class, function (Faker\Generator $faker)
         'name' => $faker->word
     ];
 });
+
+
+$factory->define(App\Comment::class, function (Faker\Generator $faker)
+{
+    $article = factory(App\Article::class)->create();
+
+    return [
+        'body' => $faker->sentence(2),
+        'user_id' => $article->user->id,
+        'article_id' => $article->id
+    ];
+});

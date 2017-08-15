@@ -103,4 +103,14 @@ class User extends Authenticatable
     {
         return $this->id === $article->user_id;
     }
+
+    /**
+     * User has many comments
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
