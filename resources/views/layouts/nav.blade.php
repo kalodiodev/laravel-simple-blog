@@ -1,16 +1,13 @@
-<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
-    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse"
-            data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault"
+<nav class="navbar fixed-top navbar-dark bg-dark navbar-expand-lg navbar-light bg-light">
+    <button class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarToggler" aria-controls="navbarToggler"
             aria-expanded="false" aria-label="Toggle navigation">
-
         <span class="navbar-toggler-icon"></span>
-
     </button>
 
-    <a class="navbar-brand" href="#">Simple Blog</a>
-
-    <div class="collapse navbar-collapse">
-        <ul class="navbar-nav mr-auto">
+    <div class="collapse navbar-collapse" id="navbarToggler">
+        <a class="navbar-brand" href="#">Simple Blog</a>
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item active">
                 <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
             </li>
@@ -36,7 +33,7 @@
 
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
-                                                 document.getElementById('logout-form').submit();">
+                                    document.getElementById('logout-form').submit();">
                             Logout
                         </a>
 
