@@ -19,6 +19,7 @@ Route::get('/', 'HomeController@index')->name('home');
 Route::get('/articles/create', 'ArticlesController@create')->name('article.create');
 Route::post('/articles', 'ArticlesController@store');
 Route::get('/article/{slug}', 'ArticlesController@show');
+Route::delete('/article/{slug}', 'ArticlesController@destroy')->name('article.delete');
 Route::get('/article/{slug}/edit', 'ArticlesController@edit')->name('article.edit');
 Route::patch('/article/{slug}', 'ArticlesController@update');
 

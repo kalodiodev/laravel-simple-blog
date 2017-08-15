@@ -128,6 +128,27 @@ class ArticlesController extends Controller
 
         return view('articles.show', compact('article'));
     }
+
+    /**
+     * Delete Article
+     *
+     * @param $slug
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws AuthorizationException
+     */
+    public function destroy($slug)
+    {
+        $article = $this->retrieveArticle($slug);
+
+        if(Gate::denies('delete', $article))
+        {
+            throw new AuthorizationException('You are not authorized for this action');
+        }
+
+        $article->delete();
+
+        return redirect()->route('home');
+    }
     
     /**
      * Retrieve article by slug

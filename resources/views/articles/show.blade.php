@@ -21,17 +21,54 @@
         <p>{{ $article->body }}</p>
 
         @if(Gate::check('update', $article) || Gate::check('delete', $article))
+            <hr>
+
             <div class="row justify-content-end">
                 <div class="btn-group">
                     @can('update', $article)
                         <a href="{{ route('article.edit', ['slug' => $article->slug]) }}" class="btn btn-primary">Edit</a>
                     @endcan
                     @can('delete', $article)
-                        <a href="" class="btn btn-danger">Delete</a>
+                        <a class="btn btn-danger" data-toggle="modal"  data-target="#deleteConfirmModal" href="#">Delete</a>
+
+                        {{-- Delete confirmation modal --}}
+                        <div class="modal fade" id="deleteConfirmModal" tabindex="-1"
+                             role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
+
+                            {{-- Dialog --}}
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+
+                                    {{-- Header --}}
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="confirmModalLabel">Confirm Delete</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+
+                                    {{-- Body --}}
+                                    <div class="modal-body">
+                                        Are you sure you want to delete this article ?
+                                    </div>
+
+                                    {{-- Footer --}}
+                                    <div class="modal-footer">
+                                        <form action="{{ route('article.delete', ['slug' => $article->slug]) }}" method="post">
+                                            {{ csrf_field() }}
+                                            {{ method_field('DELETE') }}
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     @endcan
                 </div>
             </div>
        @endif
+
     </div>
 
 @endsection
