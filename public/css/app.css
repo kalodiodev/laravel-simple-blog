@@ -57,3 +57,18 @@
   list-style: none;
 }
 
+.top-space {
+  margin-top: 4rem;
+}
+
+.bottom-space {
+  margin-bottom: 4rem;
+}
+
+.comment-body {
+  margin-left: 2rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px dashed #428bca;
+  padding: 5px;
+}
+

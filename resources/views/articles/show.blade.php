@@ -69,7 +69,25 @@
             </div>
        @endif
 
+        <div class="top-space bottom-space">
+            <h3>Comments</h3>
+            <hr>
+
+            @if(count($comments) == 0)
+                <p style="text-align: center">Be the first to comment.</p>
+            @else
+                {{-- Comments list --}}
+                @include('comments.list')
+
+            @endif
+
+            {{-- Comment form --}}
+            @include('comments.form')
+
+        </div>
+
     </div>
+
 
 @endsection
 

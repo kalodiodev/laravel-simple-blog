@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\Tag;
 use App\Article;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -125,8 +126,12 @@ class ArticlesController extends Controller
     public function show($slug)
     {
         $article = $this->retrieveArticle($slug);
+        
+        $comments = Comment::whereArticleId($article->id)
+            ->latest()
+            ->paginate(10);
 
-        return view('articles.show', compact('article'));
+        return view('articles.show', compact('article','comments'));
     }
 
     /**

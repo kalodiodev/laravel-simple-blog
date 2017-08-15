@@ -66,3 +66,18 @@ body {
   padding-left: 0;
   list-style: none;
 }
+
+.top-space {
+  margin-top: $top-space-margin;
+}
+
+.bottom-space {
+  margin-bottom: $bottom-space-margin;
+}
+
+.comment-body {
+  margin-left: $comment-body-margin-left;
+  margin-bottom: $comment-body-margin-bottom;
+  border-bottom: $comment-border-width dashed $comment-border-color;
+  padding: $comment-padding;
+}
