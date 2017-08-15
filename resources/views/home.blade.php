@@ -32,12 +32,7 @@
         @endforeach
 
         <div class="row justify-content-center">
-            @if(request('year') && request('month'))
-                {{ $articles->appends(['year' => request('year'), 'month' => request('month')])
-                   ->links('vendor.pagination.simple-bootstrap-4') }}
-            @else
-                {{ $articles->links('vendor.pagination.simple-bootstrap-4') }}
-            @endif
+            {{ $articles->links('vendor.pagination.simple-bootstrap-4') }}
         </div>
     </div>
 
