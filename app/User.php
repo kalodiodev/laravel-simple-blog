@@ -113,4 +113,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Comment::class);
     }
+
+    /**
+     * Determine if user owns the given comment
+     * 
+     * @param Comment $comment
+     * @return bool
+     */
+    public function ownsComment(Comment $comment)
+    {
+        return $this->id === $comment->user_id;
+    }
 }
