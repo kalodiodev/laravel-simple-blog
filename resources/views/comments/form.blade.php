@@ -8,7 +8,15 @@
 
             <div class="form-group">
                 <label for="comment" class="label">Your Comment:</label>
-                <textarea id="comment" class="form-control" name="body"></textarea>
+                <textarea id="comment" class="form-control{{ $errors->has('body') ? ' is-invalid' : '' }}" name="body"
+                >@if(isset($comment)){{ old('body',$comment->body) }}@else{{ old('body') }}@endif</textarea>
+
+                @if ($errors->has('body'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('body') }}
+                    </div>
+                    <small class="form-text text-muted">Please check your comment.</small>
+                @endif
             </div>
 
             <div class="form-group">
