@@ -20,3 +20,12 @@
 // const app = new Vue({
 //     el: '#app'
 // });
+
+// Delete confirmation modal show
+$(document).on("click",".deleteBtn", function () {
+    var action = $(this).data("action");
+    var text = $(this).data("message");
+
+    $("#delete-form").attr('action', action);
+    $(".modal-body").text(text);
+});

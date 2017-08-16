@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Comment;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CommentRequest;
+use Illuminate\Auth\Access\AuthorizationException;
 
 class CommentsController extends Controller
 {
@@ -19,13 +21,19 @@ class CommentsController extends Controller
 
     /**
      * Store comment
-     * 
+     *
      * @param $slug
      * @param CommentRequest $request
      * @return \Illuminate\Http\RedirectResponse
+     * @throws AuthorizationException
      */
     public function store($slug, CommentRequest $request)
     {
+        if(Gate::denies('create', Comment::class))
+        {
+            throw new AuthorizationException('You are not authorized for this action');
+        }
+
         $article = Article::whereSlug($slug)->firstOrFail();
 
         $article->comments()->create([
@@ -33,7 +41,7 @@ class CommentsController extends Controller
             'user_id' => Auth::user()->id
         ]);
 
-        return redirect()->back();
+        return redirect()->route('article', ['slug' => $article->slug]);
     }
 
     /**
@@ -45,6 +53,11 @@ class CommentsController extends Controller
      */
     public function destroy(Comment $comment)
     {
+        if(Gate::denies('delete', $comment))
+        {
+            throw new AuthorizationException('You are not authorized for this action');
+        }
+        
         $comment->delete();
         
         return redirect()->back();

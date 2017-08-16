@@ -98,6 +98,15 @@ module.exports = __webpack_require__(2);
 //     el: '#app'
 // });
 
+// Delete confirmation modal show
+$(document).on("click", ".deleteBtn", function () {
+  var action = $(this).data("action");
+  var text = $(this).data("message");
+
+  $("#delete-form").attr('action', action);
+  $(".modal-body").text(text);
+});
+
 /***/ }),
 /* 2 */
 /***/ (function(module, exports) {

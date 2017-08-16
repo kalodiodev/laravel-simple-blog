@@ -29,41 +29,10 @@
                         <a href="{{ route('article.edit', ['slug' => $article->slug]) }}" class="btn btn-primary">Edit</a>
                     @endcan
                     @can('delete', $article)
-                        <a class="btn btn-danger" data-toggle="modal"  data-target="#deleteConfirmModal" href="#">Delete</a>
-
-                        {{-- Delete confirmation modal --}}
-                        <div class="modal fade" id="deleteConfirmModal" tabindex="-1"
-                             role="dialog" aria-labelledby="confirmModalLabel" aria-hidden="true">
-
-                            {{-- Dialog --}}
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-
-                                    {{-- Header --}}
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="confirmModalLabel">Confirm Delete</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-
-                                    {{-- Body --}}
-                                    <div class="modal-body">
-                                        Are you sure you want to delete this article ?
-                                    </div>
-
-                                    {{-- Footer --}}
-                                    <div class="modal-footer">
-                                        <form action="{{ route('article.delete', ['slug' => $article->slug]) }}" method="post">
-                                            {{ csrf_field() }}
-                                            {{ method_field('DELETE') }}
-                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                                            <button type="submit" class="btn btn-danger">Delete</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <a class="btn btn-danger deleteBtn" data-toggle="modal"  data-target="#deleteConfirmModal"
+                           data-message="Are you sure you want to delete this article ?"
+                           data-action="{{ route('article.delete', ['slug' => $article->slug]) }}"
+                           href="#">Delete</a>
                     @endcan
                 </div>
             </div>
@@ -88,6 +57,10 @@
 
     </div>
 
+    @if(auth()->user())
+        {{-- Delete confirmation modal --}}
+        @include('partials.delete-confirm-modal')
+    @endif
 
 @endsection
 
