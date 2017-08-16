@@ -3,7 +3,7 @@
         Post Comment
     </div>
     <div class="card-body">
-        <form method="post" action="/article/{{ $article->slug }}/comment">
+        <form method="post" action="{{ route('comment.store', ['slug' => $article->slug]) }}">
             {{ csrf_field() }}
 
             <div class="form-group">
