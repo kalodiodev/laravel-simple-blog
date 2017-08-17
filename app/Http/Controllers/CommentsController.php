@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Comment;
+use App\Permission;
 use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CommentRequest;
@@ -42,6 +43,38 @@ class CommentsController extends Controller
         ]);
 
         return redirect()->route('article', ['slug' => $article->slug]);
+    }
+    
+    public function edit(Comment $comment)
+    {
+        if(Gate::denies('update', $comment))
+        {
+            throw new AuthorizationException('You are not authorized for this action');
+        }
+
+        return view('comments.edit', compact('comment'));
+    }
+
+    /***
+     * Update comment
+     *
+     * @param Comment $comment
+     * @param CommentRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws AuthorizationException
+     */
+    public function update(Comment $comment, CommentRequest $request)
+    {
+        if(Gate::denies('update', $comment))
+        {
+            throw new AuthorizationException('You are not authorized for this action');
+        }
+
+        $comment->update([
+           'body' => $request->get('body')
+        ]);
+
+        return redirect()->route('article', ['slug' => $comment->article->slug]);
     }
 
     /**

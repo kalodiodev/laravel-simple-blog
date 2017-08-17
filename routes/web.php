@@ -28,4 +28,6 @@ Route::get('/tags/{tag}', 'TagsController@index');
 Route::get('/archives/{year?}/{month?}', 'ArchivesController@index')->name('archives');
 
 Route::post('/article/{slug}/comment', 'CommentsController@store')->name('comment.store');
+Route::get('/comment/{comment}/edit', 'CommentsController@edit')->name('comment.edit');
 Route::delete('/comment/{comment}', 'CommentsController@destroy')->name('comment.delete');
+Route::patch('/comment/{comment}', 'CommentsController@update')->name('comment.update');

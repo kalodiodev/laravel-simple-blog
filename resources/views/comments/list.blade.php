@@ -20,7 +20,8 @@
 
                             {{-- Edit comment button --}}
                             @can('update', $comment)
-                                <a class="btn btn-primary btn-sm" href="#">Edit</a>
+                                <a class="btn btn-primary btn-sm"
+                                   href="{{ route('comment.edit', ['comment' => $comment->id]) }}">Edit</a>
                             @endcan
 
                             {{-- Delete comment button --}}
@@ -35,7 +36,6 @@
                     @endif
                 </div>
             </div>
-        </li>
     @endforeach
 </ul>
 

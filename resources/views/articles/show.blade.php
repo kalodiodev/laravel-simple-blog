@@ -38,6 +38,7 @@
             </div>
        @endif
 
+        {{-- Comments --}}
         <div class="top-space bottom-space">
             <h3>Comments</h3>
             <hr>
@@ -50,11 +51,29 @@
 
             @endif
 
-            {{-- Comment form --}}
-            @include('comments.form')
+            @if(auth()->user())
+                {{-- Comment form --}}
+                <div class="card top-space">
+                    <div class="card-header">
+                        Post Comment
+                    </div>
+
+                    <div class="card-body">
+                        <form method="post" action="{{ route('comment.store', ['slug' => $article->slug]) }}">
+                            @include('comments.form')
+                        </form>
+                    </div>
+                </div>
+            @else
+                {{-- Prompt to login or register --}}
+                <div class="card">
+                    <div class="card-body">
+                        <a href="/login">Login</a> or <a href="/register">Register</a> to post your comment
+                    </div>
+                </div>
+            @endif
 
         </div>
-
     </div>
 
     @if(auth()->user())
