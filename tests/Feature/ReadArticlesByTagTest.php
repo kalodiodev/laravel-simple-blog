@@ -29,7 +29,7 @@ class ReadArticlesByTagTest extends IntegrationTestCase
     /** @test */
     public function a_user_can_view_all_articles_with_tag() 
     {
-        $response = $this->get('/tags/' . $this->tag->name);
+        $response = $this->get('/tag/' . $this->tag->name);
 
         $response->assertSee($this->article->title);
     }
