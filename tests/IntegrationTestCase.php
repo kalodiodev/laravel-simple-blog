@@ -13,15 +13,75 @@ abstract class IntegrationTestCase extends TestCase
         $this->seed(\DatabaseSeeder::class);
     }
 
+    /**
+     * Sign In user
+     * 
+     * @param null $user
+     * @return $this
+     */
     protected function signIn($user = null)
     {
         $user = $user ?: factory(User::class)->create();
         $this->actingAs($user);
         return $this;
     }
-    
+
+    /**
+     * Give user a role
+     * 
+     * @param $user
+     * @param $role
+     * @return mixed
+     */
     protected function giveUserRole($user, $role)
     {
         return $user->giveRole($role);
+    }
+
+    /**
+     * Sign in a user with Admin role
+     *
+     * @param array $overrides
+     * @return mixed
+     */
+    protected function signInAdmin(array $overrides = [])
+    {
+        return $this->signInAs('admin', $overrides);
+    }
+
+    /**
+     * Sign in a user with Author role
+     *
+     * @param array $overrides
+     * @return mixed
+     */
+    protected function signInAuthor(array $overrides = [])
+    {
+        return $this->signInAs('author', $overrides);
+    }
+
+    /**
+     * Signm in a user with Guest
+     *
+     * @param array $overrides
+     * @return mixed
+     */
+    protected function signInGuest(array $overrides = [])
+    {
+        return $this->signInAs('guest', $overrides);
+    }
+
+    /**
+     * Sign in a user with a given role
+     *
+     * @param $role
+     * @param $overrides
+     * @return mixed
+     */
+    protected function signInAs($role, $overrides)
+    {
+        $user = factory(User::class)->create($overrides);
+        $this->signIn($user);
+        return $this->giveUserRole($user, $role);
     }
 }
