@@ -18,7 +18,7 @@
         <ol class="tags">
             @foreach($tags as $tag)
                 <li class="tag is-primary">
-                    <a href="/tags/{{ $tag }}">{{ $tag }}</a>
+                    <a href="{{ route('tag.articles', ['tag' => $tag]) }}">{{ $tag }}</a>
                 </li>
             @endforeach
         </ol>

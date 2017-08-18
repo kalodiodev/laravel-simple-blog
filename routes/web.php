@@ -23,7 +23,10 @@ Route::delete('/article/{slug}', 'ArticlesController@destroy')->name('article.de
 Route::get('/article/{slug}/edit', 'ArticlesController@edit')->name('article.edit');
 Route::patch('/article/{slug}', 'ArticlesController@update')->name('article.update');
 
-Route::get('/tags/{tag}', 'TagsController@index');
+Route::get('/tags/create', 'TagsController@create')->name('tag.create');
+Route::get('/tags', 'TagsController@index')->name('tag.index');
+Route::post('/tags', 'TagsController@store')->name('tag.store');
+Route::get('/tag/{tag}', 'TagsController@articles')->name('tag.articles');
 
 Route::get('/archives/{year?}/{month?}', 'ArchivesController@index')->name('archives');
 
