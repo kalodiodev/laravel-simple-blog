@@ -7,20 +7,27 @@ use Illuminate\Support\Facades\DB;
 class PermissionsTableSeeder extends Seeder
 {
     private $admin_actions = [
+        // Users
         ['name' => 'user-manage', 'label' => 'Manage users'],
+        // Articles
         ['name' => 'article-update-any', 'label' => 'Edit others article'],
         ['name' => 'article-delete-any', 'label' => 'Delete others article'],
+        // Comments
         ['name' => 'comment-update-any', 'label' => 'Edit others comment'],
         ['name' => 'comment-delete-any', 'label' => 'Delete others comment'],
+        // Tags
+        ['name' => 'tag-view-index', 'label' => 'View tags index'],
         ['name' => 'tag-create', 'label' => 'Create tag'],
         ['name' => 'tag-update', 'label' => 'Update tag'],
         ['name' => 'tag-delete', 'label' => 'Delete tag']
     ];
 
     private $author_actions = [
+        // Articles
         ['name' => 'article-create', 'label' => 'Create article'],
         ['name' => 'article-update', 'label' => 'Edit own article'],
         ['name' => 'article-delete', 'label' => 'Delete own article'],
+        // Comments
         ['name' => 'comment-update', 'label' => 'Edit own comment'],
         ['name' => 'comment-delete', 'label' => 'Delete own comment'],
         ['name' => 'comment-update-article', 'label' => 'Update any comment of his/hers article'],

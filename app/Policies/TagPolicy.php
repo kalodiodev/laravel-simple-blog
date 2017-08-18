@@ -10,6 +10,20 @@ class TagPolicy
     use HandlesAuthorization;
 
     /**
+     * Index tags policy
+     * 
+     * @param User $user
+     * @return bool
+     */
+    public function index(User $user)
+    {
+        return ($user->hasPermission('tag-view-index') || 
+            $user->hasPermission('tag-create') || 
+            $user->hasPermission('tag-update') || 
+            $user->hasPermission('tag-delete'));
+    }
+
+    /**
      * Create tag policy
      *
      * @param User $user
