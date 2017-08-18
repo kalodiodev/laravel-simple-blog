@@ -16,6 +16,14 @@
             </li>
         </ul>
 
+        <ul class="nav navbar-nav navbar-right">
+            @can('index', \App\Tag::class)
+                <a class="nav-link">
+                    <a class="nav-link" href="{{ route('tag.index') }}">Tags</a>
+                </li>
+            @endcan
+        </ul>
+
         <!-- Right Side Of Navbar -->
         <ul class="nav navbar-nav navbar-right">
             <!-- Authentication Links -->
