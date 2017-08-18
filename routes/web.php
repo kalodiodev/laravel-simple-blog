@@ -34,6 +34,7 @@ Route::post('/tags', 'TagsController@store')->name('tag.store');
 Route::get('/tags/create', 'TagsController@create')->name('tag.create');
 Route::get('/tags/{tag}/edit','TagsController@edit')->name('tag.edit');
 Route::patch('tags/{tag}', 'TagsController@update')->name('tag.update');
+Route::delete('tags/{tag}', 'TagsController@delete')->name('tag.delete');
 Route::get('/tag/{tag}', 'TagsController@articles')->name('tag.articles');
 
 /*

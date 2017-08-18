@@ -120,6 +120,23 @@ class TagsController extends Controller
         return redirect()->route('tag.index');
     }
 
+    /**
+     * Delete Tag
+     *
+     * @param Tag $tag
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws AuthorizationException
+     * @throws \Exception
+     */
+    public function delete(Tag $tag)
+    {
+        $this->isAuthorized('delete', Tag::class);
+
+        $tag->delete();
+
+        return redirect()->route('tag.index');
+    }
+
     protected function isAuthorized($ability, $model, $message = 'You are not authorized for this action')
     {
         if(Gate::denies($ability, $model))

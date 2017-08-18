@@ -31,7 +31,11 @@
                             <a class="btn btn-primary" href="{{ route('tag.edit', ['tag' => $tag->name]) }}">Edit</a>
                         @endcan
                         @can('delete', \App\Tag::class)
-                            <button type="button" class="btn btn-danger">Delete</button>
+                            <a class="btn btn-danger btn-sm deleteBtn" data-toggle="modal"
+                               data-target="#deleteConfirmModal"
+                               data-message="Are you sure you want to delete this tag ?"
+                               data-action="{{ route('tag.delete', ['tag' => $tag->name]) }}"
+                               href="#">Delete</a>
                         @endcan
                     </div>
                 </td>
@@ -39,6 +43,11 @@
             @endforeach
             </tbody>
         </table>
+
+        @can('delete', \App\Tag::class)
+            {{-- Delete confirmation modal --}}
+            @include('partials.delete-confirm-modal')
+        @endcan
 
         <div class="row justify-content-center">
             {{ $tags->links('vendor.pagination.bootstrap-4') }}
