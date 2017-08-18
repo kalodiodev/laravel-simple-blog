@@ -12,6 +12,9 @@ class PermissionsTableSeeder extends Seeder
         ['name' => 'article-delete-any', 'label' => 'Delete others article'],
         ['name' => 'comment-update-any', 'label' => 'Edit others comment'],
         ['name' => 'comment-delete-any', 'label' => 'Delete others comment'],
+        ['name' => 'tag-create', 'label' => 'Create tag'],
+        ['name' => 'tag-update', 'label' => 'Update tag'],
+        ['name' => 'tag-delete', 'label' => 'Delete tag']
     ];
 
     private $author_actions = [
