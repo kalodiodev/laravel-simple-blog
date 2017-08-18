@@ -86,4 +86,45 @@ class TagsController extends Controller
         
         return redirect()->route('tag.index');
     }
+
+    /**
+     * Edit Tag
+     *
+     * @param Tag $tag
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws AuthorizationException
+     */
+    public function edit(Tag $tag)
+    {
+        $this->isAuthorized('update', Tag::class);
+        
+        return view('tags.edit', compact('tag'));
+    }
+
+    /**
+     * Update Tag
+     *
+     * @param Tag $tag
+     * @param TagRequest $request
+     * @return \Illuminate\Http\RedirectResponse
+     * @throws AuthorizationException
+     */
+    public function update(Tag $tag, TagRequest $request)
+    {
+        $this->isAuthorized('update', Tag::class);
+
+        $tag->update([
+           'name' => $request->get('name')
+        ]);
+
+        return redirect()->route('tag.index');
+    }
+
+    protected function isAuthorized($ability, $model, $message = 'You are not authorized for this action')
+    {
+        if(Gate::denies($ability, $model))
+        {
+            throw new AuthorizationException($message);
+        }
+    }
 }

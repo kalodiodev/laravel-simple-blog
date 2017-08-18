@@ -28,7 +28,7 @@
                 <td>
                     <div class="btn-group btn-group-sm" role="group" aria-label="Tag actions">
                         @can('update', \App\Tag::class)
-                            <button type="button" class="btn btn-primary">Edit</button>
+                            <a class="btn btn-primary" href="{{ route('tag.edit', ['tag' => $tag->name]) }}">Edit</a>
                         @endcan
                         @can('delete', \App\Tag::class)
                             <button type="button" class="btn btn-danger">Delete</button>
