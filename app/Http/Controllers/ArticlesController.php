@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Comment;
 use App\Tag;
+use App\Comment;
 use App\Article;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Support\Facades\Gate;
 use App\Http\Requests\ArticleRequest;
+use Illuminate\Auth\Access\AuthorizationException;
 
 
 class ArticlesController extends Controller
@@ -27,10 +26,7 @@ class ArticlesController extends Controller
      */
     public function create()
     {
-        if(Gate::denies('create', Article::class))
-        {
-            throw new AuthorizationException('You are not authorized for this action');
-        }
+        $this->isAuthorized('create', Article::class);
 
         $tags = Tag::all();
 
@@ -46,10 +42,7 @@ class ArticlesController extends Controller
      */
     public function store(ArticleRequest $request)
     {
-        if(Gate::denies('create', Article::class))
-        {
-            throw new AuthorizationException('You are not authorized for this action');
-        }
+        $this->isAuthorized('create', Article::class);
         
         // Create article
         $article = Article::create([
@@ -69,6 +62,8 @@ class ArticlesController extends Controller
     /**
      * Edit article
      *
+     * @param $slug
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws AuthorizationException
      */
     public function edit($slug)
@@ -76,10 +71,7 @@ class ArticlesController extends Controller
         $tags = Tag::all();
         $article = $this->retrieveArticle($slug);
 
-        if(Gate::denies('update', $article))
-        {
-            throw new AuthorizationException('You are not authorized for this action');
-        }
+        $this->isAuthorized('update', $article);
 
         return view('articles.edit', compact('article', 'tags'));
     }
@@ -96,10 +88,7 @@ class ArticlesController extends Controller
     {
         $article = $this->retrieveArticle($slug);
 
-        if(Gate::denies('update', $article))
-        {
-            throw new AuthorizationException('You are not authorized for this action');
-        }
+        $this->isAuthorized('update', $article);
 
         $data = [
             'title' => $request->get('title'),
@@ -145,10 +134,7 @@ class ArticlesController extends Controller
     {
         $article = $this->retrieveArticle($slug);
 
-        if(Gate::denies('delete', $article))
-        {
-            throw new AuthorizationException('You are not authorized for this action');
-        }
+        $this->isAuthorized('delete', $article);
 
         $article->delete();
 

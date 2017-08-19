@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Article;
 use App\Comment;
-use App\Permission;
-use Illuminate\Support\Facades\Gate;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\CommentRequest;
 use Illuminate\Auth\Access\AuthorizationException;
@@ -30,10 +28,7 @@ class CommentsController extends Controller
      */
     public function store($slug, CommentRequest $request)
     {
-        if(Gate::denies('create', Comment::class))
-        {
-            throw new AuthorizationException('You are not authorized for this action');
-        }
+        $this->isAuthorized('create', Comment::class);
 
         $article = Article::whereSlug($slug)->firstOrFail();
 
@@ -44,13 +39,17 @@ class CommentsController extends Controller
 
         return redirect()->route('article', ['slug' => $article->slug]);
     }
-    
+
+    /**
+     * Edit Comment
+     *
+     * @param Comment $comment
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws AuthorizationException
+     */
     public function edit(Comment $comment)
     {
-        if(Gate::denies('update', $comment))
-        {
-            throw new AuthorizationException('You are not authorized for this action');
-        }
+        $this->isAuthorized('update', $comment);
 
         return view('comments.edit', compact('comment'));
     }
@@ -65,10 +64,7 @@ class CommentsController extends Controller
      */
     public function update(Comment $comment, CommentRequest $request)
     {
-        if(Gate::denies('update', $comment))
-        {
-            throw new AuthorizationException('You are not authorized for this action');
-        }
+        $this->isAuthorized('update', $comment);
 
         $comment->update([
            'body' => $request->get('body')
@@ -86,11 +82,8 @@ class CommentsController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        if(Gate::denies('delete', $comment))
-        {
-            throw new AuthorizationException('You are not authorized for this action');
-        }
-        
+        $this->isAuthorized('delete', $comment);
+
         $comment->delete();
         
         return redirect()->back();
