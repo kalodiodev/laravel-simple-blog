@@ -13,9 +13,7 @@ class IndexTagsTest extends IntegrationTestCase
     /** @test */
     public function an_authorized_user_can_view_tags_index_when_has_permission()
     {
-        $user = factory(User::class)->create();
-        $this->giveUserRole($user, 'admin');
-        $this->signIn($user);
+        $this->signInAdmin();
 
         $response = $this->get(route('tag.index'))
             ->assertStatus(200);
@@ -26,9 +24,7 @@ class IndexTagsTest extends IntegrationTestCase
     /** @test */
     public function an_unauthorized_user_cannot_view_tags_index()
     {
-        $user = factory(User::class)->create();
-        $this->giveUserRole($user, 'guest');
-        $this->signIn($user);
+        $this->signInGuest();
 
         $this->get(route('tag.index'))->assertStatus(403);
     }

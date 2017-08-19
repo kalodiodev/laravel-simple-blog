@@ -52,10 +52,7 @@ class EditCommentsTest extends IntegrationTestCase
     /** @test */
     public function an_authorized_user_can_edit_any_comment_when_has_permission()
     {
-        $user = factory(User::class)->create();
-        // admin user
-        $this->giveUserRole($user, 'admin');
-        $this->signIn($user);
+        $this->signInAdmin();
 
         $response = $this->get(route('comment.edit', ['comment' => $this->comment->id]));
 
@@ -65,10 +62,7 @@ class EditCommentsTest extends IntegrationTestCase
     /** @test */
     public function an_authorized_user_can_update_any_comment_when_has_permission()
     {
-        $user = factory(User::class)->create();
-        // Admin user
-        $this->giveUserRole($user, 'admin');
-        $this->signIn($user);
+        $this->signInAdmin();
 
         $this->patchComment($this->comment, $this->update_data)->assertStatus(302);
 
@@ -78,10 +72,7 @@ class EditCommentsTest extends IntegrationTestCase
     /** @test */
     public function an_authenticated_user_cannot_edit_other_users_comment_when_has_no_permission()
     {
-        $user = factory(User::class)->create();
-        // author user
-        $this->giveUserRole($user, 'author');
-        $this->signIn($user);
+        $this->signInAuthor();
 
         $this->get(route('comment.edit', ['comment' => $this->comment->id]))
             ->assertStatus(403);
@@ -90,10 +81,7 @@ class EditCommentsTest extends IntegrationTestCase
     /** @test */
     public function an_authenticated_user_cannot_update_other_users_comment_when_has_no_permission()
     {
-        $user = factory(User::class)->create();
-        // author user
-        $this->giveUserRole($user, 'author');
-        $this->signIn($user);
+        $this->signInAuthor();
 
         $this->patchComment($this->comment, $this->update_data)->assertStatus(403);
 

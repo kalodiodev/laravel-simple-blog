@@ -16,9 +16,7 @@ class CreateCommentsTest extends IntegrationTestCase
     /** @test */
     public function an_authorized_user_can_create_comment()
     {
-        $user = factory(User::class)->create();
-        $user = $this->giveUserRole($user, 'author');
-        $this->signIn($user);
+        $this->signInAuthor();
 
         $article = factory(Article::class)->create();
         $comment = factory(Comment::class)->make(['article_id' => $article->id]);

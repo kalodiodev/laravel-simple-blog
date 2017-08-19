@@ -39,9 +39,7 @@ class DeleteArticlesTest extends IntegrationTestCase
     /** @test */
     public function an_authenticated_author_cannot_delete_other_users_article()
     {
-        $user = factory(User::class)->create();
-        $this->giveUserRole($user, 'author');
-        $this->signIn($user);
+        $this->signInAuthor();
 
         $this->delete('/article/' . $this->article->slug)
             ->assertStatus(403);
@@ -54,9 +52,7 @@ class DeleteArticlesTest extends IntegrationTestCase
     /** @test */
     public function an_authenticated_guest_cannot_delete_articles()
     {
-        $user = factory(User::class)->create();
-        $this->giveUserRole($user, 'guest');
-        $this->signIn($user);
+        $this->signInGuest();
 
         $this->delete('/article/' . $this->article->slug)
             ->assertStatus(403);
@@ -69,9 +65,7 @@ class DeleteArticlesTest extends IntegrationTestCase
     /** @test */
     public function an_admin_can_delete_other_users_articles()
     {
-        $user = factory(User::class)->create();
-        $this->giveUserRole($user, 'admin');
-        $this->signIn($user);
+        $this->signInAdmin();
 
         $this->delete('/article/' . $this->article->slug)
             ->assertStatus(302);

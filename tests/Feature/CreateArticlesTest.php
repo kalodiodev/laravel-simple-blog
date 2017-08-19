@@ -17,11 +17,8 @@ class CreateArticlesTest extends IntegrationTestCase
     /** @test */
     function an_author_user_can_create_an_article()
     {
-        $user = factory(User::class)->create();
-        $user = $this->giveUserRole($user, 'author');
+        $user = $this->signInAuthor();
         $article = factory(Article::class)->make(['user_id' => $user->id]);
-
-        $this->signIn($user);
                 
         $response = $this->post('/articles', $article->toArray());
         
@@ -33,10 +30,7 @@ class CreateArticlesTest extends IntegrationTestCase
     /** @test */
     function an_authenticated_guest_cannot_create_an_article()
     {
-        $user = factory(User::class)->create();
-        $user = $this->giveUserRole($user, 'guest');
-
-        $this->signIn($user);
+        $this->signInGuest();
 
         $this->get('/articles/create')
             ->assertStatus(403);
@@ -45,11 +39,8 @@ class CreateArticlesTest extends IntegrationTestCase
     /** @test */
     function an_authenticated_guest_cannot_store_an_article()
     {
-        $user = factory(User::class)->create();
-        $user = $this->giveUserRole($user, 'guest');
+        $user = $this->signInGuest();
         $article = factory(Article::class)->make(['user_id' => $user->id]);
-
-        $this->signIn($user);
 
         $this->post('/articles', $article->toArray())
             ->assertStatus(403);

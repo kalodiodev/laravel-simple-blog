@@ -59,9 +59,7 @@ class EditArticlesTest extends IntegrationTestCase
     /** @test */
     public function an_author_user_cannot_edit_other_users_article()
     {
-        $user = factory(App\User::class)->create();
-        $user = $this->giveUserRole($user, 'author');
-        $this->signIn($user);
+        $this->signInAuthor();
 
         $this->get('/article/' . $this->article->slug . '/edit')
             ->assertStatus(403);
@@ -80,9 +78,7 @@ class EditArticlesTest extends IntegrationTestCase
     /** @test */
     public function an_authenticated_guest_cannot_edit_articles()
     {
-        $user = factory(App\User::class)->create();
-        $user = $this->giveUserRole($user, 'guest');
-        $this->signIn($user);
+        $this->signInGuest();
 
         $this->get('/article/' . $this->article->slug . '/edit')
             ->assertStatus(403);
@@ -91,9 +87,7 @@ class EditArticlesTest extends IntegrationTestCase
     /** @test */
     public function an_authenticated_guest_cannot_update_other_users_article()
     {
-        $user = factory(App\User::class)->create();
-        $user = $this->giveUserRole($user, 'guest');
-        $this->signIn($user);
+        $this->signInGuest();
 
         $data = [
             'title' => 'New Title'
@@ -110,9 +104,7 @@ class EditArticlesTest extends IntegrationTestCase
     /** @test */
     public function an_admin_can_edit_other_users_articles()
     {
-        $user = factory(App\User::class)->create();
-        $this->giveUserRole($user, 'admin');
-        $this->signIn($user);
+        $this->signInAdmin();
 
         $response = $this->get('/article/' . $this->article->slug . '/edit');
 
@@ -122,9 +114,7 @@ class EditArticlesTest extends IntegrationTestCase
     /** @test */
     public function an_admin_user_can_update_other_users_article()
     {
-        $user = factory(App\User::class)->create();
-        $this->giveUserRole($user, 'admin');
-        $this->signIn($user);
+        $this->signInAdmin();
 
         $this->patch('/article/' . $this->article->slug, $this->update_data)
             ->assertStatus(302);
