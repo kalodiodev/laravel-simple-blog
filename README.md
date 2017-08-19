@@ -1,5 +1,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+[![Build Status](https://travis-ci.org/kalodiodev/laravel-simple-blog.svg?branch=master)](https://travis-ci.org/kalodiodev/laravel-simple-blog)
+
 # Simple Laravel Blog
 
 A simple blog built on Laravel Framework
