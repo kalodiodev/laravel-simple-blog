@@ -49,3 +49,8 @@ Route::post('/article/{slug}/comment', 'CommentsController@store')->name('commen
 Route::get('/comment/{comment}/edit', 'CommentsController@edit')->name('comment.edit');
 Route::delete('/comment/{comment}', 'CommentsController@destroy')->name('comment.delete');
 Route::patch('/comment/{comment}', 'CommentsController@update')->name('comment.update');
+
+/*
+ * Images
+ */
+Route::get('/images/featured/{image}', 'ImagesController@featured')->name('images.featured');

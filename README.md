@@ -9,4 +9,4 @@ A simple blog built on Laravel Framework
 
 ### PHP Libraries
 * [laravel/laravel](https://github.com/laravel/laravel) - A PHP Framework For Web Artisans
-
+* [Intervention Image](https://github.com/Intervention/image) - PHP image handling and manipulation library

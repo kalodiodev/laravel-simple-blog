@@ -7,7 +7,7 @@
         <h1>Create article</h1>
         <hr>
 
-        <form method="POST" action="/articles">
+        <form method="POST" action="/articles" enctype=multipart/form-data>
             @include('articles.form')
         </form>
     </div>

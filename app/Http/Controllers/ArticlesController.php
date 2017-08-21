@@ -7,10 +7,11 @@ use App\Comment;
 use App\Article;
 use App\Http\Requests\ArticleRequest;
 use Illuminate\Auth\Access\AuthorizationException;
+use Intervention\Image\Facades\Image;
 
 
 class ArticlesController extends Controller
-{
+{    
     /**
      * ArticlesController constructor.
      */
@@ -43,15 +44,22 @@ class ArticlesController extends Controller
     public function store(ArticleRequest $request)
     {
         $this->isAuthorized('create', Article::class);
-        
-        // Create article
-        $article = Article::create([
+
+        $article_data = [
             'title' => $request->get('title'),
             'description' => $request->get('description'),
             'keywords' => $request->get('keywords'),
             'body' => $request->get('body'),
-            'user_id' => auth()->id()
-        ]);
+            'user_id' => auth()->id(),
+        ];
+
+        if($request->hasFile('image'))
+        {
+            $article_data['image'] = '../images/featured/' . $this->saveImage($request);
+        }
+        
+        // Create article
+        $article = Article::create($article_data);
 
         // Attach tags to article
         $article->tags()->attach($request->get('tags'));
@@ -150,5 +158,26 @@ class ArticlesController extends Controller
     private function retrieveArticle($slug)
     {
         return Article::whereSlug($slug)->firstOrFail();
+    }
+
+    /**
+     * Save Image
+     * 
+     * @param ArticleRequest $request
+     * @return string
+     */
+    private function saveImage(ArticleRequest $request)
+    {
+        $image = $request->file('image');
+
+        $filename = time() . '-' . $request->file('image')->getClientOriginalName();
+
+        Image::make($image)->resize(800, null, function ($constraint) {
+            $constraint->aspectRatio();
+        })->save(storage_path('/app/images/featured/' . $filename), 60);
+
+        //$resized->storeAs('images/featured/', $filename);
+        
+        return $filename;
     }
 }

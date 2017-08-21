@@ -21,6 +21,12 @@
            value="@if(isset($article)){{ old('keywords',$article->keywords) }}@else{{ old('keywords') }}@endif">
 </div>
 
+{{-- Featured Image --}}
+<div class="form-group">
+    <label for="image" class="label">Featured Image</label>
+    <input class="form-control" id="image" name="image" type="file">
+</div>
+
 {{-- Body --}}
 <div class="form-group">
     <label for="body" class="label">Body</label>

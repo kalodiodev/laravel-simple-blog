@@ -16,6 +16,7 @@ class Article extends Model
         'description',
         'keywords',
         'body',
+        'image',
         'user_id'
     ];
 

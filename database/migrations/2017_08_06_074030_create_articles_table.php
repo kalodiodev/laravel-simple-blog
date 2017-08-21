@@ -19,6 +19,7 @@ class CreateArticlesTable extends Migration
             $table->string('slug')->unique();
             $table->string('description');
             $table->string('keywords')->nullable();
+            $table->string('image')->nullable();
             $table->text('body');
             $table->boolean('enabled')->default(true);
             $table->integer('user_id')->unsigned()->index();
