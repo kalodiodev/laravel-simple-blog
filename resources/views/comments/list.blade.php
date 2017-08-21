@@ -4,6 +4,9 @@
             <div>
                 {{-- Comment owner --}}
                 <label class="text-info">{{ $comment->user->name }} </label>
+                @if($comment->user->ownsArticle($comment->article))
+                    <span class="badge badge-info">author</span>
+                @endif
                 <span> - {{ $comment->created_at->diffForHumans() }}</span>
             </div>
             <div class="comment-body">
