@@ -11,7 +11,11 @@ use Intervention\Image\Facades\Image;
 
 
 class ArticlesController extends Controller
-{    
+{
+    const FEATURED_IMAGES_FOLDER = 'images/featured/';
+    const IMAGE_QUALITY = 60;
+    const IMAGE_WIDTH = 800;
+
     /**
      * ArticlesController constructor.
      */
@@ -55,7 +59,7 @@ class ArticlesController extends Controller
 
         if($request->hasFile('image'))
         {
-            $article_data['image'] = '../images/featured/' . $this->saveImage($request);
+            $article_data['image'] = $this->saveImage($request);
         }
         
         // Create article
@@ -172,11 +176,9 @@ class ArticlesController extends Controller
 
         $filename = time() . '-' . $request->file('image')->getClientOriginalName();
 
-        Image::make($image)->resize(800, null, function ($constraint) {
+        Image::make($image)->resize(self::IMAGE_WIDTH, null, function ($constraint) {
             $constraint->aspectRatio();
-        })->save(storage_path('/app/images/featured/' . $filename), 60);
-
-        //$resized->storeAs('images/featured/', $filename);
+        })->save(storage_path('app/' . self::FEATURED_IMAGES_FOLDER . $filename), self::IMAGE_QUALITY);
         
         return $filename;
     }

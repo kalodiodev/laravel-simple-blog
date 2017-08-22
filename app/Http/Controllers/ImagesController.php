@@ -2,26 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Response;
 use Illuminate\Support\Facades\Storage;
 
 class ImagesController extends Controller
 {
     /**
-     * Get image
+     * Get articles featured image
      *
      * @param $filename
      * @return mixed
      */
     public function featured($filename)
     {
-        if(! Storage::disk('local')->has('images/featured/' . $filename))
+        if(! Storage::disk('local')->has(ArticlesController::FEATURED_IMAGES_FOLDER . $filename))
         {
             abort(404);
         }
 
-        $file = Storage::get('images/featured/' . $filename);
-
-        return Response::make($file)->header('Content-Type', 'image/jpg');
+        return response()->file(storage_path('app/' .
+            ArticlesController::FEATURED_IMAGES_FOLDER . $filename));
     }
 }

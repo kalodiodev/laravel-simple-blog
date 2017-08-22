@@ -85,4 +85,14 @@ class Article extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    /**
+     * Check if article has image
+     * 
+     * @return bool
+     */
+    public function hasImage()
+    {
+        return isset($this->image); 
+    }
 }

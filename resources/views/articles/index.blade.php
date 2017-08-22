@@ -1,7 +1,8 @@
 <div class="blog-post">
 
-    @if(isset($article->image))
-    <img src="{{ $article->image }}" alt="" class="img-fluid">
+    @if($article->hasImage())
+        <img src="{{ asset(\App\Http\Controllers\ArticlesController::FEATURED_IMAGES_FOLDER . $article->image) }}"
+             alt="" class="img-fluid" width="800">
     @endif
 
     <h2 class="blog-post-title"><a href="/article/{{ $article->slug }}">{{ $article->title }}</a></h2>
