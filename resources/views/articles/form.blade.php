@@ -23,9 +23,22 @@
 
 {{-- Featured Image --}}
 <div class="form-group">
-    <label for="image" class="label">Featured Image</label>
+    <label for="image" class="label">Featured Image (preferred size 800x400)</label>
     <input class="form-control" id="image" name="image" type="file">
 </div>
+
+{{-- Remove image --}}
+@if(isset($article) && ($article->hasImage()))
+    <div class="form-group">
+        <div class="form-check">
+            <label class="form-check-label">
+                <input type="checkbox" class="form-check-input" name="removeimage" id="removeimage"> Remove image
+            </label>
+        </div>
+    </div>
+@endif
+
+
 
 {{-- Body --}}
 <div class="form-group">

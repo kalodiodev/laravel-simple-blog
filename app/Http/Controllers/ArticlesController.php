@@ -7,6 +7,7 @@ use App\Comment;
 use App\Article;
 use App\Http\Requests\ArticleRequest;
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
 
 
@@ -109,6 +110,8 @@ class ArticlesController extends Controller
             'body' => $request->get('body')
         ];
 
+        $data['image'] = $this->updateImage($request, $article);
+
         // Update article
         $article->update($data);
 
@@ -145,10 +148,11 @@ class ArticlesController extends Controller
     public function destroy($slug)
     {
         $article = $this->retrieveArticle($slug);
-
         $this->isAuthorized('delete', $article);
 
+        $image_filename = $article->image;
         $article->delete();
+        $this->deleteImage($image_filename);
 
         return redirect()->route('home');
     }
@@ -162,6 +166,33 @@ class ArticlesController extends Controller
     private function retrieveArticle($slug)
     {
         return Article::whereSlug($slug)->firstOrFail();
+    }
+
+    /**
+     * Update image
+     *
+     * @param ArticleRequest $request
+     * @param Article $article
+     * @return string filename
+     */
+    private function updateImage(ArticleRequest $request, Article $article)
+    {
+        $filename = $article->image;
+
+        if($request->has('removeimage'))
+        {
+            $this->deleteImage($article->image);
+            $filename = null;
+        }
+
+        if(($request->hasFile('image')) && (! $request->has('removeimage')))
+        {
+            $old_image = $article->image;
+            $filename = $this->saveImage($request);
+            $this->deleteImage($old_image);
+        }
+
+        return $filename;
     }
 
     /**
@@ -181,5 +212,23 @@ class ArticlesController extends Controller
         })->save(storage_path('app/' . self::FEATURED_IMAGES_FOLDER . $filename), self::IMAGE_QUALITY);
         
         return $filename;
+    }
+
+    /**
+     * Delete image from storage
+     *
+     * @param $filename
+     */
+    private function deleteImage($filename)
+    {
+        if(($filename == null) || ($filename == ''))
+        {
+            return;
+        }
+
+        if(Storage::disk('local')->has(self::FEATURED_IMAGES_FOLDER . $filename))
+        {
+            Storage::disk('local')->delete(self::FEATURED_IMAGES_FOLDER . $filename);
+        }
     }
 }
