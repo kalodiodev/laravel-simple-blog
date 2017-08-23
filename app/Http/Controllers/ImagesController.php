@@ -14,12 +14,14 @@ class ImagesController extends Controller
      */
     public function featured($filename)
     {
-        if(! Storage::disk('local')->has(ArticlesController::FEATURED_IMAGES_FOLDER . $filename))
+        if(! Storage::has(ArticlesController::FEATURED_IMAGES_FOLDER . $filename))
         {
+            // File does not exist
             abort(404);
         }
 
-        return response()->file(storage_path('app/' .
-            ArticlesController::FEATURED_IMAGES_FOLDER . $filename));
+        return response()->file(
+            Storage::path(ArticlesController::FEATURED_IMAGES_FOLDER . $filename)
+        );
     }
 }

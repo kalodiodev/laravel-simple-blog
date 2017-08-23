@@ -102,7 +102,7 @@ class ArticlesController extends Controller
         $article = $this->retrieveArticle($slug);
 
         $this->isAuthorized('update', $article);
-
+        
         $data = [
             'title' => $request->get('title'),
             'description' => $request->get('description'),
@@ -203,14 +203,18 @@ class ArticlesController extends Controller
      */
     private function saveImage(ArticleRequest $request)
     {
+        // Filename
         $image = $request->file('image');
-
         $filename = time() . '-' . $request->file('image')->getClientOriginalName();
 
-        Image::make($image)->resize(self::IMAGE_WIDTH, null, function ($constraint) {
+        // Resize
+        $resized = Image::make($image)->resize(self::IMAGE_WIDTH, null, function ($constraint) {
             $constraint->aspectRatio();
-        })->save(storage_path('app/' . self::FEATURED_IMAGES_FOLDER . $filename), self::IMAGE_QUALITY);
-        
+        })->encode('jpeg', self::IMAGE_QUALITY);
+
+        // Save
+        Storage::put(self::FEATURED_IMAGES_FOLDER . $filename, (string) $resized);
+
         return $filename;
     }
 
@@ -226,9 +230,9 @@ class ArticlesController extends Controller
             return;
         }
 
-        if(Storage::disk('local')->has(self::FEATURED_IMAGES_FOLDER . $filename))
+        if(Storage::has(self::FEATURED_IMAGES_FOLDER . $filename))
         {
-            Storage::disk('local')->delete(self::FEATURED_IMAGES_FOLDER . $filename);
+            Storage::delete(self::FEATURED_IMAGES_FOLDER . $filename);
         }
     }
 }

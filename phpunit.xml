@@ -27,6 +27,9 @@
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
+        <!-- Database for testing -->
         <env name="DB_DATABASE" value="simpleblog_testing"/>
+        <!-- Filesystem for testing -->
+        <env name="FILESYSTEM_DRIVER" value="testfs"/>
     </php>
 </phpunit>

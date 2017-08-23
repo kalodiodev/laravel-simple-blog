@@ -1,6 +1,9 @@
 <?php
 
+use App\Article;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Tests\IntegrationTestCase;
 
 class EditArticlesTest extends IntegrationTestCase
@@ -15,7 +18,7 @@ class EditArticlesTest extends IntegrationTestCase
         'title' => 'New Title',
         'description' => 'New description',
         'keywords' => 'Test',
-        'body' => 'New article body'
+        'body' => 'New article body',
     ];
 
     public function setUp()
@@ -126,5 +129,72 @@ class EditArticlesTest extends IntegrationTestCase
             'keywords' => $this->update_data['keywords'],
             'body' => $this->update_data['body']
         ]);
+    }
+
+    /** @test */
+    function an_authorized_user_can_update_articles_featured_image()
+    {
+        Storage::fake('testfs');
+
+        $this->createFakeFeaturedImage('image.jpg', true);
+        $new_image = $this->createFakeFeaturedImage('new_image.jpg');
+
+        $article = factory(Article::class)->create(['image' => 'image.jpg']);
+
+        $this->signInAdmin();
+
+        $this->patch('/article/' . $article->slug, [
+            'title' => 'New title',
+            'description' => 'New description',
+            'body' => 'New body ...............',
+            'image' => $new_image
+        ])->assertStatus(302);
+
+        $updated = Article::whereId($article->id)->first();
+
+        $this->assertStringEndsWith('new_image.jpg',
+            $updated->image, 'New image filename must end with new_image.jpg after timestamp');
+
+        Storage::disk('testfs')->assertExists('images/featured/' . $updated->image);
+        
+        // Old image must be deleted
+        Storage::disk('testfs')->assertMissing('images/featured/image.jpg');
+    }
+
+    /** @test */
+    function an_authorized_user_can_delete_article_featured_image()
+    {
+        Storage::fake('testfs');
+        $this->createFakeFeaturedImage('image.jpg', true);
+
+        // An article with featured image, article must contain image filename
+        $article = factory(Article::class)->create(['image' => 'image.jpg']);
+
+        $this->signInAdmin();
+
+        $this->patch('/article/' . $article->slug, [
+            'title' => 'New title',
+            'description' => 'New description',
+            'body' => 'New body .................',
+            'removeimage' => 'on'
+        ])->assertStatus(302);
+
+        $updated = Article::whereId($article->id)->first();
+
+        $this->assertNull($updated->image, 'Article image filename must be null');
+
+        Storage::disk('testfs')->assertMissing('images/featured/image.jpg');
+    }
+
+    protected function createFakeFeaturedImage($filename, bool $save = false)
+    {
+        $image = UploadedFile::fake()->image($filename);
+
+        if($save)
+        {
+            $image->storeAs('images/featured/', $filename);
+        }
+
+        return $image;
     }
 }
