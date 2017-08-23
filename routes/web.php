@@ -54,3 +54,8 @@ Route::patch('/comment/{comment}', 'CommentsController@update')->name('comment.u
  * Images
  */
 Route::get('/images/featured/{image}', 'ImagesController@featured')->name('images.featured');
+
+/*
+ * Profiles
+ */
+Route::get('/profile/{user}', 'ProfilesController@show')->name('profile.show');
