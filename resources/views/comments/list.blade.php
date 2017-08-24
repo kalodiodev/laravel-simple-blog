@@ -3,7 +3,9 @@
         <li>
             <div>
                 {{-- Comment owner --}}
-                <label class="text-info">{{ $comment->user->name }} </label>
+                <label class="text-info">
+                    <a href="{{ route('profile.show', ['user' => $comment->user->id]) }}">{{ $comment->user->name }}</a>
+                </label>
                 @if($comment->user->ownsArticle($comment->article))
                     <span class="badge badge-info">author</span>
                 @endif

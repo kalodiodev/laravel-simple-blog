@@ -4,8 +4,10 @@
 
     <div class="col-md-8">
         <h1>{{ $comment->article->title }}</h1>
-        <p class="blog-post-meta">Created by <a href="#">{{ $comment->article->user->name }}</a> on
-            {{ $comment->article->created_at->toFormattedDateString() }}</p>
+        <p class="blog-post-meta">Created by
+            <a href="{{ route('profile.show', ['user' => $comment->article->user->id]) }}">
+                {{ $comment->article->user->name }}</a> on {{ $comment->article->created_at->toFormattedDateString() }}
+        </p>
         @foreach($comment->article->tags as $tag)
             <span class="badge badge-info">{{ $tag->name }}</span>
         @endforeach
