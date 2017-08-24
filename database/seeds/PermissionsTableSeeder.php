@@ -19,7 +19,9 @@ class PermissionsTableSeeder extends Seeder
         ['name' => 'tag-view-index', 'label' => 'View tags index'],
         ['name' => 'tag-create', 'label' => 'Create tag'],
         ['name' => 'tag-update', 'label' => 'Update tag'],
-        ['name' => 'tag-delete', 'label' => 'Delete tag']
+        ['name' => 'tag-delete', 'label' => 'Delete tag'],
+        // Profiles
+        ['name' => 'profile-detailed-view', 'label' => 'View user\'s detailed profile']
     ];
 
     private $author_actions = [

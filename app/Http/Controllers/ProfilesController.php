@@ -9,6 +9,16 @@ class ProfilesController extends Controller
 {
     public function show(User $user)
     {
-        return view('profiles.show', compact('user'));
+        $articles = $user->articles()
+            ->latest()
+            ->get();
+        
+        $comments = $user->comments()
+            ->with('article')
+            ->latest()
+            ->limit(10)
+            ->get();
+        
+        return view('profiles.show', compact('user', 'articles', 'comments'));
     }
 }

@@ -6,8 +6,10 @@ use App\Article;
 use App\Comment;
 use App\Policies\ArticlePolicy;
 use App\Policies\CommentPolicy;
+use App\Policies\ProfilePolicy;
 use App\Policies\TagPolicy;
 use App\Tag;
+use App\User;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -20,7 +22,8 @@ class AuthServiceProvider extends ServiceProvider
     protected $policies = [
         Article::class => ArticlePolicy::class,
         Comment::class => CommentPolicy::class,
-        Tag::class => TagPolicy::class
+        Tag::class => TagPolicy::class,
+        User::class => ProfilePolicy::class
     ];
 
     /**

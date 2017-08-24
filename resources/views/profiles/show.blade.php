@@ -4,12 +4,29 @@
 
     <div class="col-md-8">
     <h1>Profile of user {{ $user->name }}</h1>
-    <p>A few info about user</p>
+    <p>{{ $user->about }}</p>
+    @can('view', $user)
+        <table class="table">
+            <tbody>
+                <tr>
+                    <td>Email:</td><td>{{ $user->email }}</td>
+                </tr>
+                <tr>
+                    <td>Registration date:</td><td>{{ $user->created_at->toFormattedDateString() }}</td>
+                </tr>
+            </tbody>
+        </table>
+    @endcan
+    @can('update', $user)
+        <div style="text-align: right">
+            <a class="btn btn-primary" href="">Edit Profile</a>
+        </div>
+    @endcan
     <hr>
 
     <h2>Latest activity</h2>
 
-
+        {{-- Articles --}}
         <div class="card bottom-space top-space">
             <div class="card-header">
                 <h3>Articles</h3>
@@ -26,10 +43,10 @@
                         </tr>
                     </thead>
 
-                    @if($user->articles->count())
+                    @if($articles->count())
                     <tbody>
 
-                        @foreach($user->articles()->latest()->get() as $article)
+                        @foreach($articles as $article)
                             <tr>
                                 <td>{{ $article->created_at->toFormattedDateString() }}</td>
                                 <td>{{ $article->title }}</td>
@@ -52,8 +69,7 @@
             </div>
         </div>
 
-
-
+        {{-- Comments --}}
         <div class="card bottom-space">
             <div class="card-header">
                 <h3>Comments</h3>
@@ -71,8 +87,8 @@
                     </thead>
 
                     <tbody>
-                    @if($user->comments->count())
-                        @foreach($user->comments()->latest()->limit(10)->get() as $comment)
+                    @if($comments->count())
+                        @foreach($comments as $comment)
                             <tr>
                                 <td>{{ $comment->created_at->toFormattedDateString() }}</td>
                                 <td><a href="{{ route('article', ['slug' => $comment->article->slug]) }}">
@@ -87,7 +103,7 @@
                     </tbody>
                 </table>
 
-                @if($user->comments->count() == 0)
+                @if($comments->count() == 0)
                     <div class="row justify-content-center">No comments</div>
                 @endif
             </div>
