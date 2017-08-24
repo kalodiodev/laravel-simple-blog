@@ -59,3 +59,4 @@ Route::get('/images/featured/{image}', 'ImagesController@featured')->name('image
  * Profiles
  */
 Route::get('/profile/{user}', 'ProfilesController@show')->name('profile.show');
+Route::get('/profile/{user}/edit', 'ProfilesController@edit')->name('profile.edit');
