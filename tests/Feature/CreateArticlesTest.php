@@ -14,9 +14,20 @@ class CreateArticlesTest extends IntegrationTestCase
     use DatabaseMigrations;
 
     protected $article;
-    
+
     /** @test */
     function an_author_user_can_create_an_article()
+    {
+        $this->signInAuthor();
+
+        $response = $this->get('/articles/create')
+            ->assertStatus(200);
+
+        $response->assertViewIs('articles.create');
+    }
+    
+    /** @test */
+    function an_author_user_can_store_an_article()
     {
         $user = $this->signInAuthor();
         $article = factory(Article::class)->make(['user_id' => $user->id]);

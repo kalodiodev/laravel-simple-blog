@@ -24,7 +24,7 @@ class ViewProfilesTest extends IntegrationTestCase
     }
 
     /** @test */
-    public function only_authorized_user_can_view_other_users_detailed_profile()
+    public function an_authorized_user_can_view_other_users_detailed_profile()
     {
         $user = factory(User::class)->create();
 
@@ -35,6 +35,20 @@ class ViewProfilesTest extends IntegrationTestCase
 
         $response->assertViewIs('profiles.show');
         $response->assertSee('Email');
+    }
+
+    /** @test */
+    public function an_unauthorized_user_cannot_view_other_users_detailed_profile()
+    {
+        $user = factory(User::class)->create();
+
+        $this->signInGuest();
+
+        $response = $this->get('/profile/' . $user->id)
+            ->assertStatus(200);
+
+        $response->assertViewIs('profiles.show');
+        $response->assertDontSee('Email');
     }
 
     /** @test */
