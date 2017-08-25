@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use Illuminate\Http\Request;
+use App\Http\Requests\ProfileRequest;
 
 class ProfilesController extends Controller
 {
@@ -51,13 +51,13 @@ class ProfilesController extends Controller
 
     /**
      * Update user profile
-     * 
+     *
      * @param User $user
-     * @param Request $request
+     * @param ProfileRequest $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(User $user, Request $request)
+    public function update(User $user, ProfileRequest $request)
     {
         $this->isAuthorized('update', $user);
 
