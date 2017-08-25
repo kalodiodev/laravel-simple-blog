@@ -6,7 +6,7 @@
         <h1>Edit {{ $user->name }} Profile</h1>
         <hr>
 
-        <form action="" method="post" enctype="multipart/form-data">
+        <form action="{{ route('profile.update', ['user' => $user->id ]) }}" method="post" enctype="multipart/form-data">
             {{ csrf_field() }}
             {{ method_field('PATCH') }}
 
@@ -19,21 +19,21 @@
 
             {{-- About user --}}
             <div class="form-group">
-                <label for="about" class="label">About</label>
+                <label for="about" class="label">About (Optional)</label>
             <textarea class="form-control" name="about" id="about"
             >@if(isset($user)){{ old('about',$user->about) }}@else{{ old('about') }}@endif</textarea>
             </div>
 
             {{-- User profession --}}
             <div class="form-group">
-                <label for="profession" class="label">Profession</label>
+                <label for="profession" class="label">Profession (Optional)</label>
                 <input type="text" class="form-control" name="profession" id="profession"
                        value="@if(isset($user)){{ old('profession',$user->profession) }}@else{{ old('profession') }}@endif">
             </div>
 
             {{-- User country --}}
             <div class="form-group">
-                <label for="country" class="label">Country</label>
+                <label for="country" class="label">Country (Optional)</label>
                 <input type="text" class="form-control" name="country" id="country"
                        value="@if(isset($user)){{ old('country',$user->country) }}@else{{ old('country') }}@endif">
             </div>

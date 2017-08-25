@@ -21,7 +21,10 @@ $factory->define(App\User::class, function (Faker\Generator $faker)
         'email' => $faker->unique()->safeEmail,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
-        'role_id' => 3
+        'role_id' => 3,
+        'about' => $faker->sentence(3),
+        'country' => $faker->country,
+        'profession' => $faker->jobTitle
     ];
 });
 

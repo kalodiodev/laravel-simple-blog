@@ -48,4 +48,28 @@ class ProfilesController extends Controller
 
         return view('profiles.edit', compact('user'));
     }
+
+    /**
+     * Update user profile
+     * 
+     * @param User $user
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function update(User $user, Request $request)
+    {
+        $this->isAuthorized('update', $user);
+
+        // TODO: Update avatar image
+
+        $user->update([
+            'name' => $request->get('name'),
+            'about' => $request->get('about'),
+            'country' => $request->get('country'),
+            'profession' => $request->get('profession')
+        ]);
+
+        return redirect(route('profile.show', ['user' => $user->id]));
+    }
 }

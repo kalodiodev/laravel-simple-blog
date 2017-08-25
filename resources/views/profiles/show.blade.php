@@ -4,7 +4,20 @@
 
     <div class="col-md-8">
     <h1>Profile of user {{ $user->name }}</h1>
-    <p>{{ $user->about }}</p>
+    {{-- Profession --}}
+    @if(isset($user->profession))
+        <p>{{ $user->profession }}</p>
+    @endif
+    {{-- Country --}}
+    @if(isset($user->country))
+        <p>{{ $user->country }}</p>
+    @endif
+    {{-- About --}}
+    @if(isset($user->about))
+        <p>{{ $user->about }}</p>
+    @endif
+
+    {{-- Details --}}
     @can('view', $user)
         <table class="table">
             <tbody>
@@ -17,6 +30,8 @@
             </tbody>
         </table>
     @endcan
+
+    {{-- Update profile --}}
     @can('update', $user)
         <div style="text-align: right">
             <a class="btn btn-primary" href="{{ route('profile.edit', ['user' => $user->id]) }}">Edit Profile</a>
