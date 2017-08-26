@@ -18,7 +18,8 @@
 
         <ul class="nav navbar-nav navbar-right">
             @can('index', \App\Tag::class)
-                <a class="nav-link">
+
+                <li class="nav-link">
                     <a class="nav-link" href="{{ route('tag.index') }}">Tags</a>
                 </li>
             @endcan
@@ -34,6 +35,14 @@
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span>
+                            @if(auth()->user()->hasAvatar())
+                                <img class="avatar small"
+                                     src="{{ route('images.avatar', ['image' => auth()->user()->avatar ]) }}">
+                            @else
+                                <img class="avatar small" src="{{ asset('images/person.png') }}">
+                            @endif
+                        </span>
                         {{ Auth::user()->name }} <span class="caret"></span>
                     </a>
 
