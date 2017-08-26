@@ -4,7 +4,17 @@
             <div>
                 {{-- Comment owner --}}
                 <label class="text-info">
-                    <a href="{{ route('profile.show', ['user' => $comment->user->id]) }}">{{ $comment->user->name }}</a>
+                    <a href="{{ route('profile.show', ['user' => $comment->user->id]) }}">
+                        <span>
+                        {{-- Avatar --}}
+                        @if($comment->user->hasAvatar())
+                            <img class="avatar small"
+                                 src="{{ route('images.avatar', ['image' => $comment->user->avatar ]) }}"/>
+                        @else
+                            <img class="avatar small" src="{{ asset('images/person.png') }}"/>
+                        @endif
+                        </span>
+                        {{ $comment->user->name }}</a>
                 </label>
                 @if($comment->user->ownsArticle($comment->article))
                     <span class="badge badge-info">author</span>
