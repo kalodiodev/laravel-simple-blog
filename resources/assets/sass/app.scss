@@ -81,3 +81,17 @@ body {
   border-bottom: $comment-border-width dashed $comment-border-color;
   padding: $comment-padding;
 }
+
+.avatar {
+  border-radius: 50%;
+}
+
+.avatar.normal {
+  height: 120px;
+  width: 120px;
+}
+
+.avatar.small {
+  height: 30px;
+  width: 30px;
+}

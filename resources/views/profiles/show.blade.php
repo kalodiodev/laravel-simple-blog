@@ -4,39 +4,54 @@
 
     <div class="col-md-8">
     <h1>Profile of user {{ $user->name }}</h1>
-    {{-- Profession --}}
-    @if(isset($user->profession))
-        <p>{{ $user->profession }}</p>
-    @endif
-    {{-- Country --}}
-    @if(isset($user->country))
-        <p>{{ $user->country }}</p>
-    @endif
-    {{-- About --}}
-    @if(isset($user->about))
-        <p>{{ $user->about }}</p>
-    @endif
 
-    {{-- Details --}}
-    @can('view', $user)
-        <table class="table">
-            <tbody>
-                <tr>
-                    <td>Email:</td><td>{{ $user->email }}</td>
-                </tr>
-                <tr>
-                    <td>Registration date:</td><td>{{ $user->created_at->toFormattedDateString() }}</td>
-                </tr>
-            </tbody>
-        </table>
-    @endcan
-
-    {{-- Update profile --}}
-    @can('update', $user)
-        <div style="text-align: right">
-            <a class="btn btn-primary" href="{{ route('profile.edit', ['user' => $user->id]) }}">Edit Profile</a>
+    <div class="row">
+        <div class="col-md-3">
+            {{-- Avatar --}}
+            @if($user->hasAvatar())
+                <img class="avatar normal" src="{{ route('images.avatar', ['image' => $user->avatar ]) }}"/>
+            @else
+                <img class="avatar normal" src="{{ asset('images/person.png') }}"/>
+            @endif
         </div>
-    @endcan
+
+        <div class="col-md-9">
+            {{-- Profession --}}
+            @if(isset($user->profession))
+                <p>{{ $user->profession }}</p>
+            @endif
+            {{-- Country --}}
+            @if(isset($user->country))
+                <p>{{ $user->country }}</p>
+            @endif
+            {{-- About --}}
+            @if(isset($user->about))
+                <p>{{ $user->about }}</p>
+            @endif
+
+            {{-- Details --}}
+            @can('view', $user)
+                <table class="table">
+                    <tbody>
+                    <tr>
+                        <td>Email:</td><td>{{ $user->email }}</td>
+                    </tr>
+                    <tr>
+                        <td>Registration date:</td><td>{{ $user->created_at->toFormattedDateString() }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            @endcan
+
+            {{-- Update profile --}}
+            @can('update', $user)
+                <div style="text-align: right">
+                    <a class="btn btn-primary" href="{{ route('profile.edit', ['user' => $user->id]) }}">Edit Profile</a>
+                </div>
+            @endcan
+        </div>
+    </div>
+
     <hr>
 
     <h2>Latest activity</h2>
