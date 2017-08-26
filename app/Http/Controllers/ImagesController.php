@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Storage;
+use App\ImageTrait;
 
 class ImagesController extends Controller
 {
+    use ImageTrait;
+    
     /**
      * Get articles featured image
      *
@@ -14,14 +16,20 @@ class ImagesController extends Controller
      */
     public function featured($filename)
     {
-        if(! Storage::has(ArticlesController::FEATURED_IMAGES_FOLDER . $filename))
-        {
-            // File does not exist
-            abort(404);
-        }
+        $file = $this->loadImage($filename, ArticlesController::FEATURED_IMAGES_FOLDER);
 
-        return response()->file(
-            Storage::path(ArticlesController::FEATURED_IMAGES_FOLDER . $filename)
-        );
+        return $file == null ? abort(404) : response()->file($file);
+    }
+
+    /**
+     * Get avatar image
+     *
+     * @param $filename
+     */
+    public function avatar($filename)
+    {
+        $file = $this->loadImage($filename, ProfilesController::AVATAR_IMAGES_FOLDER);
+
+        return $file == null ? abort(404) : response()->file($file);
     }
 }

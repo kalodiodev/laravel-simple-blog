@@ -24,10 +24,11 @@ class ProfileRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:190',
-            'about' => 'string|max:190',
-            'profession' => 'string|max:50',
-            'country' =>  'string|max:25'
+            'name' => 'required|max:190',
+            'about' => 'max:190',
+            'profession' => 'max:50',
+            'country' =>  'max:25',
+            'avatar' => 'mimes:jpeg,png'
         ];
     }
 }

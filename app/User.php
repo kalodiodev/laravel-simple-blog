@@ -15,7 +15,14 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'role_id', 'about', 'country', 'profession'
+        'name', 
+        'email', 
+        'password', 
+        'role_id', 
+        'about', 
+        'country', 
+        'profession', 
+        'avatar'
     ];
 
     /**
@@ -123,5 +130,15 @@ class User extends Authenticatable
     public function ownsComment(Comment $comment)
     {
         return $this->id === $comment->user_id;
+    }
+
+    /**
+     * Check if user has avatar
+     *
+     * @return bool
+     */
+    public function hasAvatar()
+    {
+        return isset($this->avatar);
     }
 }

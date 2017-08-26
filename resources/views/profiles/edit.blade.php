@@ -74,8 +74,27 @@
             {{-- User avatar image --}}
             <div class="form-group">
                 <label for="avatar" class="label">Avatar</label>
-                <input type="file" class="form-control" name="avatar" id="avatar">
+                <input type="file" class="form-control{{ $errors->has('avatar') ? ' is-invalid' : '' }}"
+                       name="avatar" id="avatar">
+
+                @if ($errors->has('avatar'))
+                    <div class="invalid-feedback">
+                        {{ $errors->first('avatar') }}
+                    </div>
+                    <small class="form-text text-muted">Please check your avatar file.</small>
+                @endif
             </div>
+
+            {{-- Remove image --}}
+            @if($user->hasAvatar())
+                <div class="form-group">
+                    <div class="form-check">
+                        <label class="form-check-label">
+                            <input type="checkbox" class="form-check-input" name="removeavatar" id="removeavatar"> Remove Avatar
+                        </label>
+                    </div>
+                </div>
+            @endif
 
             <button class="btn btn-primary">Update profile</button>
         </form>
