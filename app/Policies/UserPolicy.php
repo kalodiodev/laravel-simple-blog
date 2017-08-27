@@ -41,6 +41,17 @@ class UserPolicy
      */
     public function view(User $user)
     {
-        return $user->hasPermission('user-view');
+        return ($user->hasPermission('user-view') || ($this->update($user)));
+    }
+
+    /**
+     * User update policy
+     * 
+     * @param User $user
+     * @return bool
+     */
+    public function update(User $user)
+    {
+        return $user->hasPermission('user-update');
     }
 }
