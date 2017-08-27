@@ -17,6 +17,8 @@ class UsersController extends Controller
 
     public function index()
     {
+        $this->isAuthorized('view', User::class);
+
         $users = User::paginate(25);
         
         return view('users.index', compact('users'));

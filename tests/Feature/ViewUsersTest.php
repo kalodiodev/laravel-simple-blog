@@ -37,4 +37,12 @@ class ViewUsersTest extends IntegrationTestCase
     {
         $this->get(route('users.index'))->assertRedirect('/login');
     }
+
+    /** @test */
+    public function an_unauthorized_user_cannot_view_users_list()
+    {
+        $this->signInGuest();
+
+        $this->get(route('users.index'))->assertStatus(403);
+    }
 }

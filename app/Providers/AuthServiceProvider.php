@@ -2,14 +2,14 @@
 
 namespace App\Providers;
 
-use App\Article;
-use App\Comment;
-use App\Policies\ArticlePolicy;
-use App\Policies\CommentPolicy;
-use App\Policies\ProfilePolicy;
-use App\Policies\TagPolicy;
 use App\Tag;
 use App\User;
+use App\Article;
+use App\Comment;
+use App\Policies\TagPolicy;
+use App\Policies\UserPolicy;
+use App\Policies\ArticlePolicy;
+use App\Policies\CommentPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -23,7 +23,7 @@ class AuthServiceProvider extends ServiceProvider
         Article::class => ArticlePolicy::class,
         Comment::class => CommentPolicy::class,
         Tag::class => TagPolicy::class,
-        User::class => ProfilePolicy::class
+        User::class => UserPolicy::class,
     ];
 
     /**

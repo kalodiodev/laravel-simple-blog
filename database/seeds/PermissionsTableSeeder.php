@@ -8,7 +8,9 @@ class PermissionsTableSeeder extends Seeder
 {
     private $admin_actions = [
         // Users
-        ['name' => 'user-manage', 'label' => 'Manage users'],
+        ['name' => 'user-view', 'label' => 'Users management, view user'],
+        ['name' => 'user-update', 'label' => 'Users management, edit user'],
+        ['name' => 'user-delete', 'label' => 'Users management, delete user'],
         // Articles
         ['name' => 'article-update-any', 'label' => 'Edit others article'],
         ['name' => 'article-delete-any', 'label' => 'Delete others article'],

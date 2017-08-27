@@ -53,7 +53,7 @@ class ProfilesController extends Controller
      */
     public function edit(User $user)
     {
-        $this->isAuthorized('update', $user);
+        $this->isAuthorized('update_profile', $user);
 
         return view('profiles.edit', compact('user'));
     }
@@ -68,7 +68,7 @@ class ProfilesController extends Controller
      */
     public function update(User $user, ProfileRequest $request)
     {
-        $this->isAuthorized('update', $user);
+        $this->isAuthorized('update_profile', $user);
 
         $data = [
             'name' => $request->get('name'),

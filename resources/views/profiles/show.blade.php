@@ -30,7 +30,7 @@
             @endif
 
             {{-- Details --}}
-            @can('view', $user)
+            @can('view_profile', $user)
                 <table class="table">
                     <tbody>
                     <tr>
