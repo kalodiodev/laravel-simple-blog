@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\UserRequest;
 use App\Role;
 use App\User;
 use Illuminate\Http\Request;
@@ -45,5 +46,21 @@ class UsersController extends Controller
         $roles = Role::all();
         
         return view('users.edit', compact('user', 'roles'));
+    }
+
+    public function update(User $user, UserRequest $request)
+    {
+        $this->isAuthorized('update', User::class);
+
+        $user->update([
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'about' => $request->get('about'),
+            'profession' => $request->get('profession'),
+            'country' => $request->get('country'),
+            'role_id' => $request->get('role'),
+        ]);
+
+        return redirect(route('users.index'));
     }
 }

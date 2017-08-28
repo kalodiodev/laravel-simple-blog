@@ -6,7 +6,9 @@
 
         <h1>Edit User</h1>
 
-        <form action="" method="post">
+        <form action="{{ route('users.update', ['user' => $user->id]) }}" method="post"
+              enctype="multipart/form-data">
+
             {{ csrf_field() }}
             {{ method_field('PATCH') }}
 
@@ -71,20 +73,6 @@
                         {{ $errors->first('about') }}
                     </div>
                     <small class="form-text text-muted">Please check user about.</small>
-                @endif
-            </div>
-
-            <div class="form-group">
-                <label class="label" for="profession">Profession (Optional)</label>
-                <input id="profession" name="profession"
-                       class="form-control{{ $errors->has('profession') ? ' is-invalid' : '' }}"
-                       value="@if(isset($user)){{ old('profession', $user->profession) }}@else{{ old('profession') }}@endif">
-
-                @if ($errors->has('profession'))
-                    <div class="invalid-feedback">
-                        {{ $errors->first('profession') }}
-                    </div>
-                    <small class="form-text text-muted">Please check user profession.</small>
                 @endif
             </div>
 

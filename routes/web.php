@@ -68,3 +68,4 @@ Route::patch('/profile/{user}', 'ProfilesController@update')->name('profile.upda
  */
 Route::get('/users', 'UsersController@index')->name('users.index');
 Route::get('/users/{user}/edit', 'UsersController@edit')->name('users.edit');
+Route::patch('/users/{user}', 'UsersController@update')->name('users.update');
