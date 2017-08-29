@@ -2,13 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\UserRequest;
-use App\Role;
 use App\User;
-use Illuminate\Http\Request;
+use App\Role;
+use App\Http\Requests\UserRequest;
 
-class UsersController extends Controller
+class UsersController extends ImageUploadController
 {
+    public static $image_folder = 'images/avatar/';
+    protected $image_quality = 60;
+    protected $image_height = 120;
+    protected $image_width = 120;
+
     /**
      * UsersController constructor.
      */
@@ -48,9 +52,20 @@ class UsersController extends Controller
         return view('users.edit', compact('user', 'roles'));
     }
 
+    /**
+     * Update user
+     * 
+     * @param User $user
+     * @param UserRequest $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function update(User $user, UserRequest $request)
     {
         $this->isAuthorized('update', User::class);
+
+        $avatarFilename = $this->updateImage(
+            $request->file('avatar'), $user->avatar, $request->has('removeavatar'));
 
         $user->update([
             'name' => $request->get('name'),
@@ -59,6 +74,7 @@ class UsersController extends Controller
             'profession' => $request->get('profession'),
             'country' => $request->get('country'),
             'role_id' => $request->get('role'),
+            'avatar' => $avatarFilename
         ]);
 
         return redirect(route('users.index'));

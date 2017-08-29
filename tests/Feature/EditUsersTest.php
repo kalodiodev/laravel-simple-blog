@@ -3,8 +3,10 @@
 namespace Tests\Feature;
 
 use App\User;
-use Illuminate\Support\Facades\DB;
 use Tests\IntegrationTestCase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 
@@ -168,6 +170,105 @@ class EditUsersTest extends IntegrationTestCase
             'country' => $this->update_data['country'],
             'role_id' => $this->update_data['role']
         ]);
+    }
+
+    /** @test */
+    public function an_authorized_user_can_add_user_avatar()
+    {
+        Storage::fake('testfs');
+        $user = factory(User::class)->create();
+
+        $this->signInAdmin();
+
+        $avatar = UploadedFile::fake()->image('avatar.jpg');
+
+        $this->patch(route('users.update', ['user' => $user->id]), [
+            'name' => 'New User name',
+            'email' => 'newmail@example.com',
+            'role' => 2,
+            'avatar' => $avatar
+        ])->assertStatus(302);
+
+        $user->refresh();
+
+        $this->assertNotNull($user->avatar, "User's avatar cannot be null");
+        Storage::disk('testfs')->assertExists('images/avatar/' . $user->avatar);
+    }
+
+    /** @test */
+    public function an_authorized_user_cannot_upload_invalid_user_avatar()
+    {
+        Storage::fake('testfs');
+        $user = factory(User::class)->create();
+
+        $this->signInAdmin();
+
+        $avatar = UploadedFile::fake()->image('avatar.pdf');
+
+        $response = $this->patch(route('users.update', ['user' => $user->id]), [
+            'name' => 'New User name',
+            'email' => 'newmail@example.com',
+            'role' => 2,
+            'avatar' => $avatar
+        ]);
+
+        $response->assertSessionHasErrors('avatar');
+    }
+
+    /** @test */
+    public function an_authorized_user_can_remove_user_avatar()
+    {
+        Storage::fake('testfs');
+        UploadedFile::fake()->image('avatar.jpg')->storeAs('images/avatar/', 'avatar.jpg');
+
+        $user = factory(User::class)->create(['avatar' => 'avatar.jpg']);
+
+        $this->signInAdmin();
+
+        $this->patch(route('users.update', ['user' => $user->id]), [
+            'name' => 'New User name',
+            'email' => 'newmail@example.com',
+            'role' => 2,
+            'removeavatar' => 'on'
+        ]);
+
+        $user->refresh();
+
+        $this->assertNull($user->avatar, 'User\'s avatar filename must be null');
+
+        Storage::disk('testfs')->assertMissing('images/avatar/avatar.jpg');
+    }
+
+    /** @test */
+    public function an_authorized_user_can_update_user_avatar()
+    {
+        Storage::fake('testfs');
+        // Current avatar
+        UploadedFile::fake()->image('avatar.jpg')->storeAs('images/avatar/', 'avatar.jpg');
+        // New avatar
+        $new_avatar = UploadedFile::fake()->image('new_avatar.jpg');
+
+        $user = factory(User::class)->create(['avatar' => 'avatar.jpg']);
+
+        $this->signInAdmin();
+
+        $this->patch(route('users.update', ['user' => $user->id]), [
+            'name' => 'New User name',
+            'email' => 'newmail@example.com',
+            'role' => 2,
+            'avatar' => $new_avatar
+        ]);
+
+        $user->refresh();
+
+        $this->assertStringEndsWith('new_avatar.jpg',
+            $user->avatar, 'New avatar filename must end with new_avatar.jpg after timestamp');
+
+        // New avatar must be stored
+        Storage::disk('testfs')->assertExists('images/avatar/' . $user->avatar);
+
+        // Old avatar must be deleted
+        Storage::disk('testfs')->assertMissing('images/avatar/avatar.jpg');
     }
 
     /** @test */
