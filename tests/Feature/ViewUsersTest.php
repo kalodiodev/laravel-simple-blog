@@ -39,7 +39,7 @@ class ViewUsersTest extends IntegrationTestCase
             ->assertStatus(200);
 
         $response->assertViewIs('users.index');
-        $response->assertSee($this->user->name);
+        $response->assertSee($this->user->email);
     }
 
     /** @test */
