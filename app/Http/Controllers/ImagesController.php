@@ -28,7 +28,7 @@ class ImagesController extends Controller
      */
     public function avatar($filename)
     {
-        $file = $this->loadImage($filename, ProfilesController::AVATAR_IMAGES_FOLDER);
+        $file = $this->loadImage($filename, ProfilesController::$image_folder);
 
         return $file == null ? abort(404) : response()->file($file);
     }

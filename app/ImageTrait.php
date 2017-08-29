@@ -78,7 +78,7 @@ trait ImageTrait {
      * @param $quality
      * @return string
      */
-    private function updateImage($old, $new, $path, $width, $height, $quality)
+    private function replaceImage($old, $new, $path, $width, $height, $quality)
     {
         $newFilename = $this->uploadImage($new, $path, $width, $height, $quality);
         

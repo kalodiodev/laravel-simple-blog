@@ -3,18 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use App\ImageTrait;
 use App\Http\Requests\ProfileRequest;
 
 
-class ProfilesController extends Controller
+class ProfilesController extends ImageUploadController
 {
-    use ImageTrait;
+    public static $image_folder = 'images/avatar/';
+    protected $image_quality = 60;
+    protected $image_height = 120;
+    protected $image_width = 120;
     
-    const AVATAR_IMAGES_FOLDER = 'images/avatar/';
-    const IMAGE_QUALITY = 60;
-    const IMAGE_WIDTH = 120;
-    const IMAGE_HEIGHT = 120;
 
     /**
      * ProfilesController constructor.
@@ -70,26 +68,16 @@ class ProfilesController extends Controller
     {
         $this->isAuthorized('update_profile', $user);
 
+        $avatarFilename = $this->updateImage(
+            $request->file('avatar'), $user->avatar, $request->has('removeavatar'));
+
         $data = [
             'name' => $request->get('name'),
             'about' => $request->get('about'),
             'country' => $request->get('country'),
-            'profession' => $request->get('profession')
+            'profession' => $request->get('profession'),
+            'avatar' => $avatarFilename
         ];
-
-        // Remove avatar
-        if($request->has('removeavatar'))
-        {
-            $this->deleteImage($user->avatar, self::AVATAR_IMAGES_FOLDER);
-            $data['avatar'] = null;
-        }
-
-        // Update avatar
-        if(($request->hasFile('avatar') && (! $request->has('removeavatar'))))
-        {
-            $data['avatar'] = $this->updateImage($user->avatar, $request->file('avatar'),
-                self::AVATAR_IMAGES_FOLDER, self::IMAGE_WIDTH, self::IMAGE_HEIGHT, self::IMAGE_QUALITY);
-        }
 
         $user->update($data);
 
