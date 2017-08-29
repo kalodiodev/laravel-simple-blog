@@ -93,4 +93,23 @@ class UsersController extends ImageUploadController
         
         return view('users.show', compact('user'));
     }
+
+    /**
+     * Delete User
+     *
+     * @param User $user
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Exception
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function destroy(User $user)
+    {
+        $this->isAuthorized('delete', User::class);
+
+        $avatar = $user->avatar;
+        $user->delete();
+        $this->removeImage($avatar);
+
+        return redirect(route('users.index'));
+    }
 }

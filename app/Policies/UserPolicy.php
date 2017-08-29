@@ -41,7 +41,9 @@ class UserPolicy
      */
     public function view(User $user)
     {
-        return ($user->hasPermission('user-view') || ($this->update($user)));
+        return ($user->hasPermission('user-view') || 
+            ($this->update($user)) ||
+            ($this->delete($user)));
     }
 
     /**
@@ -53,5 +55,16 @@ class UserPolicy
     public function update(User $user)
     {
         return $user->hasPermission('user-update');
+    }
+
+    /**
+     * User delete policy
+     * 
+     * @param User $user
+     * @return bool
+     */
+    public function delete(User $user)
+    {
+        return $user->hasPermission('user-delete');
     }
 }

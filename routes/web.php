@@ -69,4 +69,6 @@ Route::patch('/profile/{user}', 'ProfilesController@update')->name('profile.upda
 Route::get('/users', 'UsersController@index')->name('users.index');
 Route::get('/users/{user}', 'UsersController@show')->name('users.show');
 Route::patch('/users/{user}', 'UsersController@update')->name('users.update');
+Route::delete('/users/{user}', 'UsersController@destroy')->name('users.delete');
 Route::get('/users/{user}/edit', 'UsersController@edit')->name('users.edit');
+
