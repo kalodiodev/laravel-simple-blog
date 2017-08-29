@@ -16,7 +16,7 @@ class ImagesController extends Controller
      */
     public function featured($filename)
     {
-        $file = $this->loadImage($filename, ArticlesController::FEATURED_IMAGES_FOLDER);
+        $file = $this->loadImage($filename, ArticlesController::$image_folder);
 
         return $file == null ? abort(404) : response()->file($file);
     }

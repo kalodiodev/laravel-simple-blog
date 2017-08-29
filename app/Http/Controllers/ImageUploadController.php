@@ -62,4 +62,31 @@ class ImageUploadController extends Controller
 
         return $currentFilename;
     }
+
+    /**
+     * Store image
+     * 
+     * @param $file
+     * @return null|string
+     */
+    protected function storeImage($file)
+    {
+        if(isset($file))
+        {
+            return $this->uploadImage($file, static::$image_folder, 
+                $this->image_width, $this->image_height, $this->image_quality);
+        }
+        
+        return null;
+    }
+
+    /**
+     * Delete image
+     * 
+     * @param $filename
+     */
+    protected function removeImage($filename)
+    {
+        $this->deleteImage($filename, static::$image_folder);
+    }
 }
