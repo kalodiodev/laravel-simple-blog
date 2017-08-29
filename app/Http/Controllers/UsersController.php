@@ -77,6 +77,20 @@ class UsersController extends ImageUploadController
             'avatar' => $avatarFilename
         ]);
 
-        return redirect(route('users.index'));
+        return redirect(route('users.show', ['user' => $user->id]));
+    }
+
+    /**
+     * Show user
+     *
+     * @param User $user
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function show(User $user)
+    {
+        $this->isAuthorized('view', User::class);
+        
+        return view('users.show', compact('user'));
     }
 }
