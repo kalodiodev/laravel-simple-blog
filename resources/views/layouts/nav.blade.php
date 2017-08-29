@@ -18,9 +18,13 @@
 
         <ul class="nav navbar-nav navbar-right">
             @can('index', \App\Tag::class)
-
-                <li class="nav-link">
+                <li class="nav-item">
                     <a class="nav-link" href="{{ route('tag.index') }}">Tags</a>
+                </li>
+            @endcan
+            @can('view', \App\User::class)
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('users.index') }}">Users</a>
                 </li>
             @endcan
         </ul>
