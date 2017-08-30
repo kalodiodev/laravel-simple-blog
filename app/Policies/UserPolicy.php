@@ -42,8 +42,20 @@ class UserPolicy
     public function view(User $user)
     {
         return ($user->hasPermission('user-view') || 
+            ($this->create($user)) ||
             ($this->update($user)) ||
             ($this->delete($user)));
+    }
+
+    /**
+     * Create users policy
+     * 
+     * @param User $user
+     * @return bool
+     */
+    public function create(User $user)
+    {
+        return $user->hasPermission('user-create');
     }
 
     /**

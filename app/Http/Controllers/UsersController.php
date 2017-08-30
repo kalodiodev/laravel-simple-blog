@@ -37,6 +37,26 @@ class UsersController extends ImageUploadController
     }
 
     /**
+     * Create user
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function create()
+    {
+        $this->isAuthorized('create', User::class);
+
+        $roles = Role::all();
+
+        return view('users.create', compact('roles'));
+    }
+
+    public function store(UserRequest $request)
+    {
+        return redirect(route('users.index'));
+    }
+
+    /**
      * Edit user
      * 
      * @param User $user
