@@ -51,6 +51,8 @@
         <div class="row justify-content-center">
             {{ $users->links('vendor.pagination.bootstrap-4') }}
         </div>
+
+        <a class="btn btn-primary" href="{{ route('users.create') }}">Create User</a>
     </div>
 
 @endsection

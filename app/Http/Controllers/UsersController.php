@@ -51,9 +51,31 @@ class UsersController extends ImageUploadController
         return view('users.create', compact('roles'));
     }
 
+    /**
+     * Store user
+     *
+     * @param UserRequest $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
     public function store(UserRequest $request)
     {
-        return redirect(route('users.index'));
+        $this->isAuthorized('create', User::class);
+        
+        $avatarFilename = $this->storeImage($request->file('avatar'));
+
+        $user = User::create([
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+            'about' => $request->get('about'),
+            'profession' => $request->get('profession'),
+            'country' => $request->get('country'),
+            'role_id' => $request->get('role'),
+            'avatar' => $avatarFilename,
+            'password' => bcrypt($request->get('password'))
+        ]);
+
+        return redirect(route('users.show', ['user' => $user->id]));
     }
 
     /**

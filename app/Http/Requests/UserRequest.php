@@ -23,37 +23,24 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        if($this->method() == 'PATCH')
-        {
-            return $this->patch_rules();
-        }
-
-        return [
+        $rules = [
             'name' => 'required|max:190',
             'email' => 'required|email|max:190|unique:users',
             'about' => 'max:190',
             'profession' => 'max:50',
             'country' =>  'max:25',
-            'avatar' => 'mimes:jpeg,png'
+            'avatar' => 'mimes:jpeg,png',
+            'password' => 'required|string|min:6|confirmed',
         ];
-    }
+        
+        if($this->method() == 'PATCH')
+        {
+            $user = $this->route()->parameter('user');
+            
+            $rules['email'] = 'required|email|max:190|unique:users,email,'.$user->id;
+            $rules['password'] = 'min:6|confirmed';
+        }
 
-    /**
-     * Validation rules for patch method
-     * 
-     * @return array
-     */
-    protected function patch_rules()
-    {
-        $user = $this->route()->parameter('user');
-
-        return [
-            'name' => 'required|max:190',
-            'email' => 'required|email|max:190|unique:users,email,'.$user->id,
-            'about' => 'max:190',
-            'profession' => 'max:50',
-            'country' =>  'max:25',
-            'avatar' => 'mimes:jpeg,png'
-        ];
+        return $rules;
     }
 }

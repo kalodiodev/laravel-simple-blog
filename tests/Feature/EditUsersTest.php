@@ -272,42 +272,6 @@ class EditUsersTest extends IntegrationTestCase
     }
 
     /** @test */
-    public function user_may_have_about_of_limited_length()
-    {
-        $this->signInAdmin();
-
-        $response = $this->patch(route('users.update', ['user' => $this->user->id]), [
-            'about' => str_random(200)
-        ]);
-
-        $response->assertSessionHasErrors('about');
-    }
-
-    /** @test */
-    public function user_may_have_profession_of_limited_length()
-    {
-        $this->signInAdmin();
-
-        $response = $this->patch(route('users.update', ['user' => $this->user->id]), [
-            'profession' => str_random(51)
-        ]);
-
-        $response->assertSessionHasErrors('profession');
-    }
-
-    /** @test */
-    public function user_may_have_country_of_limited_length()
-    {
-        $this->signInAdmin();
-
-        $response = $this->patch(route('users.update', ['user' => $this->user->id]), [
-            'country' => str_random(26)
-        ]);
-
-        $response->assertSessionHasErrors('country');
-    }
-
-    /** @test */
     public function an_unauthenticated_user_cannot_edit_user()
     {
         $this->get(route('users.edit', ['user' => $this->user->id]))
