@@ -73,6 +73,8 @@ class TagsController extends Controller
         Tag::create([
            'name' => $request->get('name')
         ]);
+
+        session()->flash('message', 'Tag has been created!');
         
         return redirect()->route('tag.index');
     }
@@ -107,6 +109,8 @@ class TagsController extends Controller
            'name' => $request->get('name')
         ]);
 
+        session()->flash('message', 'Tag has been updated!');
+
         return redirect()->route('tag.index');
     }
 
@@ -123,6 +127,8 @@ class TagsController extends Controller
         $this->isAuthorized('delete', Tag::class);
 
         $tag->delete();
+
+        session()->flash('message', 'Tag has been deleted!');
 
         return redirect()->route('tag.index');
     }
