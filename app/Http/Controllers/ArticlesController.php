@@ -63,6 +63,8 @@ class ArticlesController extends ImageUploadController
         // Attach tags to article
         $article->tags()->attach($request->get('tags'));
 
+        session()->flash('message', 'Article has been posted!');
+
         return redirect("/article/" . $article->slug);
     }
 
@@ -111,6 +113,8 @@ class ArticlesController extends ImageUploadController
         // Sync article tags
         $article->tags()->sync($request->get('tags'));
 
+        session()->flash('message', 'Article has been updated!');
+
         return redirect('/article/' . $article->slug);
     }
     
@@ -146,6 +150,8 @@ class ArticlesController extends ImageUploadController
         $image_filename = $article->image;
         $article->delete();
         $this->removeImage($image_filename);
+
+        session()->flash('message', 'Article has been deleted!');
 
         return redirect()->route('home');
     }
