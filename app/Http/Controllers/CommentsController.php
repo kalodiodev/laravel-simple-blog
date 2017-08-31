@@ -37,6 +37,8 @@ class CommentsController extends Controller
             'user_id' => Auth::user()->id
         ]);
 
+        session()->flash('message', 'Comment has been posted!');
+
         return redirect()->route('article', ['slug' => $article->slug]);
     }
 
@@ -70,6 +72,8 @@ class CommentsController extends Controller
            'body' => $request->get('body')
         ]);
 
+        session()->flash('message', 'Comment has been updated!');
+
         return redirect()->route('article', ['slug' => $comment->article->slug]);
     }
 
@@ -85,6 +89,8 @@ class CommentsController extends Controller
         $this->isAuthorized('delete', $comment);
 
         $comment->delete();
+
+        session()->flash('message', 'Comment has been deleted!');
         
         return redirect()->back();
     }
