@@ -81,6 +81,8 @@ class ProfilesController extends ImageUploadController
 
         $user->update($data);
 
+        session()->flash('message', 'Profile has been updated!');
+
         return redirect(route('profile.show', ['user' => $user->id]));
     }
 }
