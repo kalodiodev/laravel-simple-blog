@@ -95,3 +95,16 @@ body {
   height: 30px;
   width: 30px;
 }
+
+#flash-message {
+  position: absolute;
+  bottom: 20px;
+  right: 20px;
+  z-index: 10;
+  animation: flash-message 6s forwards;
+}
+
+@keyframes flash-message {
+  0%   {opacity: 1;}
+  100% {opacity: 0; display:none;}
+}

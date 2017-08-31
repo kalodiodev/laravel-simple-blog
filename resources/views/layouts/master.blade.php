@@ -34,6 +34,8 @@
 <body>
     @include('layouts.nav')
 
+    @include('partials.flash')
+
     <div class="container">
 
         @yield('intro')

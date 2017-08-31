@@ -75,6 +75,8 @@ class UsersController extends ImageUploadController
             'password' => bcrypt($request->get('password'))
         ]);
 
+        session()->flash('message', 'User has been created!');
+
         return redirect(route('users.show', ['user' => $user->id]));
     }
 
@@ -126,6 +128,8 @@ class UsersController extends ImageUploadController
 
         $user->update($data);
 
+        session()->flash('message', 'User has been updated!');
+
         return redirect(route('users.show', ['user' => $user->id]));
     }
 
@@ -158,6 +162,8 @@ class UsersController extends ImageUploadController
         $avatar = $user->avatar;
         $user->delete();
         $this->removeImage($avatar);
+
+        session()->flash('message', 'User has been deleted!');
 
         return redirect(route('users.index'));
     }
