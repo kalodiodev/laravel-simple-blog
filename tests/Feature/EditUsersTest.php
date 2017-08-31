@@ -302,4 +302,46 @@ class EditUsersTest extends IntegrationTestCase
         $this->patch(route('users.update', ['user' => $this->user->id]), $this->update_data)
             ->assertStatus(403);
     }
+
+    /** @test */
+    public function an_authorized_user_may_change_user_password()
+    {
+        $this->signInAdmin();
+
+        $new_password = '123456';
+
+        $this->patch(route('users.update', ['user' => $this->user->id]), [
+            'name' => 'New User name',
+            'email' => $this->user->email,
+            'role' => '1',
+            'password' => $new_password,
+            'password_confirmation' => $new_password
+        ])->assertStatus(302);
+    }
+
+    /** @test */
+    public function user_new_password_should_match_password_confirmation()
+    {
+        $this->signInAdmin();
+
+        $response = $this->patch(route('users.update', ['user' => $this->user->id]), [
+            'password' => '123456',
+            'password_confirmation' => '000000'
+        ]);
+
+        $response->assertSessionHasErrors('password');
+    }
+
+    /** @test */
+    public function user_new_password_should_be_at_least_six_characters_long()
+    {
+        $this->signInAdmin();
+
+        $response = $this->patch(route('users.update', ['user' => $this->user->id]), [
+            'password' => '1234',
+            'password_confirmation' => '1234'
+        ]);
+
+        $response->assertSessionHasErrors('password');
+    }
 }

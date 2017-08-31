@@ -109,7 +109,7 @@ class UsersController extends ImageUploadController
         $avatarFilename = $this->updateImage(
             $request->file('avatar'), $user->avatar, $request->has('removeavatar'));
 
-        $user->update([
+        $data = [
             'name' => $request->get('name'),
             'email' => $request->get('email'),
             'about' => $request->get('about'),
@@ -117,7 +117,14 @@ class UsersController extends ImageUploadController
             'country' => $request->get('country'),
             'role_id' => $request->get('role'),
             'avatar' => $avatarFilename
-        ]);
+        ];
+
+        if($request->has('password'))
+        {
+            $data['password'] = bcrypt($request->get('password'));
+        }
+
+        $user->update($data);
 
         return redirect(route('users.show', ['user' => $user->id]));
     }

@@ -30,7 +30,7 @@ class UserRequest extends FormRequest
             'profession' => 'max:50',
             'country' =>  'max:25',
             'avatar' => 'mimes:jpeg,png',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6|max:190|confirmed',
         ];
         
         if($this->method() == 'PATCH')
@@ -38,7 +38,7 @@ class UserRequest extends FormRequest
             $user = $this->route()->parameter('user');
             
             $rules['email'] = 'required|email|max:190|unique:users,email,'.$user->id;
-            $rules['password'] = 'min:6|confirmed';
+            $rules['password'] = 'nullable|string|min:6|max:190|confirmed';
         }
 
         return $rules;
