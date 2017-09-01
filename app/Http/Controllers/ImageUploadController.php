@@ -73,7 +73,7 @@ class ImageUploadController extends Controller
     {
         if(isset($file))
         {
-            return $this->uploadImage($file, static::$image_folder, 
+            return $this->uploadResizedImage($file, static::$image_folder, 
                 $this->image_width, $this->image_height, $this->image_quality);
         }
         
