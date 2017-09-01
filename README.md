@@ -7,7 +7,6 @@
 A simple blog built on Laravel Framework
 
 ## Frameworks/Libraries
-
-### PHP Libraries
 * [laravel/laravel](https://github.com/laravel/laravel) - A PHP Framework For Web Artisans
 * [Intervention Image](https://github.com/Intervention/image) - PHP image handling and manipulation library
+* [summernote/summernote](https://github.com/summernote/summernote) - Super simple WYSIWYG editor

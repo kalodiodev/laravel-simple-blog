@@ -18,7 +18,11 @@
 
         <hr>
 
-        <p>{{ $article->body }}</p>
+        <div class="row">
+            <div class="col-md-12">
+                {!! $article->body !!}
+            </div>
+        </div>
 
         @if(Gate::check('update', $article) || Gate::check('delete', $article))
             <hr>

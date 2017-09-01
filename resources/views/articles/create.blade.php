@@ -12,4 +12,6 @@
         </form>
     </div>
 
+    @include('partials.summernote-script')
+
 @endsection
