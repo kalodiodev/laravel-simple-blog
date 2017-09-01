@@ -25,7 +25,9 @@ trait ImageTrait {
     }
 
     /**
-     * Upload image
+     * Upload resized image
+     * 
+     * <p>Image is resized before saved</p>
      * 
      * @param $file
      * @param $folder
@@ -34,7 +36,7 @@ trait ImageTrait {
      * @param $quality
      * @return string
      */
-    protected function uploadImage($file, $folder, $width, $height, $quality)
+    protected function uploadResizedImage($file, $folder, $width, $height, $quality)
     {
         $filename = time() . '-' . $file->getClientOriginalName();
 
@@ -45,6 +47,27 @@ trait ImageTrait {
 
         // Save
         Storage::put($folder . $filename, (string) $resized);
+
+        return $filename;
+    }
+
+    /**
+     * Upload image
+     * 
+     * @param $file
+     * @param $folder
+     * @param $quality
+     * @return string
+     */
+    protected function uploadImage($file, $folder, $quality)
+    {
+        $filename = time() . '-' . $file->getClientOriginalName();
+
+        // Encode
+        $image = Image::make($file)->encode('jpeg', $quality);
+
+        // Save
+        Storage::put($folder . $filename, (string) $image);
 
         return $filename;
     }
@@ -80,7 +103,7 @@ trait ImageTrait {
      */
     private function replaceImage($old, $new, $path, $width, $height, $quality)
     {
-        $newFilename = $this->uploadImage($new, $path, $width, $height, $quality);
+        $newFilename = $this->uploadResizedImage($new, $path, $width, $height, $quality);
         
         $this->deleteImage($old, $path);
         
