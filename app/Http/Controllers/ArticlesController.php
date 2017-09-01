@@ -11,6 +11,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 class ArticlesController extends ImageUploadController
 {
     public static $image_folder = 'images/featured/';
+    public static $articles_image_folder = 'images/article/';
     protected $image_width = 800;
     protected $image_height = null;
     protected $image_quality = 60;
