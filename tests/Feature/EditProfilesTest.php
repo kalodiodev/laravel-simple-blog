@@ -48,6 +48,36 @@ class EditProfilesTest extends IntegrationTestCase
     }
 
     /** @test */
+    public function an_authorized_user_can_edit_other_users_profile()
+    {
+        $user = factory(User::class)->create();
+        $this->signInAdmin();
+
+        $response = $this->get(route('profile.edit', ['user' => $user->id]))
+            ->assertStatus(200);
+
+        $response->assertViewIs('profiles.edit');
+    }
+
+    /** @test */
+    public function an_authorized_user_can_update_other_users_profile()
+    {
+        $user = factory(User::class)->create();
+        $this->signInAdmin();
+
+        $this->patch(route('profile.update', ['user' => $user->id]), $this->update_data)
+            ->assertStatus(302);
+
+        $this->assertDatabaseHas('users', [
+            'id' => $user->id,
+            'name' => $this->update_data['name'],
+            'about' => $this->update_data['about'],
+            'country' => $this->update_data['country'],
+            'profession' => $this->update_data['profession']
+        ]);
+    }
+
+    /** @test */
     public function a_user_can_update_own_profile()
     {
         $user = $this->signInGuest();

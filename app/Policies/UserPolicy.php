@@ -30,7 +30,7 @@ class UserPolicy
      */
     public function update_profile(User $auth, User $user)
     {
-        return ($auth->id === $user->id);
+        return (($auth->id === $user->id) || ($this->update($auth)));
     }
 
     /**

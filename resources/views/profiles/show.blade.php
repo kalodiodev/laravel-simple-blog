@@ -44,7 +44,7 @@
             @endcan
 
             {{-- Update profile --}}
-            @can('update', $user)
+            @can('update_profile', $user)
                 <div style="text-align: right">
                     <a class="btn btn-primary" href="{{ route('profile.edit', ['user' => $user->id]) }}">Edit Profile</a>
                 </div>
