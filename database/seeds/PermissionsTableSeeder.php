@@ -24,7 +24,10 @@ class PermissionsTableSeeder extends Seeder
         ['name' => 'tag-update', 'label' => 'Update tag'],
         ['name' => 'tag-delete', 'label' => 'Delete tag'],
         // Profiles
-        ['name' => 'profile-detailed-view', 'label' => 'View user\'s detailed profile']
+        ['name' => 'profile-detailed-view', 'label' => 'View user\'s detailed profile'],
+        // Images
+        ['name' => 'image-index-all', 'label' => 'Index all images'],
+        ['name' => 'image-delete-any', 'label' => 'Delete any image'],
     ];
 
     private $author_actions = [
@@ -36,7 +39,10 @@ class PermissionsTableSeeder extends Seeder
         ['name' => 'comment-update', 'label' => 'Edit own comment'],
         ['name' => 'comment-delete', 'label' => 'Delete own comment'],
         ['name' => 'comment-update-article', 'label' => 'Update any comment of his/hers article'],
-        ['name' => 'comment-delete-article', 'label' => 'Delete any comment of his/hers article']
+        ['name' => 'comment-delete-article', 'label' => 'Delete any comment of his/hers article'],
+        // Images
+        ['name' => 'image-index-own', 'label' => 'Index own images'],
+        ['name' => 'image-delete-own', 'label' => 'Delete own image'],
     ];
 
     private $guest_actions = [

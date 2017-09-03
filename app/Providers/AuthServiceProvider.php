@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Image;
+use App\Policies\ImagePolicy;
 use App\Tag;
 use App\User;
 use App\Article;
@@ -24,6 +26,7 @@ class AuthServiceProvider extends ServiceProvider
         Comment::class => CommentPolicy::class,
         Tag::class => TagPolicy::class,
         User::class => UserPolicy::class,
+        Image::class => ImagePolicy::class
     ];
 
     /**
