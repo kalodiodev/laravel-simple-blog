@@ -59,3 +59,12 @@ $factory->define(App\Comment::class, function (Faker\Generator $faker)
         'article_id' => $article->id
     ];
 });
+
+$factory->define(App\Image::class, function (Faker\Generator $faker)
+{
+    return [
+        'filename' => $faker->word,
+        'path' => 'images/article',
+        'user_id' => factory(App\User::class)->create()->id
+    ];
+});
