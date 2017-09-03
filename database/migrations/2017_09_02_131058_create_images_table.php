@@ -17,6 +17,7 @@ class CreateImagesTable extends Migration
             $table->increments('id');
             $table->string('filename');
             $table->string('path');
+            $table->string('thumbnail')->nullable();
             $table->integer("user_id")->unsigned();
             $table->timestamps();
 

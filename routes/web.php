@@ -57,6 +57,8 @@ Route::get('/images/featured/{image}', 'ImagesController@featured')->name('image
 Route::get('/images/avatar/{image}', 'ImagesController@avatar')->name('images.avatar');
 Route::get('/images/article/{image}', 'ImagesController@article')->name('images.article');
 Route::post('/images/article/', 'ImagesController@articleStore')->name('images.article.upload');
+Route::get('/img', 'ImagesController@index')->name('images.index');
+Route::delete('/img/{image}', 'ImagesController@delete')->name('images.delete');
 
 /*
  * Profiles

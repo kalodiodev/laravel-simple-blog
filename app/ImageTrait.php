@@ -68,7 +68,29 @@ trait ImageTrait {
 
         // Save
         Storage::put($folder . $filename, (string) $image);
+        
+        return $filename;
+    }
 
+    /**
+     * Store image thumbnail
+     * 
+     * @param $file
+     * @param $filename
+     * @param $folder
+     * @return string
+     */
+    protected function storeThumbnail($file, $filename, $folder)
+    {
+        // Resize
+        $thumbnail = Image::make($file)->resize(300, null, function ($constraint) {
+            $constraint->aspectRatio();
+        })->encode('jpeg', 50);
+        
+        $filename = 'thumbnail-' . $filename;
+
+        Storage::put($folder . $filename, (string) $thumbnail);
+        
         return $filename;
     }
 
