@@ -55,6 +55,16 @@ class User extends Authenticatable
     }
 
     /**
+     * A user has many images
+     * 
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function images()
+    {
+        return $this->hasMany(Image::class);
+    }
+
+    /**
      * Assign a role to user
      * 
      * @param $role
@@ -140,5 +150,16 @@ class User extends Authenticatable
     public function hasAvatar()
     {
         return isset($this->avatar);
+    }
+
+    /**
+     * Determine if user owns the given image
+     *
+     * @param $image
+     * @return bool
+     */
+    public function owns($image)
+    {
+        return $this->id === $image->user_id;
     }
 }
