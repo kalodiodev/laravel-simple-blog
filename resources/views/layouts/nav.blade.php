@@ -51,11 +51,15 @@
                     </a>
 
                     <div class="dropdown-menu">
-
+                        {{-- User Profile --}}
                         <a class="dropdown-item" href="{{ route('profile.show', ['user' => auth()->user()->id]) }}">
                             Profile
                         </a>
-
+                        {{-- User Images --}}
+                        <a class="dropdown-item" href="{{ route('images.index') }}">
+                            Images
+                        </a>
+                        {{-- Logout --}}
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
