@@ -3,7 +3,6 @@
 namespace Tests\Feature;
 
 use App\Article;
-use App\User;
 use Tests\IntegrationTestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 

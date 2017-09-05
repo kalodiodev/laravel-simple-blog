@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\User;
 use Tests\IntegrationTestCase;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
@@ -31,16 +30,7 @@ class EditUsersTest extends IntegrationTestCase
 
         $this->user = factory(User::class)->create();
     }
-
-    public function tearDown()
-    {
-        $this->beforeApplicationDestroyed(function () {
-            DB::disconnect();
-        });
-
-        parent::tearDown();
-    }
-
+    
     /** @test */
     public function an_authorized_user_can_edit_user()
     {

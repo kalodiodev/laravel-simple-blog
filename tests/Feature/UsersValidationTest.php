@@ -3,10 +3,9 @@
 namespace Tests\Feature;
 
 use App\User;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Tests\IntegrationTestCase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class UsersValidationTest extends IntegrationTestCase
@@ -29,15 +28,6 @@ class UsersValidationTest extends IntegrationTestCase
             'password_confirmation' => '123456',
             'role' => 2
         ];
-    }
-
-    public function tearDown()
-    {
-        $this->beforeApplicationDestroyed(function () {
-            DB::disconnect();
-        });
-
-        parent::tearDown();
     }
 
     /** @test */

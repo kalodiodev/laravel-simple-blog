@@ -3,10 +3,9 @@
 namespace Tests\Feature;
 
 use App\User;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
 use Tests\IntegrationTestCase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class CreateUsersTest extends IntegrationTestCase
@@ -30,16 +29,7 @@ class CreateUsersTest extends IntegrationTestCase
             'role' => 2
         ];
     }
-
-    public function tearDown()
-    {
-        $this->beforeApplicationDestroyed(function () {
-            DB::disconnect();
-        });
-
-        parent::tearDown();
-    }
-
+    
     /** @test */
     public function an_authorized_user_can_create_a_user()
     {

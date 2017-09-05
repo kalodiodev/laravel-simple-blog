@@ -3,14 +3,10 @@
 namespace Tests\Feature;
 
 use Tests\IntegrationTestCase;
-use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 
 class ReadArticlesTest extends IntegrationTestCase
 {
-
     use DatabaseMigrations;
 
     protected $article;

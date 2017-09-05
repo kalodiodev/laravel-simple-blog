@@ -5,24 +5,13 @@ namespace Tests\Feature;
 use App\User;
 use Tests\IntegrationTestCase;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class DeleteUsersTest extends IntegrationTestCase
 {
     use DatabaseMigrations;
-
-    public function tearDown()
-    {
-        $this->beforeApplicationDestroyed(function () {
-            DB::disconnect();
-        });
-
-        parent::tearDown();
-    }
-
-
+    
     /** @test */
     public function an_authorized_user_can_delete_a_user()
     {

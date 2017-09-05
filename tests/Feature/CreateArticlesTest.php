@@ -3,9 +3,9 @@
 namespace Tests\Feature;
 
 use App\Article;
+use Tests\IntegrationTestCase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Tests\IntegrationTestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class CreateArticlesTest extends IntegrationTestCase

@@ -4,7 +4,6 @@ namespace Tests\Feature;
 
 use App\User;
 use Tests\IntegrationTestCase;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 
@@ -19,15 +18,6 @@ class ViewUsersTest extends IntegrationTestCase
         parent::setUp();
 
         $this->user = factory(User::class)->create();
-    }
-
-    public function tearDown()
-    {
-        $this->beforeApplicationDestroyed(function () {
-            DB::disconnect();
-        });
-
-        parent::tearDown();
     }
 
     /** @test */

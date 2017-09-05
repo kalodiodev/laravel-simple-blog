@@ -1,10 +1,10 @@
 <?php
 
 use App\Article;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Tests\IntegrationTestCase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
-use Tests\IntegrationTestCase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class EditArticlesTest extends IntegrationTestCase
 {

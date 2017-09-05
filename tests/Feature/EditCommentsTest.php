@@ -1,9 +1,8 @@
 <?php
 
 use App\Comment;
-use App\User;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Tests\IntegrationTestCase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class EditCommentsTest extends IntegrationTestCase
 {
