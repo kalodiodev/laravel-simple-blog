@@ -10,7 +10,7 @@ class AvatarImageService extends ImageService {
      * 
      * @var string
      */
-    protected $folder = 'images/avatar/';
+    public static $folder = 'images/avatar/';
 
     /**
      * Images quality

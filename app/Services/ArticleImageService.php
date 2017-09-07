@@ -10,7 +10,7 @@ class ArticleImageService extends ImageService {
      * 
      * @var string
      */
-    protected $folder = 'images/article/';
+    public static $folder = 'images/article/';
 
     /**
      * Images quality

@@ -6,22 +6,28 @@ use App\Tag;
 use App\Comment;
 use App\Article;
 use App\Http\Requests\ArticleRequest;
+use App\Services\FeaturedImageService;
 use Illuminate\Auth\Access\AuthorizationException;
 
-class ArticlesController extends ImageUploadController
+class ArticlesController extends Controller
 {
-    public static $image_folder = 'images/featured/';
-    public static $articles_image_folder = 'images/article/';
-    protected $image_width = 800;
-    protected $image_height = null;
-    protected $image_quality = 60;
+    /**
+     * Featured Images Service
+     *
+     * @var FeaturedImageService
+     */
+    protected $featuredImageService;
 
     /**
      * ArticlesController constructor.
+     *
+     * @param FeaturedImageService $featuredImageService
      */
-    public function __construct()
+    public function __construct(FeaturedImageService $featuredImageService)
     {
         $this->middleware('auth')->except(['show']);
+
+        $this->featuredImageService = $featuredImageService;
     }
 
     /**
@@ -49,13 +55,16 @@ class ArticlesController extends ImageUploadController
     {
         $this->isAuthorized('create', Article::class);
 
+        $featured = $this->featuredImageService
+            ->store($request->file('image'), auth()->user(), false, false);
+
         $article_data = [
             'title' => $request->get('title'),
             'description' => $request->get('description'),
             'keywords' => $request->get('keywords'),
             'body' => $request->get('body'),
             'user_id' => auth()->id(),
-            'image' => $this->storeImage($request->file('image'))
+            'image' => $featured
         ];
         
         // Create article
@@ -100,8 +109,8 @@ class ArticlesController extends ImageUploadController
 
         $this->isAuthorized('update', $article);
         
-        $imageFilename = $this->updateImage(
-            $request->file('image'), $article->image, $request->has('removeimage'));
+        $imageFilename = $this->featuredImageService->update(
+            $article->image, $request->file('image'), auth()->user(), $request->has('removeimage'));
 
         $article->update([
             'title' => $request->get('title'),
@@ -148,9 +157,9 @@ class ArticlesController extends ImageUploadController
         $article = $this->retrieveArticle($slug);
         $this->isAuthorized('delete', $article);
 
-        $image_filename = $article->image;
+        $featured = $article->image;
         $article->delete();
-        $this->removeImage($image_filename);
+        $this->featuredImageService->delete($featured);
 
         session()->flash('message', 'Article has been deleted!');
 

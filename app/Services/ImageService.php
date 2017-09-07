@@ -13,7 +13,7 @@ class ImageService  {
      *
      * @var string
      */
-    protected $folder = 'images/';
+    public static $folder = 'images/';
 
     /**
      * Images quality
@@ -41,9 +41,9 @@ class ImageService  {
      * 
      * @return string
      */
-    public function folder()
+    public static function folder()
     {
-        return $this->folder;
+        return static::$folder;
     }
     
     /**
@@ -54,7 +54,7 @@ class ImageService  {
      */
     public function load($filename)
     {
-        return $this->loadImage($filename, $this->folder);
+        return $this->loadImage($filename, static::$folder);
     }
 
     /**
@@ -73,12 +73,12 @@ class ImageService  {
             $filename = $this->performUpload($file);
 
             // Thumbnail
-            $thumbnail = $thumbnail_enabled ? $this->createThumbnail($file, $filename, $this->folder) : $filename;
+            $thumbnail = $thumbnail_enabled ? $this->createThumbnail($file, $filename, static::$folder) : $filename;
 
             if($storeToDB)
             {
                 // Database
-                $this->storeImageInfoToDB($user, $filename, $this->folder, $thumbnail);
+                $this->storeImageInfoToDB($user, $filename, static::$folder, $thumbnail);
             }
 
             return $filename;
@@ -94,17 +94,23 @@ class ImageService  {
      */
     public function delete($image)
     {
-        $filename = $image instanceof \App\Image ? $image->filename : $image;
+        if((! ($image instanceof \App\Image)) && (($img = $this->retrieveImageFromDB($image)) != null))
+        {
+            $image = $img;
+        }
 
-        $this->deleteImage($filename, $this->folder);
+        $this->deleteImage($this->retrieveImageFilename($image), static::$folder);
 
         if($image instanceof \App\Image)
         {
+            // Thumbnail
             $this->deleteImage($image->thumbnail, $image->folder);
+            
+            // Database
             $image->delete();
         }
     }
-
+    
     /**
      * Create image thumbnail
      * 
@@ -154,11 +160,11 @@ class ImageService  {
     {
         if (($this->width != null) && ($this->height != null))
         {
-            return $this->uploadResizedImage($file, $this->folder, 
+            return $this->uploadResizedImage($file, static::$folder, 
                 $this->width, $this->height, $this->quality);
         }
 
-        return $this->uploadImage($file, $this->folder, $this->quality);
+        return $this->uploadImage($file, static::$folder, $this->quality);
     }
 
     /**
@@ -247,5 +253,29 @@ class ImageService  {
     protected function produceFilename($file)
     {
         return time() . '-' . $file->getClientOriginalName();
+    }
+
+    /**
+     * Retrieve Image from database
+     *
+     * @param $filename
+     * @return \Illuminate\Database\Eloquent\Model|null|static
+     */
+    protected function retrieveImageFromDB($filename)
+    {
+        return \App\Image::where('filename', $filename)->first();
+    }
+
+    /**
+     * Retrieve image filename from image model
+     *
+     * @param $image
+     * @return mixed
+     */
+    protected function retrieveImageFilename($image)
+    {
+        $filename = $image instanceof \App\Image ? $image->filename : $image;
+
+        return $filename;
     }
 }

@@ -1,7 +1,7 @@
 <div class="blog-post">
 
     @if($article->hasImage())
-        <img src="{{ asset(\App\Http\Controllers\ArticlesController::$image_folder . $article->image) }}"
+        <img src="{{ asset(\App\Services\FeaturedImageService::folder() . $article->image) }}"
              alt="" class="img-fluid" width="800">
     @endif
 
