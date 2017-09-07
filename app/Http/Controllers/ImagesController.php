@@ -3,20 +3,51 @@
 namespace App\Http\Controllers;
 
 use App\Image;
-use App\ImageTrait;
 use App\Http\Requests\ImageRequest;
+use App\Services\ArticleImageService;
+use App\Services\AvatarImageService;
+use App\Services\FeaturedImageService;
 
 
 class ImagesController extends Controller
 {
-    use ImageTrait;
+    /**
+     * Featured images service
+     * 
+     * @var FeaturedImageService
+     */
+    protected $featuredImagesService;
+
+    /**
+     * Article images service
+     * 
+     * @var ArticleImageService
+     */
+    protected $articleImageService;
+
+    /**
+     * Avatar image service
+     * 
+     * @var AvatarImageService
+     */
+    protected $avatarImageService;
 
     /**
      * ImagesController constructor.
+     * 
+     * @param FeaturedImageService $featuredImageService
+     * @param ArticleImageService $articleImageService
+     * @param AvatarImageService $avatarImageService
      */
-    public function __construct()
+    public function __construct(FeaturedImageService $featuredImageService, 
+                                ArticleImageService $articleImageService, 
+                                AvatarImageService $avatarImageService)
     {
         $this->middleware('auth')->only(['store','index','delete']);
+
+        $this->featuredImagesService = $featuredImageService;
+        $this->articleImageService = $articleImageService;
+        $this->avatarImageService = $avatarImageService;
     }
 
     /**
@@ -49,9 +80,7 @@ class ImagesController extends Controller
         
         if(isset($image)) 
         {
-            $this->deleteImage($image->filename, $image->path);
-            $this->deleteImage($image->thumbnail, $image->path);
-            $image->delete();
+            $this->articleImageService->delete($image);
         }
 
         return redirect()->back();
@@ -65,7 +94,7 @@ class ImagesController extends Controller
      */
     public function featured($filename)
     {
-        $file = $this->loadImage($filename, ArticlesController::$image_folder);
+        $file = $this->featuredImagesService->load($filename);
 
         return $file == null ? abort(404) : response()->file($file);
     }
@@ -77,7 +106,7 @@ class ImagesController extends Controller
      */
     public function avatar($filename)
     {
-        $file = $this->loadImage($filename, ProfilesController::$image_folder);
+        $file = $this->avatarImageService->load($filename);
 
         return $file == null ? abort(404) : response()->file($file);
     }
@@ -89,7 +118,7 @@ class ImagesController extends Controller
      */
     public function article($filename)
     {
-        $file = $this->loadImage($filename, ArticlesController::$articles_image_folder);
+        $file = $this->articleImageService->load($filename);
 
         return $file == null ? abort(404) : response()->file($file);
     }
@@ -108,27 +137,9 @@ class ImagesController extends Controller
         }
 
         $image = $request->file('file');
-        $filename = $this->uploadImage($image, ArticlesController::$articles_image_folder, 75);
-        $thumbnail = $this->storeThumbnail($image, $filename, ArticlesController::$articles_image_folder);
+        
+        $filename = $this->articleImageService->store($image, auth()->user());
 
-        $this->storeImageToDB(auth()->user(), $filename, ArticlesController::$articles_image_folder, $thumbnail);
-
-        return ArticlesController::$articles_image_folder . $filename;
-    }
-
-    /**
-     * Store image filename to database
-     *
-     * @param $user
-     * @param $filename
-     * @param $path
-     */
-    protected function storeImageToDB($user, $filename, $path, $thumbnail)
-    {
-        $user->images()->create([
-            'filename' => $filename,
-            'path' => $path,
-            'thumbnail' => $thumbnail
-        ]);
+        return $this->articleImageService->folder() . $filename;
     }
 }
