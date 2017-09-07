@@ -19,12 +19,12 @@ class DeleteImagesTest extends IntegrationTestCase
         parent::setUp();
 
         Storage::fake('testfs');
-        UploadedFile::fake()->image('image.jpg')->storeAs('images/articles/', 'image.jpg');
-        UploadedFile::fake()->image('thumbnail-image.jpg')->storeAs('images/articles/', 'image.jpg');
+        UploadedFile::fake()->image('image.jpg')->storeAs('images/article/', 'image.jpg');
+        UploadedFile::fake()->image('thumbnail-image.jpg')->storeAs('images/article/', 'image.jpg');
 
         $this->image = factory(Image::class)->create([
             'filename' => 'image.jpg',
-            'path' => 'images/articles/',
+            'path' => 'images/article/',
             'thumbnail' => 'thumbnail-image.jpg']);
     }
 
