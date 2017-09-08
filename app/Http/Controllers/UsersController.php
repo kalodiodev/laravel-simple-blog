@@ -5,20 +5,25 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Role;
 use App\Http\Requests\UserRequest;
+use App\Services\AvatarImageService;
 
-class UsersController extends ImageUploadController
+class UsersController extends Controller
 {
-    public static $image_folder = 'images/avatar/';
-    protected $image_quality = 60;
-    protected $image_height = 120;
-    protected $image_width = 120;
+    /**
+     * Avatar image service
+     */
+    protected $avatarImageService;
 
     /**
      * UsersController constructor.
+     *
+     * @param AvatarImageService $avatarImageService
      */
-    public function __construct()
+    public function __construct(AvatarImageService $avatarImageService)
     {
         $this->middleware('auth');
+
+        $this->avatarImageService = $avatarImageService;
     }
 
     /**
@@ -61,8 +66,9 @@ class UsersController extends ImageUploadController
     public function store(UserRequest $request)
     {
         $this->isAuthorized('create', User::class);
-        
-        $avatarFilename = $this->storeImage($request->file('avatar'));
+
+        $avatarFilename = $this->avatarImageService->store(
+            $request->file('avatar'), auth()->user(), false, false);
 
         $user = User::create([
             'name' => $request->get('name'),
@@ -108,8 +114,8 @@ class UsersController extends ImageUploadController
     {
         $this->isAuthorized('update', User::class);
 
-        $avatarFilename = $this->updateImage(
-            $request->file('avatar'), $user->avatar, $request->has('removeavatar'));
+        $avatarFilename = $this->avatarImageService->update(
+            $user->avatar, $request->file('avatar'), $user, $request->has('removeavatar'));
 
         $data = [
             'name' => $request->get('name'),
@@ -161,7 +167,8 @@ class UsersController extends ImageUploadController
 
         $avatar = $user->avatar;
         $user->delete();
-        $this->removeImage($avatar);
+
+        $this->avatarImageService->delete($avatar);
 
         session()->flash('message', 'User has been deleted!');
 
