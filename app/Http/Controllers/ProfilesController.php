@@ -3,23 +3,27 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\Services\AvatarImageService;
 use App\Http\Requests\ProfileRequest;
 
 
-class ProfilesController extends ImageUploadController
+class ProfilesController extends Controller
 {
-    public static $image_folder = 'images/avatar/';
-    protected $image_quality = 60;
-    protected $image_height = 120;
-    protected $image_width = 120;
-    
+    /**
+     * Avatar image service
+     */
+    protected $avatarImageService;
 
     /**
      * ProfilesController constructor.
+     *
+     * @param AvatarImageService $avatarImageService
      */
-    public function __construct()
+    public function __construct(AvatarImageService $avatarImageService)
     {
         $this->middleware('auth')->except(['show']);
+        
+        $this->avatarImageService = $avatarImageService;
     }
 
     /**
@@ -68,8 +72,8 @@ class ProfilesController extends ImageUploadController
     {
         $this->isAuthorized('update_profile', $user);
 
-        $avatarFilename = $this->updateImage(
-            $request->file('avatar'), $user->avatar, $request->has('removeavatar'));
+        $avatarFilename = $this->avatarImageService->update(
+            $user->avatar, $request->file('avatar'), $user, $request->has('removeavatar'));
 
         $data = [
             'name' => $request->get('name'),
