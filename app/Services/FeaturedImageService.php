@@ -3,8 +3,6 @@
 namespace App\Services;
 
 
-use App\User;
-
 class FeaturedImageService extends ImageService
 {
 

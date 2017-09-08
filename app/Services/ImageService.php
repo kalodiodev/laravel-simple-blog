@@ -104,7 +104,7 @@ class ImageService  {
         if($image instanceof \App\Image)
         {
             // Thumbnail
-            $this->deleteImage($image->thumbnail, $image->folder);
+            $this->deleteImage($image->thumbnail, $image->path);
             
             // Database
             $image->delete();
