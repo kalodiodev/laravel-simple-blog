@@ -97,7 +97,7 @@ class ImagesController extends Controller
             $this->articleImageService->delete($image);
         }
 
-        return redirect()->back();
+        return redirect(route('images.index'));
     }
 
     /**
