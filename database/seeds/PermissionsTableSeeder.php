@@ -28,6 +28,7 @@ class PermissionsTableSeeder extends Seeder
         // Images
         ['name' => 'image-index-all', 'label' => 'Index all images'],
         ['name' => 'image-delete-any', 'label' => 'Delete any image'],
+        ['name' => 'image-view-any', 'label' => 'View any image'],
     ];
 
     private $author_actions = [
@@ -42,6 +43,7 @@ class PermissionsTableSeeder extends Seeder
         ['name' => 'comment-delete-article', 'label' => 'Delete any comment of his/hers article'],
         // Images
         ['name' => 'image-index-own', 'label' => 'Index own images'],
+        ['name' => 'image-view-own', 'label' => 'View own image'],
         ['name' => 'image-delete-own', 'label' => 'Delete own image'],
     ];
 

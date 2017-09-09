@@ -66,6 +66,30 @@ class ViewUserImagesTest extends IntegrationTestCase
             ->assertRedirect('/login');
     }
 
+    /** @test */
+    public function an_unauthorized_user_cannot_view_image()
+    {
+        $user = $this->signInGuest();
+
+        $image = $this->addFakeImage($user);
+
+        $this->get(route('images.show', ['image' => $image->id]))
+            ->assertStatus(403);
+    }
+
+    /** @test */
+    public function a_user_cannot_view_an_image_owned_by_other_user()
+    {
+        $this->signInAuthor();
+
+        $user = factory(User::class)->create();
+
+        $image = $this->addFakeImage($user);
+
+        $this->get(route('images.show', ['image' => $image->id]))
+            ->assertStatus(403);
+    }
+
     protected function addFakeImage($user, $filename = 'article.png')
     {
         Storage::fake('testfs');

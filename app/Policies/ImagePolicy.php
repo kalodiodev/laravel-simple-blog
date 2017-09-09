@@ -33,6 +33,23 @@ class ImagePolicy
     }
 
     /**
+     * View image policy
+     * 
+     * @param User $user
+     * @param Image $image
+     * @return bool
+     */
+    public function view(User $user, Image $image)
+    {
+        if($user->hasPermission('image-view-any'))
+        {
+            return true;
+        }
+        
+        return ($user->owns($image) && $user->hasPermission('image-view-own'));
+    }
+
+    /**
      * Delete image policy
      *
      * @param User $user

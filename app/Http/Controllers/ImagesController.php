@@ -72,7 +72,9 @@ class ImagesController extends Controller
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function show(Image $image)
-    {        
+    {
+        $this->isAuthorized('view', $image);
+        
         return view('images.show', compact('image'));
     }
 
