@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Image;
 use App\Http\Requests\ImageRequest;
-use App\Services\ArticleImageService;
 use App\Services\AvatarImageService;
+use App\Services\ArticleImageService;
 use App\Services\FeaturedImageService;
 
 
@@ -43,7 +43,7 @@ class ImagesController extends Controller
                                 ArticleImageService $articleImageService, 
                                 AvatarImageService $avatarImageService)
     {
-        $this->middleware('auth')->only(['store','index','delete']);
+        $this->middleware('auth')->only(['store','index','delete','show']);
 
         $this->featuredImagesService = $featuredImageService;
         $this->articleImageService = $articleImageService;
@@ -62,6 +62,18 @@ class ImagesController extends Controller
         $images = Image::where('user_id', auth()->user()->id)->get();
         
         return view('images.index', compact('images'));
+    }
+
+    /**
+     * Show user's image
+     * 
+     * @param Image $image
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function show(Image $image)
+    {        
+        return view('images.show', compact('image'));
     }
 
     /**

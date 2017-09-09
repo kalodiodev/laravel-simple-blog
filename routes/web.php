@@ -58,6 +58,7 @@ Route::get('/images/avatar/{image}', 'ImagesController@avatar')->name('images.av
 Route::get('/images/article/{image}', 'ImagesController@article')->name('images.article');
 Route::post('/images/article/', 'ImagesController@articleStore')->name('images.article.upload');
 Route::get('/img', 'ImagesController@index')->name('images.index');
+Route::get('/img/{image}', 'ImagesController@show')->name('images.show');
 Route::delete('/img/{image}', 'ImagesController@delete')->name('images.delete');
 
 /*

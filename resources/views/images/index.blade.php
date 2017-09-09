@@ -17,7 +17,7 @@
 
                         <div style="display: flex; flex-direction: column; justify-content: flex-end;">
                             {{-- Image link --}}
-                            <a href="/{{ $image->id }}/show" {{ $image->filename }}>{{ $image->filename }}</a>
+                            <a href="{{ route('images.show', ['image' => $image->id]) }}" {{ $image->filename }}>{{ $image->filename }}</a>
                             {{-- Delete Image --}}
                             @can('delete', $image)
                                 <div style="display: flex; align-self: flex-end;">
