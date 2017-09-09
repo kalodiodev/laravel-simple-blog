@@ -40,7 +40,7 @@ class EditUsersTest extends IntegrationTestCase
             ->assertStatus(200);
 
         $response->assertViewIs('users.edit');
-        $response->assertSee($this->user->name);
+        $response->assertSee(e($this->user->name));
         $response->assertSee($this->user->email);
     }
 
