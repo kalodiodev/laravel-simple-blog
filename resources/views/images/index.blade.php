@@ -34,6 +34,10 @@
             </div>
         @endforeach
 
+        <div class="row justify-content-center">
+            {{ $images->links('vendor.pagination.bootstrap-4') }}
+        </div>
+
         {{-- Delete confirmation modal --}}
         @include('partials.delete-confirm-modal')
 

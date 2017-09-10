@@ -59,7 +59,7 @@ class ImagesController extends Controller
     {
         $this->isAuthorized('index_own', Image::class);
 
-        $images = Image::where('user_id', auth()->user()->id)->get();
+        $images = Image::where('user_id', auth()->user()->id)->paginate(15);
         
         return view('images.index', compact('images'));
     }
