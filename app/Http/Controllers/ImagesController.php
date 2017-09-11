@@ -88,20 +88,7 @@ class ImagesController extends Controller
 
         return redirect(route('images.index'));
     }
-
-    /**
-     * Get articles featured image
-     *
-     * @param $filename
-     * @return mixed
-     */
-    public function featured($filename)
-    {
-        $file = $this->articleImageService->load($filename);
-
-        return $file == null ? abort(404) : response()->file($file);
-    }
-
+    
     /**
      * Get avatar image
      *

@@ -53,7 +53,6 @@ Route::patch('/comment/{comment}', 'CommentsController@update')->name('comment.u
 /*
  * Images
  */
-Route::get('/images/featured/{image}', 'ImagesController@featured')->name('images.featured');
 Route::get('/images/avatar/{image}', 'ImagesController@avatar')->name('images.avatar');
 Route::get('/images/article/{image}', 'ImagesController@article')->name('images.article');
 Route::post('/images/article/', 'ImagesController@articleStore')->name('images.article.upload');
