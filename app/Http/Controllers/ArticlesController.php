@@ -6,28 +6,28 @@ use App\Tag;
 use App\Comment;
 use App\Article;
 use App\Http\Requests\ArticleRequest;
-use App\Services\FeaturedImageService;
+use App\Services\ArticleImageService;
 use Illuminate\Auth\Access\AuthorizationException;
 
 class ArticlesController extends Controller
 {
     /**
-     * Featured Images Service
+     * Article Images Service
      *
-     * @var FeaturedImageService
+     * @var ArticleImageService
      */
-    protected $featuredImageService;
+    protected $articleImageService;
 
     /**
      * ArticlesController constructor.
-     *
-     * @param FeaturedImageService $featuredImageService
+     * 
+     * @param ArticleImageService $articleImageService
      */
-    public function __construct(FeaturedImageService $featuredImageService)
+    public function __construct(ArticleImageService $articleImageService)
     {
         $this->middleware('auth')->except(['show']);
 
-        $this->featuredImageService = $featuredImageService;
+        $this->articleImageService = $articleImageService;
     }
 
     /**
@@ -55,7 +55,7 @@ class ArticlesController extends Controller
     {
         $this->isAuthorized('create', Article::class);
 
-        $featured = $this->featuredImageService->store($request->file('image'), auth()->user());
+        $featured = $this->articleImageService->store($request->file('image'), auth()->user());
 
         $article_data = [
             'title' => $request->get('title'),
@@ -108,7 +108,7 @@ class ArticlesController extends Controller
 
         $this->isAuthorized('update', $article);
         
-        $imageFilename = $this->featuredImageService->update(
+        $imageFilename = $this->articleImageService->update(
             $article->image, $request->file('image'), auth()->user(), $request->has('removeimage'));
 
         $article->update([
@@ -158,7 +158,7 @@ class ArticlesController extends Controller
 
         $featured = $article->image;
         $article->delete();
-        $this->featuredImageService->delete($featured);
+        $this->articleImageService->delete($featured);
 
         session()->flash('message', 'Article has been deleted!');
 

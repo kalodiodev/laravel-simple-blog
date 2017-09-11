@@ -6,18 +6,10 @@ use App\Image;
 use App\Http\Requests\ImageRequest;
 use App\Services\AvatarImageService;
 use App\Services\ArticleImageService;
-use App\Services\FeaturedImageService;
 
 
 class ImagesController extends Controller
 {
-    /**
-     * Featured images service
-     * 
-     * @var FeaturedImageService
-     */
-    protected $featuredImagesService;
-
     /**
      * Article images service
      * 
@@ -34,18 +26,15 @@ class ImagesController extends Controller
 
     /**
      * ImagesController constructor.
-     * 
-     * @param FeaturedImageService $featuredImageService
+     *
      * @param ArticleImageService $articleImageService
      * @param AvatarImageService $avatarImageService
      */
-    public function __construct(FeaturedImageService $featuredImageService, 
-                                ArticleImageService $articleImageService, 
+    public function __construct(ArticleImageService $articleImageService, 
                                 AvatarImageService $avatarImageService)
     {
         $this->middleware('auth')->only(['store','index','delete','show']);
 
-        $this->featuredImagesService = $featuredImageService;
         $this->articleImageService = $articleImageService;
         $this->avatarImageService = $avatarImageService;
     }
@@ -108,7 +97,7 @@ class ImagesController extends Controller
      */
     public function featured($filename)
     {
-        $file = $this->featuredImagesService->load($filename);
+        $file = $this->articleImageService->load($filename);
 
         return $file == null ? abort(404) : response()->file($file);
     }
