@@ -155,10 +155,10 @@ class EditArticlesTest extends IntegrationTestCase
         $this->assertStringEndsWith('new_image.jpg',
             $updated->image, 'New image filename must end with new_image.jpg after timestamp');
 
-        Storage::disk('testfs')->assertExists('images/featured/' . $updated->image);
+        Storage::disk('testfs')->assertExists('images/article/' . $updated->image);
         
-        // Old image must be deleted
-        Storage::disk('testfs')->assertMissing('images/featured/image.jpg');
+        // Old image should not be deleted
+        Storage::disk('testfs')->assertExists('images/article/image.jpg');
     }
 
     /** @test */
@@ -183,7 +183,8 @@ class EditArticlesTest extends IntegrationTestCase
 
         $this->assertNull($updated->image, 'Article image filename must be null');
 
-        Storage::disk('testfs')->assertMissing('images/featured/image.jpg');
+        // Old featured image should not be deleted
+        Storage::disk('testfs')->assertExists('images/article/image.jpg');
     }
 
     protected function createFakeFeaturedImage($filename, bool $save = false)
@@ -192,7 +193,7 @@ class EditArticlesTest extends IntegrationTestCase
 
         if($save)
         {
-            $image->storeAs('images/featured/', $filename);
+            $image->storeAs('images/article/', $filename);
         }
 
         return $image;

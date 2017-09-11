@@ -11,7 +11,7 @@ class FeaturedImageService extends ImageService
      *
      * @var string
      */
-    public static $folder = 'images/featured/';
+    public static $folder = 'images/article/';
 
     /**
      * Images quality
@@ -33,5 +33,18 @@ class FeaturedImageService extends ImageService
      * @var null
      */
     protected $height = null;
-    
+
+    /**
+     * Store image details to database
+     *
+     * @var bool
+     */
+    protected $storeToDB = true;
+
+    /**
+     * Store image thumbnail
+     *
+     * @var bool
+     */
+    protected $hasThumbnail = true;    
 }

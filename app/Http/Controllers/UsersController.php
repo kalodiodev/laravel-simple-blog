@@ -67,8 +67,7 @@ class UsersController extends Controller
     {
         $this->isAuthorized('create', User::class);
 
-        $avatarFilename = $this->avatarImageService->store(
-            $request->file('avatar'), auth()->user(), false, false);
+        $avatarFilename = $this->avatarImageService->store($request->file('avatar'), auth()->user());
 
         $user = User::create([
             'name' => $request->get('name'),
@@ -115,7 +114,7 @@ class UsersController extends Controller
         $this->isAuthorized('update', User::class);
 
         $avatarFilename = $this->avatarImageService->update(
-            $user->avatar, $request->file('avatar'), $user, $request->has('removeavatar'));
+            $user->avatar, $request->file('avatar'), $user, $request->has('removeavatar'), true);
 
         $data = [
             'name' => $request->get('name'),

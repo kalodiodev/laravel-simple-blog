@@ -55,8 +55,7 @@ class ArticlesController extends Controller
     {
         $this->isAuthorized('create', Article::class);
 
-        $featured = $this->featuredImageService
-            ->store($request->file('image'), auth()->user(), false, false);
+        $featured = $this->featuredImageService->store($request->file('image'), auth()->user());
 
         $article_data = [
             'title' => $request->get('title'),

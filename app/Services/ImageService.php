@@ -37,6 +37,20 @@ class ImageService  {
     protected $height = 120;
 
     /**
+     * Store image details to database
+     * 
+     * @var bool
+     */
+    protected $storeToDB = false;
+
+    /**
+     * Store image thumbnail
+     * 
+     * @var bool
+     */
+    protected $hasThumbnail = false;
+
+    /**
      * Get images folder
      * 
      * @return string
@@ -62,20 +76,18 @@ class ImageService  {
      *
      * @param $file
      * @param $user
-     * @param bool $thumbnail_enabled
-     * @param bool $storeToDB
      * @return null|string
      */
-    public function store($file, User $user, $thumbnail_enabled = true, $storeToDB = true)
+    public function store($file, User $user)
     {
         if(isset($file))
         {
             $filename = $this->performUpload($file);
 
             // Thumbnail
-            $thumbnail = $thumbnail_enabled ? $this->createThumbnail($file, $filename, static::$folder) : $filename;
+            $thumbnail = $this->hasThumbnail ? $this->createThumbnail($file, $filename, static::$folder) : $filename;
 
-            if($storeToDB)
+            if($this->storeToDB)
             {
                 // Database
                 $this->storeImageInfoToDB($user, $filename, static::$folder, $thumbnail);
@@ -116,15 +128,16 @@ class ImageService  {
      *
      * @param $old
      * @param $new
-     * @param $user
+     * @param User $user
      * @param bool $noImage
+     * @param bool $removeOld
      * @return null|string
      */
-    public function update($old, $new, User $user, bool $noImage)
+    public function update($old, $new, User $user, bool $noImage, bool $removeOld = false)
     {
         if($noImage)
         {
-            $this->delete($old);
+            $this->removeOld($removeOld, $old);
 
             return null;
         }
@@ -132,10 +145,24 @@ class ImageService  {
         // Update image
         if(isset($new))
         {
-            return $this->performUpdate($old, $new, $user);
+            return $this->performUpdate($old, $new, $user, $removeOld);
         }
 
         return $old;
+    }
+
+    /**
+     * Remove old image
+     *
+     * @param bool $remove
+     * @param $image
+     */
+    private function removeOld(bool $remove, $image)
+    {
+        if($remove)
+        {
+            $this->delete($image);
+        }
     }
 
     /**
@@ -144,13 +171,14 @@ class ImageService  {
      * @param $old
      * @param $new
      * @param $user
+     * @param bool $removeOld
      * @return null|string
      */
-    private function performUpdate($old, $new, $user)
+    private function performUpdate($old, $new, $user, bool $removeOld)
     {
-        $newFilename = $this->store($new, $user, false, false);
+        $newFilename = $this->store($new, $user);
 
-        $this->delete($old);
+        $this->removeOld($removeOld, $old);
 
         return $newFilename;
     }

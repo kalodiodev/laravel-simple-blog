@@ -136,7 +136,7 @@ class CreateArticlesTest extends IntegrationTestCase
         // Assert the file was stored...
         $this->assertNotNull($article, 'Article cannot be null');
         $this->assertNotNull($article->image, "Article's image cannot be null");
-        Storage::disk('testfs')->assertExists('images/featured/' . $article->image);
+        Storage::disk('testfs')->assertExists('images/article/' . $article->image);
     }
 
     /** @test */

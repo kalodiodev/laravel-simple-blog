@@ -73,7 +73,7 @@ class ProfilesController extends Controller
         $this->isAuthorized('update_profile', $user);
 
         $avatarFilename = $this->avatarImageService->update(
-            $user->avatar, $request->file('avatar'), $user, $request->has('removeavatar'));
+            $user->avatar, $request->file('avatar'), $user, $request->has('removeavatar'), true);
 
         $data = [
             'name' => $request->get('name'),

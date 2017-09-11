@@ -10,20 +10,6 @@ use Illuminate\Support\Facades\Storage;
 class ViewImagesTest extends TestCase
 {
     /** @test */
-    public function a_user_can_view_a_featured_image()
-    {
-        Storage::fake('testfs');
-
-        UploadedFile::fake()->image('image.png')
-            ->storeAs('images/featured/', 'image.png');
-
-        $response = $this->get('/images/featured/image.png')
-           ->assertStatus(200);
-        
-        $response->assertHeader('Content-Type', 'image/png');
-    }
-    
-    /** @test */
     public function a_user_can_view_an_avatar_image()
     {
         Storage::fake('testfs');
