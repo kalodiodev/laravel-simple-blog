@@ -3,15 +3,14 @@
 namespace Tests\Feature;
 
 use App\User;
+use Tests\FakeImage;
 use Tests\IntegrationTestCase;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 
 class ViewUserImagesTest extends IntegrationTestCase
 {
-    use DatabaseMigrations;
+    use DatabaseMigrations, FakeImage;
     
     /** @test */
     public function an_authorized_user_can_view_images_that_owns()
@@ -88,25 +87,5 @@ class ViewUserImagesTest extends IntegrationTestCase
 
         $this->get(route('images.show', ['image' => $image->id]))
             ->assertStatus(403);
-    }
-
-    protected function addFakeImage($user, $filename = 'article.png')
-    {
-        Storage::fake('testfs');
-
-        UploadedFile::fake()->image($filename)
-            ->storeAs('images/article/', $filename);
-
-        UploadedFile::fake()->image('thumbnail-' . $filename)
-            ->storeAs('images/article/', 'thumbnail-' . $filename);
-
-        $image = factory(\App\Image::class)->create([
-            'user_id' => $user->id,
-            'filename' => $filename,
-            'path' => 'images/article/',
-            'thumbnail' => 'thumbnail-' . $filename
-        ]);
-
-        return $image;
     }
 }

@@ -22,10 +22,10 @@
                 @foreach($images as $image)
                     <tr>
                         <td>{{ $image->id }}</td>
-                        <td>{{ $image->filename }}</td>
+                        <td><a href="{{ route('images.admin.show', ['image' => $image->id]) }}">{{ $image->filename }}</a></td>
                         <td>{{ $image->path }}</td>
                         <td>
-                            <a href="#" >
+                            <a href="{{ route('users.show', ['user' => $image->user->id]) }}" >
                                 {{ $image->user->name }}
                             </a>
                         </td>

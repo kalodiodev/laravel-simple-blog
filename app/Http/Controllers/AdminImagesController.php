@@ -41,4 +41,18 @@ class AdminImagesController extends Controller
 
         return view('images.admin.index', compact('images'));
     }
+
+    /**
+     * Show image
+     *
+     * @param Image $image
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function show(Image $image)
+    {
+        $this->isAuthorized('index', $image);
+
+        return view('images.admin.show', compact('image'));
+    }
 }

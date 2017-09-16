@@ -16,25 +16,11 @@
             <tr><th>Thumbnail:</th> <td>{{ $image->thumbnail }}</td></tr>
         </table>
 
-        {{-- Delete Image --}}
-        @can('delete', $image)
-            <div style="display: flex; flex-direction: row-reverse;">
-                <button class="btn btn-danger deleteBtn"
-                            data-toggle="modal"
-                            data-target="#deleteConfirmModal"
-                            data-message="Are you sure you want to delete this image ?"
-                            data-action="{{ route('images.delete', ['image' => $image->filename]) }}">
-                    Delete Image
-                </button>
-            </div>
-        @endcan
+        @include('images._delete-button', [
+            'delete_route' => route('images.delete', ['image' => $image->filename])
+        ])
 
         <img src="/{{ $image->path . $image->filename }}" class="img-fluid top-space bottom-space">
-
-        @can('delete', $image)
-            {{-- Delete confirmation modal --}}
-            @include('partials.delete-confirm-modal')
-        @endcan
 
     </div>
 
