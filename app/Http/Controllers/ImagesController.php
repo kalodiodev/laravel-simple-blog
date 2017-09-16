@@ -33,10 +33,25 @@ class ImagesController extends Controller
     public function __construct(ArticleImageService $articleImageService, 
                                 AvatarImageService $avatarImageService)
     {
-        $this->middleware('auth')->only(['store','index','delete','show']);
+        $this->middleware('auth')->only(['store','index','delete','show', 'all']);
 
         $this->articleImageService = $articleImageService;
         $this->avatarImageService = $avatarImageService;
+    }
+
+    /**
+     * Index all images
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function all()
+    {
+        $this->isAuthorized('index', Image::class);
+
+        $images = Image::with('user')->latest()->paginate(25);
+
+        return view('images.all', compact('images'));
     }
 
     /**
