@@ -29,7 +29,7 @@
             @endcan
             @can('index', \App\Image::class)
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('images.all') }}">Images</a>
+                    <a class="nav-link" href="{{ route('images.admin.index') }}">Images</a>
                 </li>
             @endcan
         </ul>

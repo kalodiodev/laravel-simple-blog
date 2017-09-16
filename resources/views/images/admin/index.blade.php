@@ -25,7 +25,7 @@
                         <td>{{ $image->filename }}</td>
                         <td>{{ $image->path }}</td>
                         <td>
-                            <a href="{{ route('users.show', ['user' => $image->user->id]) }}" >
+                            <a href="#" >
                                 {{ $image->user->name }}
                             </a>
                         </td>

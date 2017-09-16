@@ -7,7 +7,7 @@ use Tests\IntegrationTestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 
-class ViewAllUsersImagesTest extends IntegrationTestCase
+class AdminViewImagesTest extends IntegrationTestCase
 {
     use DatabaseMigrations;
 
@@ -18,10 +18,10 @@ class ViewAllUsersImagesTest extends IntegrationTestCase
 
         $this->signInAdmin();
 
-        $response = $this->get(route('images.all'))
+        $response = $this->get(route('images.admin.index'))
             ->assertStatus(200);
 
-        $response->assertViewIs('images.all')->assertSee($image->filename);
+        $response->assertViewIs('images.admin.index')->assertSee($image->filename);
     }
 
     /** @test */
@@ -29,14 +29,14 @@ class ViewAllUsersImagesTest extends IntegrationTestCase
     {
         $this->signInAuthor();
 
-        $this->get(route('images.all'))
+        $this->get(route('images.admin.index'))
             ->assertStatus(403);
     }
 
     /** @test */
     public function an_unauthenticated_user_cannot_index_all_users_images()
     {
-        $this->get(route('images.all'))
+        $this->get(route('images.admin.index'))
             ->assertRedirect('/login');
     }
 }

@@ -56,10 +56,18 @@ Route::patch('/comment/{comment}', 'CommentsController@update')->name('comment.u
 Route::get('/images/avatar/{image}', 'ImagesController@avatar')->name('images.avatar');
 Route::get('/images/article/{image}', 'ImagesController@article')->name('images.article');
 Route::post('/images/article/', 'ImagesController@articleStore')->name('images.article.upload');
-Route::get('/images/all', 'ImagesController@all')->name('images.all');
-Route::get('/img', 'ImagesController@index')->name('images.index');
-Route::get('/img/{image}', 'ImagesController@show')->name('images.show');
-Route::delete('/img/{image}', 'ImagesController@delete')->name('images.delete');
+
+/*
+ * Images Administration
+ */
+Route::get('/admin/images', 'AdminImagesController@index')->name('images.admin.index');
+
+/*
+ * User Images
+ */
+Route::get('/user/images', 'UserImagesController@index')->name('images.index');
+Route::get('/user/images/{image}', 'UserImagesController@show')->name('images.show');
+Route::delete('/user/images/{image}', 'UserImagesController@delete')->name('images.delete');
 
 /*
  * Profiles
