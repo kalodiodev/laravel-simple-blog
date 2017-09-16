@@ -27,6 +27,11 @@
                     <a class="nav-link" href="{{ route('users.index') }}">Users</a>
                 </li>
             @endcan
+            @can('index', \App\Image::class)
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('images.all') }}">Images</a>
+                </li>
+            @endcan
         </ul>
 
         <!-- Right Side Of Navbar -->
