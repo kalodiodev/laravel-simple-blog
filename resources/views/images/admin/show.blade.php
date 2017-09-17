@@ -38,7 +38,7 @@
         </table>
 
         @include('images._delete-button', [
-            'delete_route' => ''
+            'delete_route' => route('images.admin.delete', ['image' => $image->id])
         ])
 
         <img src="/{{ $image->path . $image->filename }}" class="img-fluid top-space bottom-space">

@@ -55,4 +55,20 @@ class AdminImagesController extends Controller
 
         return view('images.admin.show', compact('image'));
     }
+
+    /**
+     * Delete Image
+     * 
+     * @param Image $image
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function destroy(Image $image)
+    {
+        $this->isAuthorized('delete_any', $image);
+
+        $this->articleImageService->delete($image);
+
+        return redirect(route('images.admin.index'));
+    }
 }

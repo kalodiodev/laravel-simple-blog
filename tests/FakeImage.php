@@ -2,13 +2,19 @@
 
 namespace Tests;
 
+use App\User;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 
 trait FakeImage {
 
-    protected function addFakeImage($user, $filename = 'article.png')
+    protected function addFakeImage($user = null, $filename = 'article.png')
     {
+        if(! isset($user))
+        {
+            $user = factory(User::class)->create();
+        }
+        
         Storage::fake('testfs');
 
         UploadedFile::fake()->image($filename)

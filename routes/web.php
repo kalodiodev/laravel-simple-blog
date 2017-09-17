@@ -62,6 +62,7 @@ Route::post('/images/article/', 'ImagesController@articleStore')->name('images.a
  */
 Route::get('/admin/images', 'AdminImagesController@index')->name('images.admin.index');
 Route::get('/admin/images/{image}', 'AdminImagesController@show')->name('images.admin.show');
+Route::delete('/admin/images/{image}', 'AdminImagesController@destroy')->name('images.admin.delete');
 
 /*
  * User Images

@@ -65,4 +65,15 @@ class ImagePolicy
 
         return ($user->owns($image) && $user->hasPermission('image-delete-own'));
     }
+
+    /**
+     * Delete image belongs to any user policy
+     * 
+     * @param User $user
+     * @return bool
+     */
+    public function delete_any(User $user)
+    {
+        return $user->hasPermission('image-delete-any');
+    }
 }
