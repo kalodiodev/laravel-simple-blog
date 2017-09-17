@@ -50,6 +50,17 @@ class ImagePolicy
     }
 
     /**
+     * View image belongs to any user policy
+     *
+     * @param User $user
+     * @return bool
+     */
+    public function view_any(User $user)
+    {
+        return $user->hasPermission('image-view-any');
+    }
+
+    /**
      * Delete image policy
      *
      * @param User $user

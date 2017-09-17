@@ -51,7 +51,7 @@ class AdminImagesController extends Controller
      */
     public function show(Image $image)
     {
-        $this->isAuthorized('index', $image);
+        $this->isAuthorized('view_any', Image::class);
 
         return view('images.admin.show', compact('image'));
     }
@@ -65,7 +65,7 @@ class AdminImagesController extends Controller
      */
     public function destroy(Image $image)
     {
-        $this->isAuthorized('delete_any', $image);
+        $this->isAuthorized('delete_any', Image::class);
 
         $this->articleImageService->delete($image);
 
