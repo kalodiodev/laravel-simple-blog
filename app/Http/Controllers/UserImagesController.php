@@ -72,6 +72,8 @@ class UserImagesController extends Controller
         if(isset($image))
         {
             $this->articleImageService->delete($image);
+
+            session()->flash('message', 'Image has been deleted!');
         }
 
         return redirect(route('images.index'));
