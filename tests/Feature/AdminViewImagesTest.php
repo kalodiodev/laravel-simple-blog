@@ -8,7 +8,6 @@ use Tests\FakeImage;
 use Tests\IntegrationTestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-
 class AdminViewImagesTest extends IntegrationTestCase
 {
     use DatabaseMigrations, FakeImage;
@@ -88,5 +87,59 @@ class AdminViewImagesTest extends IntegrationTestCase
 
         $this->get(route('images.admin.show', ['image' => $image->id]))
             ->assertStatus(403);
+    }
+
+    /** @test */
+    public function an_admin_user_can_filter_images_by_filename()
+    {
+        $this->signInAdmin();
+
+        $image1 = $this->addFakeImage(null, 'article.png');
+        $image2 = $this->addFakeImage(null, 'filter.png');
+
+        $response = $this->get(route('images.admin.index', ['search' => 'filter']))
+            ->assertStatus(200);
+
+        $response
+            ->assertSee($image2->filename)
+            ->assertDontSee($image1->filename);
+    }
+
+    /** @test */
+    public function an_admin_user_can_filter_images_by_user_name()
+    {
+        $this->signInAdmin();
+
+        $user1 = factory(User::class)->create(['name' => 'Username']);
+        $user2 = factory(User::class)->create(['name' => 'Filter']);
+
+        $image1 = $this->addFakeImage($user1, 'article.png');
+        $image2 = $this->addFakeImage($user2, 'filter.png');
+
+        $response = $this->get(route('images.admin.index', ['search' => 'Filter']))
+            ->assertStatus(200);
+
+        $response
+            ->assertSee($image2->filename)
+            ->assertDontSee($image1->filename);
+    }
+
+    /** @test */
+    public function an_admin_user_can_filter_images_by_user_email()
+    {
+        $this->signInAdmin();
+
+        $user1 = factory(User::class)->create(['email' => 'user@example.com']);
+        $user2 = factory(User::class)->create(['email' => 'filter@example.com']);
+
+        $image1 = $this->addFakeImage($user1, 'article.png');
+        $image2 = $this->addFakeImage($user2, 'filter.png');
+
+        $response = $this->get(route('images.admin.index', ['search' => 'filter@example.com']))
+            ->assertStatus(200);
+
+        $response
+            ->assertSee($image2->filename)
+            ->assertDontSee($image1->filename);
     }
 }

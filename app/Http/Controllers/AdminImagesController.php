@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Image;
 use App\Services\ArticleImageService;
+use Illuminate\Http\Request;
 
 
 class AdminImagesController extends Controller
@@ -30,16 +31,31 @@ class AdminImagesController extends Controller
     /**
      * Index all images
      *
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->isAuthorized('index', Image::class);
 
-        $images = Image::with('user')->latest()->paginate(25);
+        $images = Image::with('user');
 
-        return view('images.admin.index', compact('images'));
+        if($request->has('search'))
+        {
+            $search = $request->get('search');
+
+            $images = $images
+                ->where('filename','like','%' . $search . '%')
+                ->orWhereHas('user', function ($query) use($search) {
+                    $query->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('email', 'like', '%' . $search . '%');
+                });
+        }
+
+        $images = $images->latest()->paginate(25);
+
+        return view('images.admin.index', compact('images', 'search'));
     }
 
     /**
