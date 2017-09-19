@@ -162,4 +162,20 @@ class User extends Authenticatable
     {
         return $this->id === $image->user_id;
     }
+
+    /**
+     * Filter users by given term
+     *
+     * <p>Filter by user name or email</p>
+     * 
+     * @param $query
+     * @param $term
+     * @return mixed
+     */
+    public function scopeFilter($query, $term)
+    {
+        return $query
+            ->where('name', 'like', '%' . $term . '%')
+            ->orWhere('email', 'like', '%' . $term . '%');
+    }
 }

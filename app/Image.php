@@ -25,4 +25,22 @@ class Image extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    /**
+     * Filter images by given term
+     * 
+     * <p>Filter by filename or by owner</p>
+     * 
+     * @param $query
+     * @param $term
+     * @return mixed
+     */
+    public function scopeFilter($query, $term)
+    {
+        return $query
+            ->where('filename','like','%' . $term . '%')
+            ->orWhereHas('user', function ($query) use($term) {
+                $query->filter($term);
+            });
+    }
 }

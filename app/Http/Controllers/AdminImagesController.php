@@ -45,12 +45,7 @@ class AdminImagesController extends Controller
         {
             $search = $request->get('search');
 
-            $images = $images
-                ->where('filename','like','%' . $search . '%')
-                ->orWhereHas('user', function ($query) use($search) {
-                    $query->where('name', 'like', '%' . $search . '%')
-                        ->orWhere('email', 'like', '%' . $search . '%');
-                });
+            $images = $images->filter($search);
         }
 
         $images = $images->latest()->paginate(25);
