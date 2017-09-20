@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Role;
+use Illuminate\Http\Request;
 use App\Http\Requests\UserRequest;
 use App\Services\AvatarImageService;
 
@@ -28,17 +29,27 @@ class UsersController extends Controller
 
     /**
      * Index users
-     * 
+     *
+     * @param Request $request
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function index()
+    public function index(Request $request)
     {
         $this->isAuthorized('view', User::class);
 
-        $users = User::paginate(25);
+        $users = User::query();
+
+        if($request->has('search'))
+        {
+            $search = $request->get('search');
+
+            $users = $users->filter($search);
+        }
+
+        $users = $users->paginate(25);
         
-        return view('users.index', compact('users'));
+        return view('users.index', compact('users', 'search'));
     }
 
     /**

@@ -6,6 +6,8 @@
         <h1>Users</h1>
         <hr>
 
+        @include('partials.search-input')
+
         <table class="table">
             <thead>
                 <tr>
@@ -49,7 +51,11 @@
         @endcan
 
         <div class="row justify-content-center">
-            {{ $users->links('vendor.pagination.bootstrap-4') }}
+            @if(isset($search))
+                {{ $users->appends(['search' => $search])->links('vendor.pagination.bootstrap-4') }}
+            @else
+                {{ $users->links('vendor.pagination.bootstrap-4') }}
+            @endif
         </div>
 
         <a class="btn btn-primary" href="{{ route('users.create') }}">Create User</a>
