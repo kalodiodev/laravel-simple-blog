@@ -32,9 +32,9 @@ Route::patch('/article/{slug}', 'ArticlesController@update')->name('article.upda
 Route::get('/tags', 'TagsController@index')->name('tag.index');
 Route::post('/tags', 'TagsController@store')->name('tag.store');
 Route::get('/tags/create', 'TagsController@create')->name('tag.create');
-Route::get('/tags/{tag}/edit','TagsController@edit')->name('tag.edit');
-Route::patch('tags/{tag}', 'TagsController@update')->name('tag.update');
-Route::delete('tags/{tag}', 'TagsController@delete')->name('tag.delete');
+Route::get('/tag/{tag}/edit','TagsController@edit')->name('tag.edit');
+Route::patch('tag/{tag}', 'TagsController@update')->name('tag.update');
+Route::delete('tag/{tag}', 'TagsController@delete')->name('tag.delete');
 Route::get('/tag/{tag}', 'TagsController@articles')->name('tag.articles');
 
 /*
@@ -61,15 +61,15 @@ Route::post('/images/article/', 'ImagesController@articleStore')->name('images.a
  * Images Administration
  */
 Route::get('/admin/images', 'AdminImagesController@index')->name('images.admin.index');
-Route::get('/admin/images/{image}', 'AdminImagesController@show')->name('images.admin.show');
-Route::delete('/admin/images/{image}', 'AdminImagesController@destroy')->name('images.admin.delete');
+Route::get('/admin/image/{image}', 'AdminImagesController@show')->name('images.admin.show');
+Route::delete('/admin/image/{image}', 'AdminImagesController@destroy')->name('images.admin.delete');
 
 /*
  * User Images
  */
 Route::get('/user/images', 'UserImagesController@index')->name('images.index');
-Route::get('/user/images/{image}', 'UserImagesController@show')->name('images.show');
-Route::delete('/user/images/{image}', 'UserImagesController@delete')->name('images.delete');
+Route::get('/user/image/{image}', 'UserImagesController@show')->name('images.show');
+Route::delete('/user/image/{image}', 'UserImagesController@delete')->name('images.delete');
 
 /*
  * Profiles
@@ -79,13 +79,12 @@ Route::get('/profile/{user}/edit', 'ProfilesController@edit')->name('profile.edi
 Route::patch('/profile/{user}', 'ProfilesController@update')->name('profile.update');
 
 /*
- * Users
+ * Users administration
  */
-Route::get('/users', 'UsersController@index')->name('users.index');
-Route::post('/users', 'UsersController@store')->name('users.store');
-Route::get('/users/create', 'UsersController@create')->name('users.create');
-Route::get('/users/{user}', 'UsersController@show')->name('users.show');
-Route::patch('/users/{user}', 'UsersController@update')->name('users.update');
-Route::delete('/users/{user}', 'UsersController@destroy')->name('users.delete');
-Route::get('/users/{user}/edit', 'UsersController@edit')->name('users.edit');
-
+Route::get('/admin/users', 'UsersController@index')->name('users.index');
+Route::post('/admin/users', 'UsersController@store')->name('users.store');
+Route::get('/admin/users/create', 'UsersController@create')->name('users.create');
+Route::get('/admin/user/{user}', 'UsersController@show')->name('users.show');
+Route::patch('/admin/user/{user}', 'UsersController@update')->name('users.update');
+Route::delete('/admin/user/{user}', 'UsersController@destroy')->name('users.delete');
+Route::get('/admin/user/{user}/edit', 'UsersController@edit')->name('users.edit');
