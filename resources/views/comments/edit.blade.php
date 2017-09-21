@@ -4,10 +4,16 @@
 
     <div class="col-md-8">
         <h1>{{ $comment->article->title }}</h1>
-        <p class="blog-post-meta">Created by
+
+        <p class="blog-post-meta">
+            {{ __('comments.info.created_by') }}
             <a href="{{ route('profile.show', ['user' => $comment->article->user->id]) }}">
-                {{ $comment->article->user->name }}</a> on {{ $comment->article->created_at->toFormattedDateString() }}
+                {{ $comment->article->user->name }}
+            </a>
+            {{ __('comments.info.on_date', ['date' => $comment->article->created_at->toFormattedDateString() ]) }}
         </p>
+
+        {{-- Tags --}}
         @foreach($comment->article->tags as $tag)
             <span class="badge badge-info">{{ $tag->name }}</span>
         @endforeach
@@ -17,8 +23,12 @@
         <p>{{ $comment->article->description }}</p>
 
         <div class="top-space">
-            <h3>Your comment</h3>
-            <p class="blog-post-meta">Submitted at {{ $comment->created_at->toFormattedDateString() }}</p>
+            <h3>{{ __('comments.form.title') }}</h3>
+
+            <p class="blog-post-meta">
+                {{ __('comments.form.update.submitted_at', ['date' => $comment->created_at->toFormattedDateString()]) }}
+            </p>
+
             <hr>
 
             <p>{{ $comment->body }}</p>
@@ -26,7 +36,7 @@
             {{-- Comment form --}}
             <div class="card top-space">
                 <div class="card-header">
-                    Update Comment
+                    {{ __('comments.form.update.title') }}
                 </div>
                 <div class="card-body">
                     <form method="post" action="{{ route('comment.update', ['comment' => $comment->id]) }}">

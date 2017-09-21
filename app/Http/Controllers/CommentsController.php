@@ -37,7 +37,7 @@ class CommentsController extends Controller
             'user_id' => Auth::user()->id
         ]);
 
-        session()->flash('message', 'Comment has been posted!');
+        session()->flash('message', __('comments.flash.posted'));
 
         return redirect()->route('article', ['slug' => $article->slug]);
     }
@@ -72,7 +72,7 @@ class CommentsController extends Controller
            'body' => $request->get('body')
         ]);
 
-        session()->flash('message', 'Comment has been updated!');
+        session()->flash('message', __('comments.flash.updated'));
 
         return redirect()->route('article', ['slug' => $comment->article->slug]);
     }
@@ -90,7 +90,7 @@ class CommentsController extends Controller
 
         $comment->delete();
 
-        session()->flash('message', 'Comment has been deleted!');
+        session()->flash('message', __('comments.flash.deleted'));
         
         return redirect()->back();
     }

@@ -12,7 +12,7 @@
         <h1>{{ $article->title }}</h1>
         <p class="blog-post-meta">
             {{ __('articles.created_by') }} <a href="{{ route('profile.show', ['user' => $article->user->id]) }}">{{ $article->user->name }}</a>
-            {{ __('articles.on') }} {{ $article->created_at->toFormattedDateString() }}</p>
+            {{ __('articles.on_date', ['date' => $article->created_at->toFormattedDateString()]) }}</p>
         @foreach($article->tags as $tag)
             <span class="badge badge-info">{{ $tag->name }}</span>
         @endforeach
@@ -47,11 +47,11 @@
 
         {{-- Comments --}}
         <div class="top-space bottom-space">
-            <h3>Comments</h3>
+            <h3>{{ __('comments.title') }}</h3>
             <hr>
 
             @if(count($comments) == 0)
-                <p style="text-align: center">Be the first to comment.</p>
+                <p style="text-align: center">{{ __('comments.first') }}</p>
             @else
                 {{-- Comments list --}}
                 @include('comments.list')
@@ -62,7 +62,7 @@
                 {{-- Comment form --}}
                 <div class="card top-space">
                     <div class="card-header">
-                        Post Comment
+                        {{ __('comments.post_comment') }}
                     </div>
 
                     <div class="card-body">
@@ -75,7 +75,10 @@
                 {{-- Prompt to login or register --}}
                 <div class="card">
                     <div class="card-body">
-                        <a href="/login">Login</a> or <a href="/register">Register</a> to post your comment
+                        <a href='/login'>{{ __('comments.login_prompt.login') }}</a>
+                        {{ __('comments.login_prompt.or') }}
+                        <a href='/register'>{{ __('comments.login_prompt.register') }}</a>
+                        {{ __('comments.login_prompt.to_post_comment') }}
                     </div>
                 </div>
             @endif

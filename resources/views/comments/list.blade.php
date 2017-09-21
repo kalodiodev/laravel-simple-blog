@@ -17,7 +17,7 @@
                         {{ $comment->user->name }}</a>
                 </label>
                 @if($comment->user->ownsArticle($comment->article))
-                    <span class="badge badge-info">author</span>
+                    <span class="badge badge-info">{{ __('comments.author') }}</span>
                 @endif
                 <span> - {{ $comment->created_at->diffForHumans() }}</span>
             </div>
@@ -36,16 +36,22 @@
                             {{-- Edit comment button --}}
                             @can('update', $comment)
                                 <a class="btn btn-primary btn-sm"
-                                   href="{{ route('comment.edit', ['comment' => $comment->id]) }}">Edit</a>
+                                   href="{{ route('comment.edit', ['comment' => $comment->id]) }}"
+                                >
+                                    {{ __('comments.button.edit') }}
+                                </a>
                             @endcan
 
                             {{-- Delete comment button --}}
                             @can('delete', $comment)
                                 <a class="btn btn-danger btn-sm deleteBtn" data-toggle="modal"
                                    data-target="#deleteConfirmModal"
-                                   data-message="Are you sure you want to delete this comment ?"
+                                   data-message="{{ __('comments.delete_confirm') }}"
                                    data-action="{{ route('comment.delete', ['comment' => $comment->id]) }}"
-                                   href="#">Delete</a>
+                                   href="#"
+                                >
+                                    {{ __('comments.button.delete') }}
+                                </a>
                             @endcan
                         </div>
                     @endif
