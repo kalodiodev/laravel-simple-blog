@@ -8,8 +8,8 @@
 @section('intro')
     <div class="row">
         <div class="col-md-12 jumbotron">
-            <h1>This is Simple Blog homepage</h1>
-            <p>Welcome to simple blog</p>
+            <h1>{{ __('home.title') }}</h1>
+            <p>{{ __('home.welcome') }}</p>
         </div>
     </div>
 @endsection
@@ -20,7 +20,7 @@
 
         @can('create', \App\Article::class)
             <div class="row justify-content-end" style="margin-bottom: 30px;">
-                <a href="{{ route('article.create') }}" class="btn btn-primary">Create article</a>
+                <a href="{{ route('article.create') }}" class="btn btn-primary">{{ __('articles.button.create')  }}</a>
             </div>
         @endcan
 

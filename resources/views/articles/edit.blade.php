@@ -4,7 +4,7 @@
 
     <div class="col-md-8">
 
-        <h1>Edit article</h1>
+        <h1>{{ __('articles.title.edit') }}</h1>
         <hr>
 
         <form method="POST" action="/article/{{ $article->slug }}" enctype=multipart/form-data>

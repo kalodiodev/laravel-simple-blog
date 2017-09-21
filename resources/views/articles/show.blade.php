@@ -10,8 +10,9 @@
 
     <div class="col-md-8">
         <h1>{{ $article->title }}</h1>
-        <p class="blog-post-meta">Created by <a href="{{ route('profile.show', ['user' => $article->user->id]) }}">{{ $article->user->name }}</a> on
-            {{ $article->created_at->toFormattedDateString() }}</p>
+        <p class="blog-post-meta">
+            {{ __('articles.created_by') }} <a href="{{ route('profile.show', ['user' => $article->user->id]) }}">{{ $article->user->name }}</a>
+            {{ __('articles.on') }} {{ $article->created_at->toFormattedDateString() }}</p>
         @foreach($article->tags as $tag)
             <span class="badge badge-info">{{ $tag->name }}</span>
         @endforeach
@@ -30,13 +31,15 @@
             <div class="row justify-content-end">
                 <div class="btn-group">
                     @can('update', $article)
-                        <a href="{{ route('article.edit', ['slug' => $article->slug]) }}" class="btn btn-primary">Edit</a>
+                        <a href="{{ route('article.edit', ['slug' => $article->slug]) }}" class="btn btn-primary">
+                            {{ __('articles.button.edit') }}
+                        </a>
                     @endcan
                     @can('delete', $article)
                         <a class="btn btn-danger deleteBtn" data-toggle="modal"  data-target="#deleteConfirmModal"
                            data-message="Are you sure you want to delete this article ?"
                            data-action="{{ route('article.delete', ['slug' => $article->slug]) }}"
-                           href="#">Delete</a>
+                           href="#">{{ __('articles.button.delete') }}</a>
                     @endcan
                 </div>
             </div>
