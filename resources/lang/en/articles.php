@@ -23,8 +23,14 @@ return [
         'tags'         => 'Tags',
     ],
     
+    'flash'    => [
+        'posted'  => 'Article has been posted!',
+        'deleted' => 'Article has been deleted!',
+        'updated' => 'Article has been updated!',
+    ],
+    
     'read_more'  => 'Read more...',
     'created_by' => 'Created by',
-    'on'         => 'on',
+    'on_date'    => 'on :date',
     'by'         => 'by',
 ];

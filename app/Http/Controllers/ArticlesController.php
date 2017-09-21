@@ -72,7 +72,7 @@ class ArticlesController extends Controller
         // Attach tags to article
         $article->tags()->attach($request->get('tags'));
 
-        session()->flash('message', 'Article has been posted!');
+        session()->flash('message', __('articles.flash.posted'));
 
         return redirect("/article/" . $article->slug);
     }
@@ -122,7 +122,7 @@ class ArticlesController extends Controller
         // Sync article tags
         $article->tags()->sync($request->get('tags'));
 
-        session()->flash('message', 'Article has been updated!');
+        session()->flash('message', __('articles.flash.updated'));
 
         return redirect('/article/' . $article->slug);
     }
@@ -160,7 +160,7 @@ class ArticlesController extends Controller
         $article->delete();
         $this->articleImageService->delete($featured);
 
-        session()->flash('message', 'Article has been deleted!');
+        session()->flash('message', __('articles.flash.deleted'));
 
         return redirect()->route('home');
     }
