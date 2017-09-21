@@ -4,7 +4,7 @@
 
     <div class="col-md-8">
 
-        <h1>Edit Tag</h1>
+        <h1>{{ __('tags.title.edit') }}</h1>
         <hr>
 
         <form method="POST" action="{{ route('tag.update', ['tag' => $tag->name]) }}">

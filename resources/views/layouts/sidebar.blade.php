@@ -14,7 +14,7 @@
     </div>
 
     <div class="sidebar-module">
-        <h4>Tags</h4>
+        <h4>{{ __('tags.title.index') }}</h4>
         <ol class="tags">
             @foreach($tags as $tag)
                 <li class="tag is-primary">

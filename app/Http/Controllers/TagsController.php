@@ -74,7 +74,7 @@ class TagsController extends Controller
            'name' => $request->get('name')
         ]);
 
-        session()->flash('message', 'Tag has been created!');
+        session()->flash('message', __('tags.flash.posted'));
         
         return redirect()->route('tag.index');
     }
@@ -109,7 +109,7 @@ class TagsController extends Controller
            'name' => $request->get('name')
         ]);
 
-        session()->flash('message', 'Tag has been updated!');
+        session()->flash('message', __('tags.flash.updated'));
 
         return redirect()->route('tag.index');
     }
@@ -128,7 +128,7 @@ class TagsController extends Controller
 
         $tag->delete();
 
-        session()->flash('message', 'Tag has been deleted!');
+        session()->flash('message', __('tags.flash.deleted'));
 
         return redirect()->route('tag.index');
     }

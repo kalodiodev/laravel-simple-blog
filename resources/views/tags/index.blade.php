@@ -4,17 +4,17 @@
 
     <div class="col-md-8">
 
-        <h1>Tags</h1>
+        <h1>{{ __('tags.title.index') }}</h1>
 
         <table class="table table-responsive">
             <thead>
             <tr>
-                <th>ID</th>
-                <th>Tag Name</th>
-                <th># of Articles</th>
-                <th>Created At</th>
-                <th>Updated At</th>
-                <th>Action</th>
+                <th>{{ __('tags.index.id') }}</th>
+                <th>{{ __('tags.index.name') }}</th>
+                <th>{{ __('tags.index.articles_number') }}</th>
+                <th>{{ __('tags.index.created_at') }}</th>
+                <th>{{ __('tags.index.updated_at') }}</th>
+                <th>{{ __('tags.index.action') }}</th>
             </tr>
             </thead>
             <tbody>
@@ -28,14 +28,20 @@
                 <td>
                     <div class="btn-group btn-group-sm" role="group" aria-label="Tag actions">
                         @can('update', \App\Tag::class)
-                            <a class="btn btn-primary" href="{{ route('tag.edit', ['tag' => $tag->name]) }}">Edit</a>
+                            <a class="btn btn-primary" href="{{ route('tag.edit', ['tag' => $tag->name]) }}"
+                            >
+                                {{ __('tags.button.edit') }}
+                            </a>
                         @endcan
                         @can('delete', \App\Tag::class)
                             <a class="btn btn-danger btn-sm deleteBtn" data-toggle="modal"
                                data-target="#deleteConfirmModal"
-                               data-message="Are you sure you want to delete this tag ?"
+                               data-message="{{ __('tags.confirm.delete') }}"
                                data-action="{{ route('tag.delete', ['tag' => $tag->name]) }}"
-                               href="#">Delete</a>
+                               href="#"
+                            >
+                                {{ __('tags.button.delete') }}
+                            </a>
                         @endcan
                     </div>
                 </td>
@@ -53,7 +59,7 @@
             {{ $tags->links('vendor.pagination.bootstrap-4') }}
         </div>
 
-        <a class="btn btn-primary" href="{{ route('tag.create') }}">Add Tag</a>
+        <a class="btn btn-primary" href="{{ route('tag.create') }}">{{ __('tags.button.add') }}</a>
 
     </div>
 
