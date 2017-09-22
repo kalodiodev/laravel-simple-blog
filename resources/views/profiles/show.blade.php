@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="col-md-8">
-    <h1>Profile of user {{ $user->name }}</h1>
+    <h1>{{ __('profile.title.show', ['name' => $user->name]) }}</h1>
 
     <div class="row">
         <div class="col-md-3">
@@ -34,10 +34,10 @@
                 <table class="table">
                     <tbody>
                     <tr>
-                        <td>Email:</td><td>{{ $user->email }}</td>
+                        <td>{{ __('profile.details.email') }}</td><td>{{ $user->email }}</td>
                     </tr>
                     <tr>
-                        <td>Registration date:</td><td>{{ $user->created_at->toFormattedDateString() }}</td>
+                        <td>{{ __('profile.details.registration_date') }}</td><td>{{ $user->created_at->toFormattedDateString() }}</td>
                     </tr>
                     </tbody>
                 </table>
@@ -46,7 +46,11 @@
             {{-- Update profile --}}
             @can('update_profile', $user)
                 <div style="text-align: right">
-                    <a class="btn btn-primary" href="{{ route('profile.edit', ['user' => $user->id]) }}">Edit Profile</a>
+                    <a class="btn btn-primary"
+                       href="{{ route('profile.edit', ['user' => $user->id]) }}"
+                    >
+                        {{ __('profile.button.edit') }}
+                    </a>
                 </div>
             @endcan
         </div>
@@ -54,21 +58,21 @@
 
     <hr>
 
-    <h2>Latest activity</h2>
+    <h2>{{ __('profile.title.latest_activity') }}</h2>
 
         {{-- Articles --}}
         <div class="card bottom-space top-space">
             <div class="card-header">
-                <h3>Articles</h3>
+                <h3>{{ __('profile.articles.title') }}</h3>
             </div>
 
             <div class="card-body">
                 <table class="table">
                     <thead class="thead-default">
                         <tr>
-                            <th>Date</th>
-                            <th>Title</th>
-                            <th>Tags</th>
+                            <th>{{ __('profile.articles.index.date') }}</th>
+                            <th>{{ __('profile.articles.index.title') }}</th>
+                            <th>{{ __('profile.articles.index.tags') }}</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -85,7 +89,12 @@
                                         <div class="badge badge-info">{{ $tag->name }}</div>
                                     @endforeach
                                 </td>
-                                <td><a class="btn btn-primary" href="{{ route('article', ['slug' => $article->slug]) }}">Visit</a></td>
+                                <td><a class="btn btn-primary"
+                                       href="{{ route('article', ['slug' => $article->slug]) }}"
+                                    >
+                                        {{ __('profile.articles.visit') }}
+                                    </a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -93,7 +102,7 @@
                 </table>
 
                 @if($user->articles->count() == 0)
-                    <div class="row justify-content-center">No articles</div>
+                    <div class="row justify-content-center">{{ __('profile.articles.no_articles') }}</div>
                 @endif
 
             </div>
@@ -102,16 +111,16 @@
         {{-- Comments --}}
         <div class="card bottom-space">
             <div class="card-header">
-                <h3>Comments</h3>
+                <h3>{{ __('profile.comments.title') }}</h3>
             </div>
 
             <div class="card-body">
                 <table class="table">
                     <thead class="thead-default">
                     <tr>
-                        <th>Date</th>
-                        <th>on Article</th>
-                        <th>Comment</th>
+                        <th>{{ __('profile.comments.index.date') }}</th>
+                        <th>{{ __('profile.comments.index.on_article') }}</th>
+                        <th>{{ __('profile.comments.index.comment') }}</th>
                         <th></th>
                     </tr>
                     </thead>
@@ -134,7 +143,7 @@
                 </table>
 
                 @if($comments->count() == 0)
-                    <div class="row justify-content-center">No comments</div>
+                    <div class="row justify-content-center">{{ __('profile.comments.no_comments') }}</div>
                 @endif
             </div>
         </div>

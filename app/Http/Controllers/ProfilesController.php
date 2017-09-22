@@ -85,7 +85,7 @@ class ProfilesController extends Controller
 
         $user->update($data);
 
-        session()->flash('message', 'Profile has been updated!');
+        session()->flash('message', __('profile.flash.updated'));
 
         return redirect(route('profile.show', ['user' => $user->id]));
     }
