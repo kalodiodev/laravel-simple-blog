@@ -3,7 +3,8 @@
 @section('content')
 
     <div class="col-md-8">
-        <h1>My images</h1>
+        {{-- Title --}}
+        <h1>{{ __('images.index.title') }}</h1>
         <hr>
 
         @foreach($images->chunk(3) as $chunk)
@@ -24,8 +25,11 @@
                                     <button class="btn-xs btn-danger deleteBtn"
                                             data-toggle="modal"
                                             data-target="#deleteConfirmModal"
-                                            data-message="Are you sure you want to delete image with filename {{ $image->filename }} ?"
-                                            data-action="{{ route('images.delete', ['image' => $image->filename]) }}">Delete</button>
+                                            data-message="{{ __('images.index.delete_confirm', ['filename' => $image->filename]) }}"
+                                            data-action="{{ route('images.delete', ['image' => $image->filename]) }}"
+                                    >
+                                        {{ __('images.index.button.delete') }}
+                                    </button>
                                 </div>
                             @endcan
                         </div>
@@ -34,6 +38,7 @@
             </div>
         @endforeach
 
+        {{-- Pagination --}}
         <div class="row justify-content-center">
             {{ $images->links('vendor.pagination.bootstrap-4') }}
         </div>

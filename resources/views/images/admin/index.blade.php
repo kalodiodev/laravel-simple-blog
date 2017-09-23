@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="col-md-12">
-        <h1>All images</h1>
+        <h1>{{ __('images.index.all_title') }}</h1>
         <hr>
 
         @include('partials.search-input')

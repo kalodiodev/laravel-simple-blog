@@ -80,7 +80,7 @@ class AdminImagesController extends Controller
 
         $this->articleImageService->delete($image);
 
-        session()->flash('message', 'Image has been deleted!');
+        session()->flash('message', __('images.flash.deleted'));
 
         return redirect(route('images.admin.index'));
     }

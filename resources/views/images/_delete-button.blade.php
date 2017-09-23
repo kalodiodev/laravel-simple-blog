@@ -4,9 +4,9 @@
         <button class="btn btn-danger deleteBtn"
                 data-toggle="modal"
                 data-target="#deleteConfirmModal"
-                data-message="Are you sure you want to delete this image ?"
+                data-message="{{ __('images.show.delete_confirm') }}"
                 data-action="{{ $delete_route }}">
-            Delete Image
+            {{ __('images.show.button.delete') }}
         </button>
     </div>
 @endcan
