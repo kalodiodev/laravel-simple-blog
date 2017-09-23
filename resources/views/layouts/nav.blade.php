@@ -9,27 +9,27 @@
         <a class="navbar-brand" href="#">Simple Blog</a>
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item active">
-                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/">{{ __('partials.nav.home') }} <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
+                <a class="nav-link" href="#">{{ __('partials.nav.about') }}</a>
             </li>
         </ul>
 
         <ul class="nav navbar-nav navbar-right">
             @can('index', \App\Tag::class)
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('tag.index') }}">Tags</a>
+                    <a class="nav-link" href="{{ route('tag.index') }}">{{ __('partials.nav.admin.tags') }}</a>
                 </li>
             @endcan
             @can('view', \App\User::class)
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('users.index') }}">Users</a>
+                    <a class="nav-link" href="{{ route('users.index') }}">{{ __('partials.nav.admin.users') }}</a>
                 </li>
             @endcan
             @can('index', \App\Image::class)
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('images.admin.index') }}">Images</a>
+                    <a class="nav-link" href="{{ route('images.admin.index') }}">{{ __('partials.nav.admin.images') }}</a>
                 </li>
             @endcan
         </ul>
@@ -38,8 +38,8 @@
         <ul class="nav navbar-nav navbar-right">
             <!-- Authentication Links -->
             @if (Auth::guest())
-                <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">Login</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">Register</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">{{ __('partials.nav.login') }}</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">{{ __('partials.nav.register') }}</a></li>
             @else
                 <li class="nav-item dropdown">
                     <a href="#" class="nav-link dropdown-toggle"
@@ -58,17 +58,17 @@
                     <div class="dropdown-menu">
                         {{-- User Profile --}}
                         <a class="dropdown-item" href="{{ route('profile.show', ['user' => auth()->user()->id]) }}">
-                            Profile
+                            {{ __('partials.nav.profile') }}
                         </a>
                         {{-- User Images --}}
                         <a class="dropdown-item" href="{{ route('images.index') }}">
-                            Images
+                            {{ __('partials.nav.images') }}
                         </a>
                         {{-- Logout --}}
                         <a class="dropdown-item" href="{{ route('logout') }}"
                            onclick="event.preventDefault();
                                     document.getElementById('logout-form').submit();">
-                            Logout
+                            {{ __('partials.nav.logout') }}
                         </a>
 
                         <form class="dropdown-item" id="logout-form"

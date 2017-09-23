@@ -8,7 +8,7 @@
 
             {{-- Header --}}
             <div class="modal-header">
-                <h5 class="modal-title" id="confirmModalLabel">Confirm Delete</h5>
+                <h5 class="modal-title" id="confirmModalLabel">{{ __('partials.delete_confirm.title') }}</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -22,8 +22,8 @@
                 <form id="delete-form" action="" method="post">
                     {{ csrf_field() }}
                     {{ method_field('DELETE') }}
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-danger">Delete</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('partials.delete_confirm.cancel') }}</button>
+                    <button type="submit" class="btn btn-danger">{{ __('partials.delete_confirm.delete') }}</button>
                 </form>
             </div>
         </div>
