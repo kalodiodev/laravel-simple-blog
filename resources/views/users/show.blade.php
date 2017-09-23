@@ -4,7 +4,7 @@
 
 
     <div class="col-md-8">
-        <h1>User {{ $user->name }}</h1>
+        <h1>{{ __('users.title.show', ['user' => $user->name]) }}</h1>
 
         <hr>
 
@@ -23,33 +23,37 @@
                 <table class="table">
                     <tbody>
                         <tr>
-                            <th>Name</th>
+                            <th>{{ __('users.table.name') }}</th>
                             <td>{{ $user->name }}</td>
                         </tr>
                         <tr>
-                            <th>Email</th>
+                            <th>{{ __('users.table.email') }}</th>
                             <td>{{ $user->email }}</td>
                         </tr>
                         <tr>
-                            <th>About</th>
+                            <th>{{ __('users.table.about') }}</th>
                             <td>{{ $user->about }}</td>
                         </tr>
                         <tr>
-                            <th>Profession</th>
+                            <th>{{ __('users.table.profession') }}</th>
                             <td>{{ $user->profession }}</td>
                         </tr>
                         <tr>
-                            <th>Country</th>
+                            <th>{{ __('users.table.country') }}</th>
                             <td>{{ $user->country }}</td>
                         </tr>
                         <tr>
-                            <th>Role</th>
+                            <th>{{ __('users.table.role') }}</th>
                             <td>{{ $user->role->name }}</td>
                         </tr>
                     </tbody>
                 </table>
 
-                <a class="btn btn-primary" href="{{ route('users.edit', ['user' => $user->id]) }}">Edit</a>
+                <a class="btn btn-primary"
+                   href="{{ route('users.edit', ['user' => $user->id]) }}"
+                >
+                    {{ __('users.button.edit') }}
+                </a>
             </div>
         </div>
     </div>

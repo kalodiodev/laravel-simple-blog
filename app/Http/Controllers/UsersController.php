@@ -91,7 +91,7 @@ class UsersController extends Controller
             'password' => bcrypt($request->get('password'))
         ]);
 
-        session()->flash('message', 'User has been created!');
+        session()->flash('message', __('users.flash.created'));
 
         return redirect(route('users.show', ['user' => $user->id]));
     }
@@ -144,7 +144,7 @@ class UsersController extends Controller
 
         $user->update($data);
 
-        session()->flash('message', 'User has been updated!');
+        session()->flash('message', __('users.flash.updated'));
 
         return redirect(route('users.show', ['user' => $user->id]));
     }
@@ -180,7 +180,7 @@ class UsersController extends Controller
 
         $this->avatarImageService->delete($avatar);
 
-        session()->flash('message', 'User has been deleted!');
+        session()->flash('message', __('users.flash.deleted'));
 
         return redirect(route('users.index'));
     }

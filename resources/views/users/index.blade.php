@@ -3,7 +3,7 @@
 @section('content')
 
     <div class="col-md-8">
-        <h1>Users</h1>
+        <h1>{{ __('users.title.index') }}</h1>
         <hr>
 
         @include('partials.search-input')
@@ -11,11 +11,11 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Role</th>
-                    <th>Action</th>
+                    <th>{{ __('users.table.id') }}</th>
+                    <th>{{ __('users.table.name') }}</th>
+                    <th>{{ __('users.table.email') }}</th>
+                    <th>{{ __('users.table.role') }}</th>
+                    <th>{{ __('users.table.action') }}</th>
                 </tr>
             </thead>
 
@@ -29,14 +29,21 @@
                         <td>
                             <div class="btn-group btn-group-sm" role="group" aria-label="User actions">
                                 @can('update', \App\User::class)
-                                    <a class="btn btn-primary" href="{{ route('users.edit', ['user' => $user->id]) }}">Edit</a>
+                                    <a class="btn btn-primary"
+                                       href="{{ route('users.edit', ['user' => $user->id]) }}"
+                                    >
+                                        {{ __('users.button.edit') }}
+                                    </a>
                                 @endcan
                                 @can('delete', \App\User::class)
                                     <a class="btn btn-danger btn-sm deleteBtn" data-toggle="modal"
                                        data-target="#deleteConfirmModal"
-                                       data-message="Are you sure you want to delete user {{ $user->name }} ?"
+                                       data-message="{{ __('users.delete_confirm', ['user' => $user->name]) }}"
                                        data-action="{{ route('users.delete', ['user' => $user->id]) }}"
-                                       href="#">Delete</a>
+                                       href="#"
+                                    >
+                                        {{ __('users.button.delete') }}
+                                    </a>
                                 @endcan
                             </div>
                         </td>
@@ -58,7 +65,7 @@
             @endif
         </div>
 
-        <a class="btn btn-primary" href="{{ route('users.create') }}">Create User</a>
+        <a class="btn btn-primary" href="{{ route('users.create') }}">{{ __('users.button.create') }}</a>
     </div>
 
 @endsection

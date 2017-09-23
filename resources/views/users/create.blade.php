@@ -4,7 +4,7 @@
 
     <div class="col-md-8">
 
-        <h1>Create User</h1>
+        <h1>{{ __('users.title.create') }}</h1>
 
         <form action="{{ route('users.store') }}" method="post" enctype="multipart/form-data">
 
@@ -13,7 +13,7 @@
             @include('users.form')
 
             {{-- Store user button --}}
-            <button class="btn btn-primary">Save User</button>
+            <button class="btn btn-primary">{{ __('users.button.save') }}</button>
         </form>
 
     </div>
