@@ -5,8 +5,8 @@
     <div class="col-8 col-md-6 offset-md-2">
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">Reset Password</h4>
-                <h6 class="card-subtitle mb-2 text-muted">Insert your email,</h6>
+                <h4 class="card-title">{{ __('auth.reset_password.title') }}</h4>
+                <h6 class="card-subtitle mb-2 text-muted">{{ __('auth.reset_password.insert_email') }}</h6>
             </div>
 
             <div class="card-block">
@@ -20,7 +20,7 @@
                     {{ csrf_field() }}
 
                     <div class="form-group{{ $errors->has('email') ? ' has-danger' : '' }}">
-                        <label for="email" class="form-control-label">E-Mail Address</label>
+                        <label for="email" class="form-control-label">{{ __('auth.form.email') }}</label>
                         <input id="email" type="email" name="email" value="{{ old('email') }}"
                                class="form-control{{ $errors->has('email') ? ' form-control-danger' : '' }}" required>
 
@@ -28,11 +28,11 @@
                             <div class="form-control-feedback">
                                 {{ $errors->first('email') }}
                             </div>
-                            <small class="form-text text-muted">Please check your email.</small>
+                            <small class="form-text text-muted">{{ __('auth.error.check_email') }}</small>
                         @endif
                     </div>
 
-                    <button type="submit" class="btn btn-primary">Send Password Reset Link</button>
+                    <button type="submit" class="btn btn-primary">{{ __('auth.button.send_reset') }}</button>
                 </form>
             </div>
         </div>
